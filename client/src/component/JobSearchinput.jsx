@@ -1,7 +1,17 @@
 import { Search } from "lucide-react";
 import MobileSearchBar from "./MobileSearchBar";
+import { useEffect, useState } from "react";
 
 const JobSearchBar = () => {
+      
+         const[jobQuery,setJobquery]=useState("")
+         const[locationQuery,setLocationQuery]=useState("")
+         const[expreinceQuery,setexperinceQuery]=useState("")
+
+      const handleJobsSearchClick=()=>{
+             
+      }
+         
   return (
     <div className="lg:px-[75px]   w-full searchBox pt-6 ">
       <div className="flex items-center w-full justify-between">
@@ -35,10 +45,11 @@ const JobSearchBar = () => {
               className="border-l  max-[768px]:hidden border-stone-300 outline-none text-[13px] ps-2 pe-4 w-[20%]"
               placeholder="Loaction "
             />
-            <select className="border-l max-[768px]:hidden w-[20%] ps-2 border-stone-300 outline-none text-[13px] ">
-              <option>Fresher</option>
-            </select>
+            <input type="text" placeholder="Experience" className="border-l max-[768px]:hidden w-[20%] ps-2 border-stone-300 outline-none text-[13px] "/>
+           
+            
             <button
+               onClick={handleJobsSearchClick}
               className="p-2  max-[768px]:hidden cursor-pointer text-white w-[150px] rounded-full ms-3 me-1"
               style={{ backgroundColor: "#6E00BE" }}
             >
