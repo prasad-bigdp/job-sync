@@ -16,7 +16,7 @@ const Header=()=>{
   const[auth,setAuth]=useState(false)
 
     return(
-        <header className="flex lg:px-[75px] max-md:p-3  relative   min-[769px]:shadow-lg max-[768px]:w-full   justify-between   min-[769px]:rounded-bl-2xl  min-[769px]:rounded-br-2xl  min-[769px]:border-b  min-[769px]:border-stone-300 items-center  min-[769px]:gap-4" >
+        <header className="flex lg:px-[75px]  max-md:p-3  relative   min-[769px]:shadow-lg max-[768px]:w-full   justify-between   min-[769px]:rounded-bl-2xl  min-[769px]:rounded-br-2xl  min-[769px]:border-b  min-[769px]:border-stone-300 items-center  min-[769px]:gap-4" >
                <div className="flex items-center ">
                 {
                   auth?<div className='md:hidden flex gap-4 items-center '>
@@ -40,10 +40,10 @@ const Header=()=>{
                   y="70"
                   fontFamily="Arial, Helvetica, sans-serif"
                   fontSize="70"
-                  fill="#6a1b9a"
+                  fill="#000"
                   fontWeight="bold"
                 >
-                  foundit
+                  sams
                 </text>
               </svg>
                 </div>
@@ -60,20 +60,26 @@ const Header=()=>{
                  y="70"
                  fontFamily="Arial, Helvetica, sans-serif"
                  fontSize="70"
-                 fill="#6a1b9a"
+                 fill="#000"
                  fontWeight="bold"
                >
-                 foundit
+                sams
                </text>
              </svg>
                </div>
-                 <div className=" flex items-center gap-3 max-lg:text-[0.7rem] text-[14px]  max-[768px]:hidden">
-                    <div className="font-[500] hover:underline cursor-pointer">Jobs</div>
-                    <div className="font-[500] hover:underline   cursor-pointer">Services</div>
-                    <div  className="font-[500] hover:underline  cursor-pointer ">Highlight</div>
-                    <div className="font-[500] hover:underline  cursor-pointer">Prep</div>
-                    <div className="font-[500] hover:underline  cursor-pointer">Learn</div>
-                    <div className="font-[500] hover:underline   cursor-pointer">Career Advice</div>
+                 <div className=" flex items-center gap-5 max-lg:text-[0.7rem] text-[14px]  max-[768px]:hidden">
+                    <div className="font-[500] group  relative  cursor-pointer">
+                    Jobs
+                    <div className='w-full h-1 group-hover:bg-orange-400   absolute '></div>
+                    </div>
+                    <div className="font-[500] group relative  cursor-pointer">Services
+                    <div className='w-full h-1   group-hover:bg-orange-400  absolute '></div>
+                    </div>
+                    <div  className="font-[500] group relative  cursor-pointer ">
+                    Companies
+                    <div className='w-full h-1   group-hover:bg-orange-400  rounded-[3px] absolute '></div>
+                    </div>
+                    
                  </div>
 
               </div>

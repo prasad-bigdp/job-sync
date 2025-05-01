@@ -9,7 +9,6 @@ function FeaturedCompanies() {
     "https://res.cloudinary.com/dv5abn9bn/image/upload/v1746005846/HWMRuAwwASLR6Ge4hHcTaTjIGemPxfVNFaIayRv3_fvra2a.webp",
     "https://res.cloudinary.com/dv5abn9bn/image/upload/v1746005845/XkD2qczUmzHjmow82kL0KXn3C58Ckc943TU4ioAy_tk0xxj.webp",
     "https://res.cloudinary.com/dv5abn9bn/image/upload/v1746005845/gtvNLVlCC0gljwoGWib46QZij1Onlkvtj9Y5Tphr_nqguch.webp",
-    "https://res.cloudinary.com/dv5abn9bn/image/upload/v1746005845/gtvNLVlCC0gljwoGWib46QZij1Onlkvtj9Y5Tphr_nqguch.webp",
     "https://res.cloudinary.com/dv5abn9bn/image/upload/v1746005842/RxBMJijwDrAtoV1i9kZmIv17TbS9cSlr200IMHF7_wlhpbi.webp",
     "https://res.cloudinary.com/dv5abn9bn/image/upload/v1746005844/vaxhFktkYNY3Se07eyLhJ3nal8NCLARr9yPI15Gz_pz3op9.webp",
     "https://res.cloudinary.com/dv5abn9bn/image/upload/v1746005844/BbTm5uqIbhiLgZAAmiVeYTk85RKlnh7TEx9mc6Y1_xm9xp0.webp",

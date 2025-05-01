@@ -12,7 +12,7 @@ function App() {
   return (
 
         <Routes>
-           <Route path='/homepage' Component={Homepage} ></Route>
+           <Route path='/index' Component={Homepage} ></Route>
            <Route path='/jobsseekerform' Component={MobileSearchJobs}/>
         </Routes>
    

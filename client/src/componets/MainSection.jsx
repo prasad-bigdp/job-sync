@@ -3,7 +3,7 @@ import FeaturedCompanies from './FeaturedCompanies'
 import PopularCategories from './PopularCategories'
 import TrendingChips from './TrendingChips'
 import JobVacancyTabs from './JobVacancyTabs'
-import Footer from './Footer'
+
 
 
 const trendingSkills = [
@@ -24,7 +24,7 @@ function MainSection() {
     <TrendingChips title="Trending skills" items={trendingSkills}/>
     <TrendingChips title="Trending job titles" items={trendingTitles}/>
     <JobVacancyTabs/>
-    <Footer/>
+   
    </>
   )
 }

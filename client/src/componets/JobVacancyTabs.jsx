@@ -123,12 +123,12 @@ function JobVacancyTabs() {
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-5 md:p-8 w-full max-w-6xl mx-auto my-10">
-      {/* Heading */}
+     
       <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">
         Find job vacancies by
       </h2>
 
-      {/* Tabs */}
+      
       <div className="flex items-center space-x-6 border-b border-gray-200 mb-4 overflow-x-auto hide-scrollbar">
         {TABS.map((tab) => (
           <button
@@ -144,7 +144,7 @@ function JobVacancyTabs() {
         ))}
       </div>
 
-      {/* Tag list */}
+
       <div className="flex flex-wrap gap-3">
         {JOB_TAGS[activeTab]?.length > 0 ? (
           JOB_TAGS[activeTab].map((tag, idx) => (
@@ -160,7 +160,7 @@ function JobVacancyTabs() {
         )}
       </div>
 
-      {/* CTA Footer */}
+    
       {activeTab === 'Skills' && (
         <div className="mt-6">
           <button className="flex items-center text-sm text-purple-700 font-medium hover:underline">

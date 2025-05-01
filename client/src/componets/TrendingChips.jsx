@@ -1,16 +1,16 @@
 import React from 'react'
-import { ChevronRight } from 'lucide-react';
+
 
 function TrendingChips({ title, items }) {
   return (
     <div className="bg-[#f9f9fb] rounded-2xl p-4 md:px-6 md:py-5 my-4 w-full overflow-hidden">
       <div className="flex items-center gap-4">
-        {/* Section Title */}
+      
         <div className="min-w-max font-semibold text-gray-900 text-base md:text-lg px-2">
           {title}
         </div>
 
-        {/* Chips - Scrollable */}
+       
         <div className="flex-1 overflow-x-auto hide-scrollbar">
           <div className="flex items-center gap-3 w-max pr-2">
             {items.map((item, idx) => (
