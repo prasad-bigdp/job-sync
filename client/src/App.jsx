@@ -1,15 +1,22 @@
-import { useState } from 'react'
+
 import './App.css'
-import MainSection from './componets/MainSection';
+import { Routes,Route } from 'react-router-dom'
+import './App.css'
+import Homepage from './pages/Homepage'
+import MobileSearchJobs from './pages/MobileSearchJobs'
+
+
 
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main>
-         <MainSection/>
-      </main>
-    </div>
+
+        <Routes>
+           <Route path='/homepage' Component={Homepage} ></Route>
+           <Route path='/jobsseekerform' Component={MobileSearchJobs}/>
+        </Routes>
+   
+
   )
 }
 
