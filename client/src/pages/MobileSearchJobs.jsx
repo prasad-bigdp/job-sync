@@ -10,11 +10,11 @@ const MobileSearchJobs=()=>{
       const[expreinceQuery,setexperinceQuery]=useState("")
         useEffect(()=>{
              if(window.innerWidth>1024){
-                  navigate("/homepage")
+                  navigate("/index")
              }
         },[navigate])
         const handlebacktoHome=()=>{
-            navigate("/homepage")
+            navigate("/index")
         }
            const handleJobsSearchclick=()=>{
                 if(jobsQuery ===""||locationQuery==="") return null

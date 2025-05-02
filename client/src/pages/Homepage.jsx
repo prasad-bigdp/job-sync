@@ -1,14 +1,16 @@
-import  Header from "../componets/Header"
-import JobSearchBar from "../componets/JobSearchinput"
+import Footer from "../components/Footer"
+import  Header from "../components/Header"
+import JobSearchBar from "../components/JobSearchinput"
 import MainSection from "../components/MainSection"
+
 
 
 
 const Homepage=()=>{
        return(
         <div className="font-[Poppins]" >
-                <Header/>
-                 <main>
+                 <div className="sticky bg-white top-0 z-20"> <Header /></div>
+                 <main className=" max-lg:sticky bg-white z-10 max-lg:top-14">
                      <JobSearchBar/>
                  </main>
                 <section>
@@ -16,7 +18,7 @@ const Homepage=()=>{
                 </section>
 
                 <footer>
-                
+                    <Footer/>
                 
                 </footer>
 
