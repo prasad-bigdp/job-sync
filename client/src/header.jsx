@@ -18,18 +18,18 @@ export default function Header() {
   };
 
   return (
-    <nav className="bg-blue-600 p-4 text-white flex justify-end">
-      <div className="me-7 flex gap-5">
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        {isLoggedIn ? (
-          <button onClick={handleLogout} className="hover:underline">
-            Logout
-          </button>
-        ) : (
-          <Link to="/login">Login</Link>
-        )}
-      </div>
-    </nav>
+    <nav className="bg-blue-500 p-4 flex justify-end">
+  <div className="flex gap-5 text-white">
+    <Link to="/" className="text-white hover:underline">Home</Link>
+    <Link to="/about" className="text-white hover:underline">About</Link>
+    {isLoggedIn ? (
+      <button onClick={handleLogout} className="text-white hover:underline">
+        Logout
+      </button>
+    ) : (
+      <Link to="/login" className="text-white hover:underline">Login</Link>
+    )}
+  </div>
+</nav>
   );
 }
