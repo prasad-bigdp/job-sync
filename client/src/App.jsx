@@ -1,9 +1,12 @@
 
 import './App.css'
-import { Routes,Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import Homepage from './pages/Homepage'
 import MobileSearchJobs from './pages/MobileSearchJobs'
+import Navbar from './componets/Navbar'
+import JobList from './componets/JobList'
+import Header from './componets/Header'
 
 
 
@@ -11,11 +14,18 @@ import MobileSearchJobs from './pages/MobileSearchJobs'
 function App() {
   return (
 
-        <Routes>
-           <Route path='/homepage' Component={Homepage} ></Route>
-           <Route path='/jobsseekerform' Component={MobileSearchJobs}/>
-        </Routes>
-   
+    <div>
+      <Routes>
+        <Route path='/' Component={Homepage}></Route>
+        <Route path='/homepage' Component={Homepage} ></Route>
+        <Route path='/jobsseekerform' Component={MobileSearchJobs} />
+
+
+        <Route path='/navbar' Component={Navbar}></Route>
+        <Route path='jobs' Component={JobList}></Route>
+      </Routes>
+    </div>
+
 
   )
 }

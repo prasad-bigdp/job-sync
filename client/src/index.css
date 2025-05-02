@@ -1,5 +1,6 @@
 
 @import "tailwindcss";
+@plugin "daisyui";
 
 /* scroll.css */
 .hide-scrollbar {
