@@ -10,6 +10,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+//Job Matching Route :
 app.use("api/jobs" , require("./routes/job"))
 
 const PORT = process.env.PORT || 5000

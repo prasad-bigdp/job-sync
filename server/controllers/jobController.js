@@ -17,6 +17,7 @@ exports.getMatchedJobs = (req , res) => {
         }
 
 
+        // Matching Logic :
         return Job.find({skillsRequired : {$in : userSkills}})
           .populate("employer" , "name company")
           .then(matchedJobs => {
