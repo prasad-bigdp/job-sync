@@ -4,6 +4,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Navbar from './Navbar';
+import Header from './Header';
+import JobSearchBar from './JobSearchinput';
+import Footer from './Footer';
 
 function JobList() {
     const [jobs, setJobs] = useState([]);
@@ -45,9 +49,14 @@ function JobList() {
         setSelectedJob(filtered[0] || null);
     }, [search, locationFilter, experienceFilter, jobs]);
 
-    console.log(selectedJob)
+   
     return (
-        <div className="p-4">
+        <div>
+            <div className='sticky top-0 bg-white'>
+            <Header />
+            </div>
+            <JobSearchBar/>
+           <div className="p-4">
             <h2 className="text-2xl font-bold mb-4">Job Listings</h2>
             <div className='grid grid-cols-5 gap-4 h-[76vh]'>
                 <div className='col-span-5 md:col-span-2 overflow-y-auto'>
@@ -105,7 +114,14 @@ function JobList() {
                 </div>
             </div>
         </div>
-    );
+
+    )
+          <Footer/>
+
+        </div>
+      
+    )  
+  
 }
 
 export default JobList;
