@@ -1,6 +1,6 @@
 import  Header from "../componets/Header"
 import JobSearchBar from "../componets/JobSearchinput"
-import MainSection from "../componets/MainSection"
+import MainSection from "../components/MainSection"
 
 
 

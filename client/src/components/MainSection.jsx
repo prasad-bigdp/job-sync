@@ -1,9 +1,10 @@
 import React from 'react'
-import FeaturedCompanies from './FeaturedCompanies'
-import PopularCategories from './PopularCategories'
-import TrendingChips from './TrendingChips'
-import JobVacancyTabs from './JobVacancyTabs'
+import PopularCategories from './PopularCategories';
+import JobInsightsSection from './JobInsightsSection';
+import FeaturedCompanies from './FeaturedCompanies';
+import TrendingRoles from './TrendingRoles';
 import Footer from './Footer'
+
 
 
 const trendingSkills = [
@@ -19,12 +20,11 @@ const trendingTitles = [
 function MainSection() {
   return (
    <>
-    <FeaturedCompanies/>
-    <PopularCategories/>
-    <TrendingChips title="Trending skills" items={trendingSkills}/>
-    <TrendingChips title="Trending job titles" items={trendingTitles}/>
-    <JobVacancyTabs/>
-    <Footer/>
+      <PopularCategories />
+      <JobInsightsSection/>
+      <FeaturedCompanies />
+      <TrendingRoles />
+      <Footer/>
    </>
   )
 }
