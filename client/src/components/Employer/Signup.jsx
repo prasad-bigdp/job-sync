@@ -1,6 +1,9 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { TextField ,Button} from "@mui/material";
+import Header from '../../header';
+
 
 function EmployerSignup() {
 
@@ -39,67 +42,166 @@ function EmployerSignup() {
   });
 
   return (
-    <div className="container mt-4">
-      <h3>Employer Signup</h3>
-      <form onSubmit={formik.handleSubmit}>
-        <dl>
-          <dt>Name</dt>
-          <dd>
-            <input type="text" name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.touched.name && formik.errors.name && (
-              <dd className="text-danger">{formik.errors.name}</dd>
-            )}
-          </dd>
+    <div>
+      <Header />
+    
+    <div className="flex justify-end pr-10 mt-10">
+      <div className='w-full max-w-md'>
+      <h3>Create Recruiter Profile</h3>
+      <form onSubmit={formik.handleSubmit} className="w-full max-w-md">
+        <div className='mb-4'>
+          <label htmlFor='name' className="block text-sm font-medium mb-1">
+            Name <span className="text-red-500">*</span>
+          </label>
+          <TextField id="name"
+          name="name"
+          placeholder="Name"
+          fullWidth
+          variant="outlined"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}></TextField>
+        </div>
 
-          <dt>Email</dt>
-          <dd>
-            <input type="email" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.touched.email && formik.errors.email && (
-              <dd className="text-danger">{formik.errors.email}</dd>
-            )}
-          </dd>
+        <div className='mb-4'>
+          <label htmlFor='Email ID' className="block text-sm font-medium mb-1">
+            Email <span className="text-red-500">*</span>
+          </label>
+          <TextField id="email"
+          name="email"
+          placeholder="email address"
+          fullWidth
+          variant="outlined"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}></TextField>
+        </div>
+        
+        <div className="flex gap-6 mb-4">
+  <div className="w-64">
+    <label htmlFor="phone" className="block text-sm font-medium mb-1">
+      Phone Number<span className="text-red-500">*</span>
+    </label>
+    <TextField
+      id="phone"
+      name="phone"
+      placeholder="Phone Number"
+      variant="outlined"
+      type="tel"
+      value={formik.values.phone}
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+      error={formik.touched.phone && Boolean(formik.errors.phone)}
+      helperText={formik.touched.phone && formik.errors.phone}
+      sx={{
+        width: '100%',
+        '& .MuiOutlinedInput-root': {
+          borderRadius: 0
+        }
+      }}
+    />
+  </div>
 
-          <dt>Phone</dt>
-          <dd>
-            <input type="text" name="phone" value={formik.values.phone} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.touched.phone && formik.errors.phone && (
-              <dd className="text-danger">{formik.errors.phone}</dd>
-            )}
-          </dd>
+  <div className="w-64">
+    <label htmlFor="password" className="block text-sm font-medium mb-1">
+      Password<span className="text-red-500">*</span>
+    </label>
+    <TextField
+      id="password"
+      name="password"
+      placeholder="Password"
+      variant="outlined"
+      type="password"
+      value={formik.values.password}
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+      error={formik.touched.password && Boolean(formik.errors.password)}
+      helperText={formik.touched.password && formik.errors.password}
+      sx={{
+        width: '100%',
+        '& .MuiOutlinedInput-root': {
+          borderRadius: 0
+        }
+      }}
+      
+    />
+    
 
-          <dt>Password</dt>
-          <dd>
-            <input type="password" name="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.touched.password && formik.errors.password && (
-              <dd className="text-danger">{formik.errors.password}</dd>
-            )}
-          </dd>
+        
+    
+  </div>
+</div>
+<div className="mb-4 w-full">
+  <label htmlFor="company" className="block text-sm font-medium mb-1">
+  Company<span className="text-red-500">*</span>
+  </label>
+  <TextField
+    id="company"
+    name="company"
+    placeholder="Company"
+    variant="outlined"
+    fullWidth
+    value={formik.values.company}
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    error={formik.touched.company && Boolean(formik.errors.company)}
+    helperText={formik.touched.company && formik.errors.company}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        borderRadius: 0
+      }
+    }}
+  />
+</div>
+<div className="mb-4">
+  <label className="flex items-start gap-2 text-sm">
+    <input
+      type="checkbox"
+      name="agreeToTerms"
+      checked={formik.values.agreeToTerms}
+      onChange={formik.handleChange}
+      className="mt-1"
+    />
+    <span>
+      I agree to use the aforesaid details to create my Recruiter Profile & display it on the JobSync site and also agree to be bound by the{" "}
+      <a href="#" className="text-blue-600 underline">Terms of Use</a> &{" "}
+      <a href="#" className="text-blue-600 underline">Privacy</a> of JobSync.
+    </span>
+  </label>
+  {formik.touched.agreeToTerms && formik.errors.agreeToTerms && (
+    <p className="text-red-600 text-xs mt-1">{formik.errors.agreeToTerms}</p>
+  )}
+</div>
 
-          <dt>Company</dt>
-          <dd>
-            <input type="text" name="company" value={formik.values.company} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.touched.company && formik.errors.company && (
-              <dd className="text-danger">{formik.errors.company}</dd>
-            )}
-          </dd>
-
-          <dt>Preferences</dt>
-          <dd>
-            <label>
-              <input type="checkbox" name="receiveApplicationEmails" checked={formik.values.receiveApplicationEmails} onChange={formik.handleChange} />
-              Receive Application Emails
-            </label>
-          </dd>
-          <dd>
-            <label>
-              <input type="checkbox" name="darkMode" checked={formik.values.darkMode} onChange={formik.handleChange} />
-              Dark Mode
-            </label>
-          </dd>
-        </dl>
-        <button type="submit">Sign Up</button>
-      </form>
+<div className="flex justify-end mt-4">
+  <Button
+    type="submit"
+    variant="contained"
+    sx={{
+      width:'150px',
+      height:'45px',
+      color: 'white', 
+      borderColor: 'purple', // purple border
+      borderRadius: 1.5,
+      backgroundColor:'#6b21a8',
+      textTransform: 'none', 
+      '&:hover': {
+        borderColor: '#581c87', // darker purple on hover
+        color: '#581c87'
+      }
+    }}
+  >
+    Submit
+  </Button>
+</div>
+</form>
+  </div>
     </div>
+      </div>
   );
 }
 

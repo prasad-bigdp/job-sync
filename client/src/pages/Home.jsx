@@ -6,7 +6,7 @@ function Home (){
     const navigate = useNavigate();
 
     return(
-        <div className="text-center mt-5 ">
+        <div>
             <Header />
            
         </div>

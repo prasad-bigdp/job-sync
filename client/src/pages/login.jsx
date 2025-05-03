@@ -1,32 +1,57 @@
-import React from 'react'
-import Header from '../header'
-import {Link} from 'react-router-dom'
-
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
+import Header from '../header';
 
 function Login() {
-    return (
-      <div>
-       
-        <Header />
-  
-        
-        <div className="pt-24 text-center space-x-4">
-          <Link
-            to="/EmployerLogin"
-            className="bg-green-600 hover:bg-green-700 text-white no-underline font-semibold py-2 px-6 rounded inline-block"
-          >
-            Employer
-          </Link>
-  
-          <Link
-            to="/jobseeker"
-            className="bg-blue-500 hover:bg-blue-700 text-white no-underline font-semibold py-2 px-6 rounded inline-block"
-          >
-            JobSeeker
-          </Link>
-        </div>
+  return (
+    <div>
+      <Header />
+
+      <div className="pt-24 text-center space-x-4">
+        <Button
+          variant="contained"
+          component={Link}
+          to="/EmployerSignup"
+          sx={{
+            backgroundColor: '#6b21a8', // purple
+            color: 'white',
+            px: 4,
+            py: 1.5,
+            fontWeight: '600',
+            textTransform: 'none',
+            borderRadius: 2,
+            '&:hover': {
+              backgroundColor: '#581c87'
+            },
+            mr: 2 
+          }}
+        >
+          Employer
+        </Button>
+
+        <Button
+          variant="outlined"
+          component={Link}
+          to="/jobseeker"
+          sx={{
+            color: '#6b21a8',
+            borderColor: '#6b21a8',
+            px: 4,
+            py: 1.5,
+            fontWeight: '600',
+            textTransform: 'none',
+            borderRadius: 2,
+            '&:hover': {
+              backgroundColor: '#f3e8ff',
+              borderColor: '#6b21a8'
+            }
+          }}
+        >
+          JobSeeker
+        </Button>
       </div>
-    );
-  }
-  
-  export default Login;
+    </div>
+  );
+}
+
+export default Login;

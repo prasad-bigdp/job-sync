@@ -18,7 +18,7 @@ export default function Header() {
   };
 
   return (
-    <nav className="bg-blue-500 p-4 flex justify-end">
+    <nav className="bg-purple-800 p-4 flex justify-end">
   <div className="flex gap-5 text-white">
     <Link to="/" className="text-white hover:underline">Home</Link>
     <Link to="/about" className="text-white hover:underline">About</Link>
