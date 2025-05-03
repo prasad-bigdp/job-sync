@@ -7,10 +7,12 @@ exports.getMatchedJobs = (req , res) => {
 
      .then(user => {
 
+      //check existing user :
         if(!user) {
             return res.status(404).json({message : "User not Found"})
         }
 
+        //check user skills :
         const userSkills = user.skills
         if(!userSkills || userSkills.length === 0) {
             return res.status(200).json({message : "User has no skills listed" , jobs : []})
@@ -19,7 +21,7 @@ exports.getMatchedJobs = (req , res) => {
 
         // Matching Logic :
         return Job.find({skillsRequired : {$in : userSkills}})
-          .populate("employer" , "name company")
+          .populate("employer" , "name company")               // replaces the ObjectId ( of job field which is reference to the employer collection ) with the actual employer details..
           .then(matchedJobs => {
             res.json({matchedCount : matchedJobs.length , jobs : matchedJobs})
           })
