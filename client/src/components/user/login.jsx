@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import Header from '../header';
+import Header from '../../header';
 
 function UserLogin() {
   const validationSchema = Yup.object({
@@ -57,7 +57,7 @@ function UserLogin() {
               </div>
 
               <div className="flex items-center justify-between mb-4">
-                <Link to=" " className="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
+                <Link to="/forgot-password" className="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
                   Forgot Password?
                 </Link>
               </div>
