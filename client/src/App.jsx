@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+import Header from './components/Header';
+import Home from './pages/Home';
+import About from './pages/About';
+import Login from './pages/Login';
+import EmployerLogin from './pages/EmployerLogin';
+import UserLogin from './pages/UserLogin';
+import UserDashBoard from './pages/UserDashBoard';
+import UserSignup from './pages/UserSignup';
+import ForgetPassword from './pages/ForgetPassword';
+import ProtectedRoute from './components/ProtectedRoute';
+
+
+export default function App() {
+  
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/login/employer" element={<EmployerLogin />} />
+        <Route path="/login/user" element={<UserLogin />} />
+        <Route path="/signup" element={<UserSignup />} />
+        <Route path="/forgetpwd" element={<ForgetPassword />} />
+        <Route
+          path="/user-dashboard"
+          element={
+            <ProtectedRoute>
+              <UserDashBoard />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </div>
+  );
 }
-
-export default App
