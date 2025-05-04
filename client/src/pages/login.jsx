@@ -21,7 +21,9 @@ function Login() {
             textTransform: 'none',
             borderRadius: 2,
             '&:hover': {
-              backgroundColor: '#581c87'
+              backgroundColor: '#f3e8ff',
+              borderColor: '#6b21a8',
+              color: '#6b21a8'
             },
             mr: 2 
           }}
@@ -30,12 +32,13 @@ function Login() {
         </Button>
 
         <Button
-          variant="outlined"
+          variant="contained"
           component={Link}
-          to="/jobseeker"
+          to="/UserSignup"
           sx={{
-            color: '#6b21a8',
-            borderColor: '#6b21a8',
+            backgroundColor: '#6b21a8', // purple
+            color: 'white',
+            // borderColor: '#6b21a8',
             px: 4,
             py: 1.5,
             fontWeight: '600',
@@ -43,7 +46,8 @@ function Login() {
             borderRadius: 2,
             '&:hover': {
               backgroundColor: '#f3e8ff',
-              borderColor: '#6b21a8'
+              borderColor: '#6b21a8',
+              color: '#6b21a8'
             }
           }}
         >

@@ -20,10 +20,10 @@ export default function Header() {
   return (
     <nav className="bg-purple-800 p-4 flex justify-end">
   <div className="flex gap-5 text-white">
-    <Link to="/" className="text-white hover:underline">Home</Link>
-    <Link to="/about" className="text-white hover:underline">About</Link>
+    <Link to="/" className="text-white [text-decoration:none] ">Home</Link>
+    <Link to="/about" className="text-white no-underline  ">About</Link>
     {isLoggedIn ? (
-      <button onClick={handleLogout} className="text-white hover:underline">
+      <button onClick={handleLogout} className="text-white no-underline  ">
         Logout
       </button>
     ) : (
