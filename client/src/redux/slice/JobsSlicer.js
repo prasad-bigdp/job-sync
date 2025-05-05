@@ -2,18 +2,17 @@
 
   const initialState={
   
-  toggle:false
+  toggleJob:false
 }
 
 const SearchJobSlicer=createSlice({
       name:"JobsSearch",
       initialState,
       reducers:{
-     
-        setToggle:(state,action)=>{
-          state.toggle=action.payload
+          setToggleJob:(state,action)=>{
+          state.toggleJob=action.payload
         }
       }
 })
-export const {setToggle}=SearchJobSlicer.actions
+export const {setToggleJob}=SearchJobSlicer.actions
 export default SearchJobSlicer.reducer

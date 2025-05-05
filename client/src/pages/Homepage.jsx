@@ -1,7 +1,8 @@
-import Footer from "../componets/Footer"
-import  Header from "../componets/Header"
-import JobSearchBar from "../componets/JobSearchinput"
-import MainSection from "../componets/MainSection"
+import Footer from "../components/Footer"
+import  Header from "../components/Header"
+import JobSearchBar from "../components/JobSearchinput"
+import MainSection from "../components/MainSection"
+
 
 
 

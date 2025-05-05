@@ -9,14 +9,15 @@ import { useState } from 'react';
 import IsauthLoginComponet from './AuthLoginCheck';
 
 
+
 const Header=()=>{
       
   const [toggle,setToggle]=useState(false)
   const[toggleOffcanvas,setToggleOffcanvas]=useState(false)
-  const[auth,setAuth]=useState(false)
+  const[auth,setAuth]=useState(true)
 
     return(
-        <header className="flex lg:px-[75px]  max-md:p-3  relative   min-[769px]:shadow-lg max-[768px]:w-full   justify-between   min-[769px]:rounded-bl-2xl  min-[769px]:rounded-br-2xl  min-[769px]:border-b  min-[769px]:border-stone-300 items-center  min-[769px]:gap-4" >
+        <header className="flex lg:px-[75px] h-[70px]  max-md:p-3 z-20 relative   min-[769px]:shadow-lg max-[768px]:w-full   justify-between   min-[769px]:rounded-bl-2xl  min-[769px]:rounded-br-2xl  min-[769px]:border-b  min-[769px]:border-stone-300 items-center  min-[769px]:gap-4" >
                <div className="flex items-center ">
                 {
                   auth?<div className='md:hidden flex gap-4 items-center '>
@@ -29,43 +30,18 @@ const Header=()=>{
              
                 </div>:
                 <div className='hidden max-md:block'>
-                <svg
-                width="150"
-                height="60"
-                viewBox="0 0 400 100"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <text
-                  x="10"
-                  y="70"
-                  fontFamily="Arial, Helvetica, sans-serif"
-                  fontSize="70"
-                  fill="#000"
-                  fontWeight="bold"
-                >
-                  sams
-                </text>
-              </svg>
+                <div className='me-4'>
+                <img src="https://res.cloudinary.com/dzmrkbev5/image/upload/v1746340322/JobSync_djvrm2.webp" className='w-[110px]'/>
+                    
                 </div>
+                </div>
+                  
                 }
                <div className='md:block hidden'>
-               <svg
-               width="150"
-               height="60"
-               viewBox="0 0 400 100"
-               xmlns="http://www.w3.org/2000/svg"
-             >
-               <text
-                 x="10"
-                 y="70"
-                 fontFamily="Arial, Helvetica, sans-serif"
-                 fontSize="70"
-                 fill="#000"
-                 fontWeight="bold"
-               >
-                sams
-               </text>
-             </svg>
+               <div className='me-4'><img src="https://res.cloudinary.com/dzmrkbev5/image/upload/v1746340322/JobSync_djvrm2.webp" className='w-[110px]'/>
+                  
+                  
+               </div>
                </div>
                  <div className=" flex items-center gap-5 max-lg:text-[0.7rem] text-[14px]  max-[768px]:hidden">
                     <div className="font-[500] group  relative  cursor-pointer">
