@@ -11,7 +11,7 @@ function Login() {
         <Button
           variant="contained"
           component={Link}
-          to="/EmployerSignup"
+          to="/EmployerLogin"
           sx={{
             backgroundColor: '#6b21a8', // purple
             color: 'white',
@@ -21,9 +21,7 @@ function Login() {
             textTransform: 'none',
             borderRadius: 2,
             '&:hover': {
-              backgroundColor: '#f3e8ff',
-              borderColor: '#6b21a8',
-              color: '#6b21a8'
+              backgroundColor: '#581c87'
             },
             mr: 2 
           }}
@@ -32,6 +30,7 @@ function Login() {
         </Button>
 
         <Button
+
           variant="contained"
           component={Link}
           to="/UserLogin"
@@ -53,6 +52,7 @@ function Login() {
         >
           JobSeeker
         </Button>
+        
       </div>
     </div>
   );

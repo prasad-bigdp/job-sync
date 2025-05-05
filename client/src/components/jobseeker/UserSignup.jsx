@@ -136,25 +136,7 @@ function UserSignup() {
               />
             </div>
 
-            {/* Confirm Password - on next line */}
-            <div className="mb-4">
-              <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">
-                Confirm Password <span className="text-red-500">*</span>
-              </label>
-              <TextField
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                fullWidth
-                variant="outlined"
-                type="password"
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
-                helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
-              />
-            </div>
+            
 
             {/* Terms checkbox */}
             <div className="mb-4">
@@ -182,17 +164,16 @@ function UserSignup() {
               <Button
                 type="submit"
                 variant="contained"
-                disabled={!formik.values.confirmPassword} // disables if confirm password is empty
                 sx={{
-                  width: '150px',
-                  height: '45px',
-                  color: 'white',
-                  borderColor: 'purple',
+                  width:'150px',
+                  height:'45px',
+                  color: 'white', 
+                  borderColor: 'purple', // purple border
                   borderRadius: 1.5,
-                  backgroundColor: '#6b21a8',
-                  textTransform: 'none',
+                  backgroundColor:'#6b21a8',
+                  textTransform: 'none', 
                   '&:hover': {
-                    borderColor: '#581c87',
+                    borderColor: '#581c87', // darker purple on hover
                     color: '#581c87'
                   }
                 }}

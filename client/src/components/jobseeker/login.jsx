@@ -20,6 +20,9 @@ function UserLogin() {
   };
 
   return (
+    <div>
+      <Header />
+    
     <div className="flex min-h-screen bg-gray-100  justify-end items-center px-4">
       <div className="bg-[#ffffff] shadow-md rounded-lg  w-full max-w-md px-8 pt-6 pb-8">
         <h3 className="text-xl font-semibold mb-6 text-gray-800 text-center">User Login</h3>
@@ -57,7 +60,7 @@ function UserLogin() {
               </div>
 
               <div className="flex items-center justify-between mb-4">
-                <Link to=" " className="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
+                <Link to="/forgot-password" className="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
                   Forgot Password?
                 </Link>
               </div>
@@ -73,10 +76,19 @@ function UserLogin() {
               >
                 Log In
               </button>
+              <div className="text-center mt-4">
+                                              <span className="text-sm text-gray-700">
+                                                  Don't have an account?{' '}
+                                                  <Link to="/UserSignup" className="text-blue-500 hover:underline">
+                                                      Click here to sign up
+                                                  </Link>
+                                              </span>
+                                          </div>
             </Form>
           )}
         </Formik>
       </div>
+    </div>
     </div>
   );
 }
