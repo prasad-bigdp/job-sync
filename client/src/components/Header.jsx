@@ -14,7 +14,7 @@ const Header=()=>{
       
   const [toggle,setToggle]=useState(false)
   const[toggleOffcanvas,setToggleOffcanvas]=useState(false)
-  const[auth,setAuth]=useState(true)
+  const[auth,setAuth]=useState(false)
 
     return(
         <header className="flex lg:px-[75px] h-[70px]  max-md:p-3 z-20 relative   min-[769px]:shadow-lg max-[768px]:w-full   justify-between   min-[769px]:rounded-bl-2xl  min-[769px]:rounded-br-2xl  min-[769px]:border-b  min-[769px]:border-stone-300 items-center  min-[769px]:gap-4" >

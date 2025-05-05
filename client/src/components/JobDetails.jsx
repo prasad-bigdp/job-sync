@@ -2,14 +2,14 @@ import { MapPin } from 'lucide-react';
 import { Briefcase } from 'lucide-react';
 import { Wallet } from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
-import { useDispatch } from 'react-redux';
-import { setToggleJob } from '../redux/slice/JobsSlicer';
 
 
-const JobDetails=({selectedJob})=>{
-    const dispatch=useDispatch()
+
+
+const JobDetails=({selectedJob,setSelected})=>{
+    
             const handleJobsBackclick=()=>{
-                    dispatch(setToggleJob(false))
+                   setSelected(false)
             }
           return(
             <div className='  '>
