@@ -1,41 +1,30 @@
-import { useState } from 'react'
-<<<<<<< HEAD
-import './App.css'
-import { BrowserRouter } from 'react-router-dom';
-import UserLogin from './components/user/login'
-=======
-// import Header from './header'
+import { useState } from 'react';
+import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import EmployerSignup from './components/Employer/Signup'
-import Home from './pages/Home'
-import Login from './pages/login'
-import UserSignup from './components/jobseeker/UserSignup'
->>>>>>> 3e10416182bceb9fd75e131601f80385afeee9bc
+import UserLogin from './components/user/login';
+import EmployerSignup from './components/Employer/Signup';
+import Home from './pages/Home';
+import Login from './pages/login';
+import UserSignup from './components/jobseeker/UserSignup';
 
 function App() {
   // const [count, setCount] = useState(0)
 
   return (
-<<<<<<< HEAD
-    <BrowserRouter>
-    <>
-   
-    <UserLogin />
-     
-    </>
-    </BrowserRouter>
+    <Router>
+      <>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<UserLogin />} />
+          <Route path="/EmployerSignup" element={<EmployerSignup />} />
+          <Route path="/UserSignup" element={<UserSignup />} />
+          {/* You might want to place UserLogin on a specific route, 
+             or render it conditionally based on user authentication */}
+          <Route path="/user/login" element={<UserLogin />} /> 
+        </Routes>
+      </>
+    </Router>
   );
-=======
-    
-      <Routes>
-        <Route path ="/" element={<Home />} />
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/EmployerSignup" element={<EmployerSignup/>} />
-        <Route path="/UserSignup" element={<UserSignup/>} />
-      </Routes>
-    
-  )
->>>>>>> 3e10416182bceb9fd75e131601f80385afeee9bc
 }
 
-export default App
+export default App;
