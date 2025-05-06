@@ -1,3 +1,4 @@
+
 import { MessageCircleMore } from "lucide-react";
 import { Bell } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
@@ -73,6 +74,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+
 
       {authUser.auth.token ? (
         <div>

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "./Header";
 import JobSearchBar from "./JobSearchinput";
-import Footer from "./Footer";
-
+import Footer from "./Footer"
 import JobDetails from "./JobDetails";
 import AllJobsListpannel from "./AllJobsPannel";
 import NotFoundPage from "./NotFound";
@@ -84,7 +83,11 @@ function JobList() {
                   </div>
 
                   <div
-                    className={`col-span-3 border   rounded-[10px] bg-white ${
+
+                   
+
+                    className={`col-span-3 border  lg:h-[100vh] max-lg:pt-9  rounded-[10px] bg-white ${
+
                       isSelected
                         ? "max-lg:absolute max-lg:w-full"
                         : "max-lg:hidden"
@@ -117,3 +120,7 @@ function JobList() {
 }
 
 export default JobList;
+
+
+ 
+
