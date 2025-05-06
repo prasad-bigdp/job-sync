@@ -1,19 +1,18 @@
 import React from 'react'
-import PopularCategories from './PopularCategories'
-import FeaturedCompany from './FeaturedCompany'
-import TrendingRoles from './TrendingRoles'
-import JobInsightsSection from './JobInsightsSection'
+import TopCompanies from './TopCompanies';
+import RecommendedJobs from './RecommendedJobs';
+import InternshipCorner from './InternshipCorner';
+import TrendingDomains from './TrendingDomains';
 
 
 function MainSection() {
   return (
-   <>
-     <PopularCategories/>
-     <JobInsightsSection/>
-     <FeaturedCompany/>
-     <TrendingRoles/>
-     
-   </>
+    <>
+       <TopCompanies/>
+       <RecommendedJobs/>
+       <InternshipCorner/>
+       <TrendingDomains/>
+    </>
   )
 }
 
