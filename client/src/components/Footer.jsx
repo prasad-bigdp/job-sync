@@ -118,7 +118,6 @@ const Footer = () => {
           </div>
 
           <div className="w-full lg:w-1/3 space-y-5 text-gray-300">
-            {/* Selected Country */}
             <div>
               <label className="block mb-2">Selected Country</label>
               <select className="bg-gray-700 border border-gray-500 text-white py-1 px-3 rounded w-full max-w-xs">
