@@ -7,6 +7,7 @@ import { AlignJustify } from 'lucide-react';
 import ProfileComponent from './Profile';
 import { useState } from 'react';
 import IsauthLoginComponet from './AuthLoginCheck';
+import { useAuth } from '../context/AuthContext';
 
 
 
@@ -14,13 +15,13 @@ const Header=()=>{
       
   const [toggle,setToggle]=useState(false)
   const[toggleOffcanvas,setToggleOffcanvas]=useState(false)
-  const[auth,setAuth]=useState(false)
-
+  const authUser=useAuth()
+  
     return(
         <header className="flex lg:px-[75px] h-[70px]  max-md:p-3 z-20 relative   min-[769px]:shadow-lg max-[768px]:w-full   justify-between   min-[769px]:rounded-bl-2xl  min-[769px]:rounded-br-2xl  min-[769px]:border-b  min-[769px]:border-stone-300 items-center  min-[769px]:gap-4" >
                <div className="flex items-center ">
                 {
-                  auth?<div className='md:hidden flex gap-4 items-center '>
+                  authUser.auth.token?<div className='md:hidden flex gap-4 items-center '>
                   <div>  <AlignJustify size={30} onClick={()=>setToggleOffcanvas(!toggleOffcanvas)} className='cursor-pointer '/></div>
                   <div> <img src='https://res.cloudinary.com/dzmrkbev5/image/upload/v1741630343/%5Bobject%20Object%5D/93039741e042c42035ea22e2.jpg' height="40" width="40" className='border border-stone-300 rounded-full ' /></div>
                 <div>
@@ -62,7 +63,7 @@ const Header=()=>{
 
 
               {
-                auth? <div>
+                authUser.auth.token? <div>
                 <div className='flex items-center gap-4'>
                    <MessageCircleMore  size={19}/>
                    <Bell size={19}/>
