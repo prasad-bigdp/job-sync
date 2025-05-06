@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import JobSearchBar from './JobSearchinput';
 import Footer from './Footer';
-import { useSelector } from 'react-redux';
+
 import JobDetails from './JobDetails';
 import AllJobsListpannel from './AllJobsPannel';
 import NotFoundPage from './NotFound';
@@ -20,7 +20,7 @@ function JobList() {
     const locationFilter = queryParams.get('locations') || '';
     const experienceFilter = queryParams.get('experience') || '';
     const [loading,setLoading]=useState(true)
-    const isSelected=useSelector(state=>state.searchJob.toggleJob)
+    const [isSelected,setSelected]=useState(false)
 
     useEffect(() => {
         fetch('/job.json')
@@ -69,12 +69,12 @@ function JobList() {
                        <h2 className="text-2xl font-bold mb-4 max-lg:ps-2">Job Listings</h2>
                        <div className='grid  lg:grid-cols-5 grid-cols-1  gap-4 '>
                            <div className={`col-span-5 px-2 md:col-span-2 w-full  lg:h-[100vh]   jobsscrollbar-hide  ${isSelected?"max-lg:hidden":"max-lg:block"}`}>
-                           <AllJobsListpannel selectedJob={selectedJob}  setSelectedJob={setSelectedJob} filteredJobs={filteredJobs}/>
+                           <AllJobsListpannel selectedJob={selectedJob} setSelected={setSelected}  setSelectedJob={setSelectedJob} filteredJobs={filteredJobs}/>
                          
                            </div>
            
                            <div className={`col-span-3 border   rounded-[10px] bg-white ${isSelected?"max-lg:absolute max-lg:w-full":"max-lg:hidden"} border-stone-300 max-lg:w-full shadow overflow-y-auto jobsscrollbar-hide lg:block top-6`}>
-                               {selectedJob ? ( <JobDetails selectedJob={selectedJob} /> ) : ( <p>Select a job to see details</p> )}
+                               {selectedJob ? ( <JobDetails selectedJob={selectedJob} isSelected={isSelected} setSelected={setSelected} /> ) : ( <p>Select a job to see details</p> )}
                            </div>
                        </div>
                        
