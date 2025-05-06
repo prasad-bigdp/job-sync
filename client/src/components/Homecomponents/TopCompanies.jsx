@@ -10,7 +10,7 @@ function TopCompanies() {
     { name: 'CRED', logo: 'https://logo.clearbit.com/cred.club', openings: 27 },
     { name: "BYJU'S", logo: 'https://logo.clearbit.com/byjus.com', openings: 33 },
     { name: 'Paytm', logo: 'https://logo.clearbit.com/paytm.com', openings: 51 },
-  ];
+  ]
 
   return (
     <section className="py-16 px-6 bg-gradient-to-b text-gray-900 text-center">
