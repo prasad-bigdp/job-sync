@@ -84,7 +84,7 @@ const JobSearchBar = () => {
             <div>
             <button
                 type="submit"
-              className="p-2  max-[768px]:hidden cursor-pointer text-white w-[150px] rounded-full ms-3 me-1"
+              className="p-2  max-[768px]:hidden cursor-pointer text-white w-[150px] rounded-[20px] ms-3 me-1"
               style={{ backgroundColor: "#6E00BE" }}
             >
               Search

@@ -12,8 +12,8 @@ const IsauthLoginComponet=()=>{
          <div className='flex   items-center gap-4'>
         
          <div className='border-r flex gap-2 pe-3'>
-         <button style={{color:"#8427C8",borderColor:"#8427C8"}} className='border cursor-pointer lg:text-[13px]  max-lg:text-[9px]   max-md:p-1 flex items-center justify-center p-2 rounded-[15px]' ><CircleUser size={15}/>Login</button>
-         <button style={{backgroundColor:"#FC5912"}} className='border  flex items-center cursor-pointer lg:text-[13px]  max-lg:text-[9px]   max-md:p-1  text-white justify-center p-2 rounded-[15px]'><UserPen size={15}/>Register</button>
+         <button style={{color:"#8427C8",borderColor:"#8427C8",borderRadius:"13px"}} className=' border cursor-pointer lg:text-[13px]  max-lg:text-[9px]   max-md:p-1 flex items-center justify-center p-2 ' ><CircleUser size={15}/>Login</button>
+         <button style={{backgroundColor:"#FC5912",borderRadius:"13px"}} className='border  flex items-center cursor-pointer lg:text-[13px]  max-lg:text-[9px]   max-md:p-1  text-white justify-center p-2 '><UserPen size={15}/>Register</button>
          </div>
          <div className=''>
              <button className='lg:text-[13px] cursor-pointer  max-lg:text-[9px] '>Employers Login</button>
