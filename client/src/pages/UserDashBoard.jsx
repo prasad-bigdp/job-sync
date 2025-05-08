@@ -16,6 +16,7 @@ export default function UserDashboard() {
         });
 
         setUserData(response.data.user);
+        console.log('userdashbord',response.data)
       } catch (err) {
         console.error('Error fetching user dashboard:', err);
       }
