@@ -1,11 +1,6 @@
-const express = require("express")
-const router = express.Router()
-
-const auth = require("../middleware/authMiddleware")
-const jobController = require("../controllers/jobController")
-
-//added route path for job matching :
-
-router.get("/match" , auth , jobController.getMatchedJobs)
-
-module.exports = router
+const express = require('express');
+const authMiddleware = require('../middleware/authMiddleware');
+const { getJobsController, postJobController } = require('../controllers/jobController');
+const app = express();
+app.get('/', authMiddleware, getJobsController);
+app.post('/', authMiddleware, postJobController)
