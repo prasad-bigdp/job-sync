@@ -70,7 +70,7 @@ function JobList() {
                 </h2>
                 <div className="grid  lg:grid-cols-5 grid-cols-1  gap-4 ">
                   <div
-                    className={`col-span-5 px-2 md:col-span-2 w-full  lg:h-[100vh]   jobsscrollbar-hide  ${
+                    className={`col-span-5 px-2 md:col-span-2 w-full  overflow-auto lg:h-[100vh]   jobsscrollbar-hide  ${
                       isSelected ? "max-lg:hidden" : "max-lg:block"
                     }`}
                   >

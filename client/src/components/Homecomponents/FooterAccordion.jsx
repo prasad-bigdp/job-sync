@@ -3,6 +3,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const FooterAccordion = ({ title, links }) => {
     const [open, setOpen] = useState(false);
@@ -20,9 +21,9 @@ const FooterAccordion = ({ title, links }) => {
           <ul className="text-gray-400 text-sm py-2 space-y-1">
             {links.map((link, idx) => (
               <li key={idx}>
-                <a href="#" className="hover:text-white transition-colors duration-200">
+                <Link href="#" className="hover:text-white  text-decoration-none  transition-colors duration-200">
                   {link}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

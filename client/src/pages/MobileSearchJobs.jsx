@@ -57,8 +57,8 @@ const MobileSearchJobs = () => {
       <div className="absolute w-full left-0 bottom-[100px] px-3 ">
         <button
           onClick={handleJobsSearchclick}
-          className="p-2   cursor-pointer text-white text-xl w-full rounded-[10px] "
-          style={{ backgroundColor: "#6E00BE" }}
+          className="p-2   cursor-pointer text-white text-xl w-full  "
+          style={{ backgroundColor: "#6E00BE",borderRadius:"10px" }}
         >
           Search
         </button>
