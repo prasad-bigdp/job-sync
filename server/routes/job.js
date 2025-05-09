@@ -7,4 +7,8 @@ const jobController = require("../controllers/jobController")
 
 router.get("/match" , auth , jobController.getMatchedJobs)
 
+// added route path for filter job :
+
+router.get("/filter" , jobController.getFilteredJobs)
+
 module.exports = router

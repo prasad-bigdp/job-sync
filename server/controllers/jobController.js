@@ -32,3 +32,62 @@ exports.getMatchedJobs = (req , res) => {
         res.status(500).json({message : "Server Error"})
      })
 }
+
+
+// logic for filter job : 
+
+exports.getFilteredJobs = (req , res) => {
+
+  const { location , title , skills , minSalary , employer , company} = req.query;
+
+  let filter = {} ;
+
+  if(title) {
+    filter.title = { $regex : title , $options : "i"} ;
+  }
+
+  if(location) {
+    filter.location = { $regex : location , $options : "i"} ;
+  }
+
+  if(minSalary) {
+    filter.salaryRange = { $regex : new RegExp(`${minSalary}` , "i") } ;
+  }
+
+  if(skills) {
+    const skillArray = skills.split(",") ;
+    filter.skillsRequired = { $in : skillArray }
+  }
+
+  // Query the Job collection with the constructed filter
+  Job.find(filter)
+     .populate("employer" , "name company email")
+     .then( (jobs) => {
+      let filtered = jobs ;
+
+      // Additional filtering for employer or company if provided
+      if(employer || company) {
+        filtered = jobs.filter( (job) => {
+          const matchEmployer = company
+          ? job.employer?.company
+          ?.toLowerCase()
+          .includes(company.toLowerCase())
+          : true ;
+          return matchEmployer && matchCompany ;
+        })
+      }
+
+      // if no job matches the criteria
+      if(filtered.length === 0) {
+        return res.status(404).json({message : "No jobs matched your criteria ."})
+      }
+
+
+      // return the filtered jobs : 
+      res.status(200).json({
+        message : `${filter.length} job(s) found .` ,
+        count : filtered.length ,
+        jobs : filtered
+      }) ;
+     })
+}
