@@ -2,14 +2,14 @@ import { MapPin } from 'lucide-react';
 import { Briefcase } from 'lucide-react';
 import { Wallet } from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
-import { useDispatch } from 'react-redux';
-import { setToggleJob } from '../redux/slice/JobsSlicer';
 
 
-const JobDetails=({selectedJob})=>{
-    const dispatch=useDispatch()
+
+
+const JobDetails=({selectedJob,setSelected})=>{
+    
             const handleJobsBackclick=()=>{
-                    dispatch(setToggleJob(false))
+                   setSelected(false)
             }
           return(
             <div className='  '>
@@ -32,7 +32,7 @@ const JobDetails=({selectedJob})=>{
                              <span  className="flex text-gray-500 gap-2 items-center" >< MapPin size={12} /><span className="text-[12px]">{selectedJob.location}</span></span>
                           </div>
                           <div>
-                         <button className="p-2  cursor-pointer text-white w-[150px] my-4 rounded-[14px] "
+                         <button className="p-2  cursor-pointer text-white w-[150px] my-4 rounded "
                         style={{ backgroundColor: "#6E00BE" }}
                         >
                          Apply Now

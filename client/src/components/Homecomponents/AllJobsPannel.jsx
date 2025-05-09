@@ -1,17 +1,13 @@
 
-
 import { MapPin } from 'lucide-react';
 import { Briefcase } from 'lucide-react';
 import { Wallet } from 'lucide-react';
-import { useDispatch } from 'react-redux';
-import { setToggleJob } from '../redux/slice/JobsSlicer';
 
-const AllJobsListpannel=({filteredJobs,selectedJob,setSelectedJob})=>{
-       
-       const dispatch=useDispatch()
+
+const AllJobsListpannel=({filteredJobs,selectedJob,setSelectedJob,setSelected})=>{
       const handleSetSelectJob=(job)=>{
         setSelectedJob(job)
-        dispatch(setToggleJob(true))
+        setSelected(true)
         
       }
       return (
