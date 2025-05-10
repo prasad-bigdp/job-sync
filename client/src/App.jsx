@@ -1,7 +1,7 @@
 import "./App.css";
-import { useState } from 'react'
+
 // import Header from './header'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter,  Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 import MobileSearchJobs from "./pages/MobileSearchJobs";
 import JobList from "./components/Homecomponents/JobList";
