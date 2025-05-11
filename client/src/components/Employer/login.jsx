@@ -1,67 +1,24 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import Header from '../../header'
 
-export default function EmployerLogin() {
-  const navigate = useNavigate();
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
+function EmployeeLogin() {
+    const validationSchema = Yup.object({
+        email: Yup.string().email('Invalid email address').required('Email is required'),
+        password: Yup.string().required('Password is required'),
+    });
 
-  const formik = useFormik({
-    initialValues: { email: '', password: '' },
-    validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email').required('Required'),
-      password: Yup.string().min(6, 'Minimum 6 characters').required('Required'),
-    }),
-    onSubmit: async (values) => {
-      setError('');
-      setLoading(true);
+    const initialValues = {
+        email: '',
+        password: '',
+    };
 
-      try {
-        // Step 1: Send login request
-        const res = await axios.post('http://127.0.0.1:5000/api/employers/login', values);
+    const onSubmit = (values) => {
+        console.log('Logging in employee with:', values);
+    };
 
-        // Step 2: Check if login failed
-        if (!res.data.success) {
-          setLoading(false);
-          return setError(res.data.message || 'Login failed');
-        }
-
-        // Step 3: Extract token and employer
-        const { token, employer } = res.data;
-
-        if (!token || !employer) {
-          setLoading(false);
-          return setError('Invalid response from server');
-        }
-
-        // Step 4: Store token and employer info
-        localStorage.setItem('token', token);
-        localStorage.setItem('EmployerId', employer._id);
-        localStorage.setItem('role', employer.role);
-
-        
-        // Step 6: Navigate to dashboard
-        navigate('/employer-dashboard');
-      } catch (err) {
-        console.error('Login error:', err);
-        setError('Server error. Please try again.');
-      } finally {
-        setLoading(false);
-      }
-    },
-  });
-
-  return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow rounded">
-      <h1 className="text-2xl font-bold mb-4 text-center">Employer Login</h1>
-      <form onSubmit={formik.handleSubmit} className="space-y-4">
-        {error && <div className="text-red-500">{error}</div>}
-
+    return (
         <div>
           <label className="block font-semibold">Email</label>
           <input

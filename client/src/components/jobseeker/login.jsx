@@ -19,7 +19,6 @@ function UserLogin() {
     try {
       const res = await axios.post('http://127.0.0.1:5000/api/users/login', values);
       console.log('Login Response:', res);
-
       if (res.data.success) {
         const { token, user } = res.data;
 
@@ -43,7 +42,7 @@ function UserLogin() {
     <div className="flex min-h-screen bg-gray-100 justify-end items-center px-4">
       <div className="bg-white shadow-md rounded-lg w-full max-w-md px-8 pt-6 pb-8">
         <h3 className="text-xl font-semibold mb-6 text-gray-800 text-center">User Login</h3>
-        
+
         {error && <div className="text-red-500 text-sm text-center mb-4">{error}</div>}
 
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>

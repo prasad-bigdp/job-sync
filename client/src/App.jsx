@@ -12,7 +12,9 @@ import EmployeeLogin from './components/Employer/login';
 import ForgotPassword from './components/forgot-password/Forgot-password';
 import  UserLogin from './components/JobSeeker/login';
 import  UserSignup from './components/JobSeeker/UserSignup';
+
 import EmployerDashboard from "./components/dashboards/EmployerDashboard";
+import UserDashboard from './components/UserDashboard/userDashboard';
 function App() {
   return (
 
@@ -27,7 +29,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/UserLogin" element={<UserLogin/>}/>
         <Route path="/UserSignup" element={<UserSignup />} />
-        <Route path="/employer-dashboard" element={<EmployerDashboard/>} />
+        <Route path="/employer-dashboard" element={<EmployerDashboard />} />
+        <Route path="/user-Dashboard" element={<UserDashboard />} />
       </Routes>
     </AuthProvider>
       
