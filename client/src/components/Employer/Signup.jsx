@@ -1,11 +1,14 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Link, useNavigate } from 'react-router-dom'; 
 import { TextField ,Button} from "@mui/material";
 import Header from '../../header';
+import axios from 'axios';
 
 
 function EmployerSignup() {
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -15,29 +18,28 @@ function EmployerSignup() {
       password: "",
       company: "",
       receiveApplicationEmails: true,
-      darkMode: false
+      darkMode: false,
+      agreeToTerms:false
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required").min(3, "Name is too short"),
       email: Yup.string().email("Invalid email").required("Email is required"),
       phone: Yup.string().matches(/^[0-9]{10}$/, "Enter 10 digit phone number").nullable(),
       password: Yup.string().required("Password is required").min(6, "At least 6 characters"),
-      company: Yup.string().nullable()
+      company: Yup.string().required("Company is required"),
+      agreeToTerms: Yup.boolean()
+    .oneOf([true], "You must agree to the terms and privacy policy")
     }),
-    onSubmit: (values) => {
-      const payload = {
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
-        password: values.password,
-        company: values.company,
-        role: "employer",
-        settings: {
-          receiveApplicationEmails: values.receiveApplicationEmails,
-          darkMode: values.darkMode
-        }
-      };
-      console.log("Submitting employer:", payload);
+    onSubmit: async(values,{resetForm}) => {
+      try{
+        const respose = await axios.post('http://localhost:5000/api/employers',values);
+        alert("singup successful!");
+        resetForm();
+        navigate('/EmployerLogin');
+      }catch(error){
+        alert(error.response?.data?.message || error.message || 'Error while signing up');
+         console.error('Signup error:', error);
+      }
     }
   });
 

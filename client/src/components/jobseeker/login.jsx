@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+<<<<<<< HEAD
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
+=======
+import { Link,useNavigate } from 'react-router-dom';
+>>>>>>> 1a91157338d99d4c754ca0c70f322cc917fc923a
 import Header from '../../header';
 
+
 function UserLogin() {
+<<<<<<< HEAD
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -15,6 +21,9 @@ function UserLogin() {
     setShowPassword(!showPassword);
   };
 
+=======
+  const navigate = useNavigate();
+>>>>>>> 1a91157338d99d4c754ca0c70f322cc917fc923a
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -25,6 +34,7 @@ function UserLogin() {
     password: '',
   };
 
+<<<<<<< HEAD
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       const res = await axios.post('http://127.0.0.1:5000/api/users/login', values);
@@ -48,6 +58,28 @@ function UserLogin() {
       setSubmitting(false);
     }
   };
+=======
+  const onSubmit = (values) => {
+    const storedUser = JSON.parse(localStorage.getItem('employerUser'));
+
+      if (!storedUser) {
+        alert('No user found. Please sign up first.');
+        return;
+      }
+
+      if (
+        values.email === storedUser.email &&
+        values.password === storedUser.password
+      ) {
+        localStorage.setItem('isLoggedIn', 'true'); // Optional: for auth checks
+        alert('Login successful!');
+        navigate('/user-Dashboard'); // redirect to dashboard
+      } else {
+        alert('Invalid email or password.');
+      }
+    }
+  
+>>>>>>> 1a91157338d99d4c754ca0c70f322cc917fc923a
 
   return (
     <div>

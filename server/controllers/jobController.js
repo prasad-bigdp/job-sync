@@ -32,3 +32,16 @@ exports.getMatchedJobs = (req , res) => {
         res.status(500).json({message : "Server Error"})
      })
 }
+
+exports.getJobsController = (req, res) =>
+{
+  if (!req.user)
+  {
+     res.status(400).json({error:"Token is not provided"})
+  }
+    
+}
+exports.postJobController = (req, res) =>
+{
+  
+}

@@ -1,24 +1,50 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Header from '../../header'
+import { useState } from 'react';
+import axios from 'axios';
+
 
 function EmployeeLogin() {
-    const validationSchema = Yup.object({
-        email: Yup.string().email('Invalid email address').required('Email is required'),
-        password: Yup.string().required('Password is required'),
-    });
+    const navigate = useNavigate();
+  const [error, setError] = useState('');
 
-    const initialValues = {
-        email: '',
-        password: '',
-    };
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    password: Yup.string().required('Password is required'),
+  });
 
-    const onSubmit = (values) => {
-        console.log('Logging in employee with:', values);
-    };
+  const initialValues = {
+    email: '',
+    password: '',
+  };
 
+  const onSubmit = async (values) => {
+    try {
+      const res = await axios.post('http://localhost:5000/api/users/login', values); // adjust backend port if needed
+      console.log('Login Response:', res);
+
+      if (res.data.success) {
+        const { token, user } = res.data;
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('UserId', user._id);
+        localStorage.setItem('role', user.role);
+
+        console.log('Token stored:', token);
+
+        navigate('/user-Dashboard');
+      } else {
+        setError('Invalid credentials');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Server error or Invalid credentials');
+    }
+  };
+       
     return (
         <div>
             <Header />
