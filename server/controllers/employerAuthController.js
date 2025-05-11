@@ -3,7 +3,7 @@ const Employer = require('../models/Employer');
 const dotenv = require('dotenv');
 
 dotenv.config();
-const SECRET_KEY = process.env.JWT_SECRET_KEY;
+const SECRET_KEY = process.env.JWT_SECRET;
 
 exports.loginEmployer = async (req, res) => {
   const { email, password } = req.body;
