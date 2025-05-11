@@ -8,6 +8,7 @@ import EmployeeLogin from './components/Employer/login';
 import ForgotPassword from './components/forgot-password/Forgot-password';
 import  UserLogin from './components/JobSeeker/login';
 import  UserSignup from './components/JobSeeker/UserSignup';
+import UserDashboard from './components/UserDashboard/userDashboard';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,6 +23,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/UserLogin" element={<UserLogin/>}/>
         <Route path="/UserSignup" element={<UserSignup />} />
+        <Route path="/user-Dashboard" element={<UserDashboard />}/>
       </Routes>
     
   )

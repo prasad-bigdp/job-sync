@@ -1,10 +1,12 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Header from '../../header';
 
+
 function UserLogin() {
+  const navigate = useNavigate();
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -16,8 +18,25 @@ function UserLogin() {
   };
 
   const onSubmit = (values) => {
-    console.log('Logging in user with:', values);
-  };
+    const storedUser = JSON.parse(localStorage.getItem('employerUser'));
+
+      if (!storedUser) {
+        alert('No user found. Please sign up first.');
+        return;
+      }
+
+      if (
+        values.email === storedUser.email &&
+        values.password === storedUser.password
+      ) {
+        localStorage.setItem('isLoggedIn', 'true'); // Optional: for auth checks
+        alert('Login successful!');
+        navigate('/user-Dashboard'); // redirect to dashboard
+      } else {
+        alert('Invalid email or password.');
+      }
+    }
+  
 
   return (
     <div>
