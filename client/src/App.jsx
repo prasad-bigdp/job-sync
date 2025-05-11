@@ -1,7 +1,7 @@
 import "./App.css";
-import { useState } from 'react'
+
 // import Header from './header'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter,  Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 import MobileSearchJobs from "./pages/MobileSearchJobs";
 import JobList from "./components/Homecomponents/JobList";
@@ -11,6 +11,7 @@ import EmployeeLogin from './components/Employer/login';
 import ForgotPassword from './components/forgot-password/Forgot-password';
 import  UserLogin from './components/JobSeeker/login';
 import  UserSignup from './components/JobSeeker/UserSignup';
+import UserDashboard from './components/UserDashboard/userDashboard';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/UserLogin" element={<UserLogin/>}/>
         <Route path="/UserSignup" element={<UserSignup />} />
+        <Route path="/user-Dashboard" element={<UserDashboard />}/>
       </Routes>
     
   )

@@ -1,50 +1,29 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Header from '../../header'
+import { useState } from 'react';
+import axios from 'axios';
+
 
 function EmployeeLogin() {
-    const validationSchema = Yup.object({
-        email: Yup.string().email('Invalid email address').required('Email is required'),
-        password: Yup.string().required('Password is required'),
-    });
+    const navigate = useNavigate();
+  const [error, setError] = useState('');
+
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    password: Yup.string().required('Password is required'),
+  });
 
     const initialValues = {
         email: '',
         password: '',
     };
-    onSubmit: async (values) => {
-      try {
-        // Making the login API call
-        const res = await axios.post('http://127.0.0.1:5000/api/employers/login', values);
-        console.log('Login Response:', res);  // Log the full response
 
-        const { token, employer } = res.data;
-
-        // Safe check for employer object
-        if (!employer) {
-          console.error('Employer data is missing in the response');
-          return setError('Employer data not found');
-        }
-
-        console.log('Token:', token);
-        console.log('Employer:', employer);
-
-        // Store token and employer details in localStorage
-        localStorage.setItem('token', token);
-        localStorage.setItem('EmployerId', employer._id);  // Ensure employer._id exists
-        localStorage.setItem('role', employer.role);
-
-        // Navigate to Employer Dashboard
-        navigate('/employer-dashboard');
-      } catch (err) {
-        console.error('Login error:', err);
-        setError('Server error or invalid credentials');
-      }
-    },
-  });
-    
+    const onSubmit = (values) => {
+        console.log('Logging in employee with:', values);
+    };
 
     return (
         <div>
