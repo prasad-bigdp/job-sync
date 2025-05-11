@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, Link } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
 
 function UserLogin() {
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const initialValues = { email: '', password: '' };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -39,66 +45,89 @@ function UserLogin() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100 justify-end items-center px-4">
-      <div className="bg-white shadow-md rounded-lg w-full max-w-md px-8 pt-6 pb-8">
-        <h3 className="text-xl font-semibold mb-6 text-gray-800 text-center">User Login</h3>
+    <div>
+      <div className="flex min-h-screen bg-gray-100 justify-end items-center px-4">
+        <div className="bg-[#ffffff] shadow-md rounded-lg w-full max-w-md px-8 pt-6 pb-8">
+          <h3 className="text-xl font-semibold mb-6 text-gray-800 text-center">User Login</h3>
 
-        {error && <div className="text-red-500 text-sm text-center mb-4">{error}</div>}
-
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-          {({ isSubmitting }) => (
-            <Form>
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-                  Email address
-                </label>
-                <Field
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                <ErrorMessage name="email" component="div" className="text-red-500 text-sm italic" />
-              </div>
-
-              <div className="mb-6">
-                <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-                  Password
-                </label>
-                <Field
-                  type="password"
-                  id="password"
-                  name="password"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                <ErrorMessage name="password" component="div" className="text-red-500 text-sm italic" />
-              </div>
-
-              <div className="flex items-center justify-between mb-4">
-                <Link to="/forgot-password" className="text-blue-500 hover:text-blue-800 text-sm">
-                  Forgot Password?
-                </Link>
-              </div>
-
-              <button
-                type="submit"
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded w-full"
-                disabled={isSubmitting}
-              >
-                Log In
-              </button>
-
-              <div className="text-center mt-4">
-                <span className="text-sm text-gray-700">
-                  Don’t have an account?{' '}
-                  <Link to="/UserSignup" className="text-blue-500 hover:underline">
-                    Click here to sign up
-                  </Link>
-                </span>
-              </div>
-            </Form>
+          {error && (
+            <div className="text-red-500 text-sm text-center mb-4">{error}</div>
           )}
-        </Formik>
+
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <div className="mb-4">
+                  <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+                    Email address
+                  </label>
+                  <Field
+                    type="email"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="email"
+                    name="email"
+                  />
+                  <ErrorMessage name="email" component="div" className="text-red-500 text-sm italic" />
+                </div>
+
+                <div className="mb-6 relative">
+                  <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <Field
+                      type={showPassword ? 'text' : 'password'}
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
+                      id="password"
+                      name="password"
+                    />
+                    <div
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </div>
+                  </div>
+                  <ErrorMessage name="password" component="div" className="text-red-500 text-sm italic" />
+                </div>
+
+                <div className="flex items-center justify-between mb-4">
+                  <Link to="/forgot-password" className="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
+                    Forgot Password?
+                  </Link>
+                </div>
+
+                <div className="text-center mb-4">
+                  <span className="text-gray-600 text-sm">Don't have an account? </span>
+                  <Link to="/UserSignup" className="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
+                    Sign up
+                  </Link>
+                </div>
+
+                <button
+                  type="submit"
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                  disabled={isSubmitting}
+                >
+                  Log In
+                </button>
+
+                <div className="text-center mt-4">
+                  <span className="text-sm text-gray-700">
+                    Don't have an account?{' '}
+                    <Link to="/UserSignup" className="text-blue-500 hover:underline">
+                      Click here to sign up
+                    </Link>
+                  </span>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
       </div>
     </div>
   );
