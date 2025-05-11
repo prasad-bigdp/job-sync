@@ -10,7 +10,6 @@ import ForgotPassword from './components/forgot-password/Forgot-password';
 import  UserLogin from './components/JobSeeker/login';
 import  UserSignup from './components/JobSeeker/UserSignup';
 
-
 function App() {
   const [count, setCount] = useState(0)
 
