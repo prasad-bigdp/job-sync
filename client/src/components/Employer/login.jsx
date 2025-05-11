@@ -14,10 +14,37 @@ function EmployeeLogin() {
         email: '',
         password: '',
     };
+    onSubmit: async (values) => {
+      try {
+        // Making the login API call
+        const res = await axios.post('http://127.0.0.1:5000/api/employers/login', values);
+        console.log('Login Response:', res);  // Log the full response
 
-    const onSubmit = (values) => {
-        console.log('Logging in employee with:', values);
-    };
+        const { token, employer } = res.data;
+
+        // Safe check for employer object
+        if (!employer) {
+          console.error('Employer data is missing in the response');
+          return setError('Employer data not found');
+        }
+
+        console.log('Token:', token);
+        console.log('Employer:', employer);
+
+        // Store token and employer details in localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('EmployerId', employer._id);  // Ensure employer._id exists
+        localStorage.setItem('role', employer.role);
+
+        // Navigate to Employer Dashboard
+        navigate('/employer-dashboard');
+      } catch (err) {
+        console.error('Login error:', err);
+        setError('Server error or invalid credentials');
+      }
+    },
+  });
+    
 
     return (
         <div>

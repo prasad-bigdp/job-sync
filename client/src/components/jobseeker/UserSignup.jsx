@@ -2,8 +2,8 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button } from "@mui/material";
-import { useNavigate } from 'react-router-dom'; 
-import Header from '../../header';
+import { useNavigate,Link } from 'react-router-dom';
+import axios from 'axios';
 
 function UserSignup() {
   const navigate = useNavigate();
@@ -14,7 +14,6 @@ function UserSignup() {
       email: "",
       phone: "",
       password: "",
-      confirmPassword: "",
       receiveApplicationEmails: true,
       darkMode: false,
       agreeToTerms: false
@@ -24,35 +23,25 @@ function UserSignup() {
       email: Yup.string().email("Invalid email").required("Email is required"),
       phone: Yup.string().matches(/^[0-9]{10}$/, "Enter 10 digit phone number").nullable(),
       password: Yup.string().required("Password is required").min(6, "At least 6 characters"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
-        .required('Confirm Password is required'),
       agreeToTerms: Yup.boolean()
         .oneOf([true], "You must accept the terms and conditions")
     }),
-    onSubmit: (values) => {
-      const payload = {
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-        role: "User",
-        settings: {
-          receiveApplicationEmails: values.receiveApplicationEmails,
-          darkMode: values.darkMode
-        }
-      };
-      console.log("Submitted User:", payload);
-
-      // Redirect to login page
-      navigate('/login');
-    }
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/api/users', values);
+        console.log(response)
+        alert('Signup successful!');
+        navigate('/UserLogin');
+      } catch (error) {
+        alert('Error while signing up.');
+        console.error('Signup error:', error.response?.data || error.message);
+      }
+    },
   });
 
   return (
     <div>
-      <Header />
+     
       <div className="flex justify-end pr-10 mt-10">
         <div className='w-full max-w-md'>
           <h3 className="text-lg font-semibold mb-4">New to JobSync? Sign Up!</h3>
@@ -136,7 +125,7 @@ function UserSignup() {
               />
             </div>
 
-            
+
 
             {/* Terms checkbox */}
             <div className="mb-4">
@@ -165,13 +154,13 @@ function UserSignup() {
                 type="submit"
                 variant="contained"
                 sx={{
-                  width:'150px',
-                  height:'45px',
-                  color: 'white', 
+                  width: '150px',
+                  height: '45px',
+                  color: 'white',
                   borderColor: 'purple', // purple border
                   borderRadius: 1.5,
-                  backgroundColor:'#6b21a8',
-                  textTransform: 'none', 
+                  backgroundColor: '#6b21a8',
+                  textTransform: 'none',
                   '&:hover': {
                     borderColor: '#581c87', // darker purple on hover
                     color: '#581c87'
@@ -180,7 +169,13 @@ function UserSignup() {
               >
                 Submit
               </Button>
-            </div>
+              </div>
+              <div className="text-center mt-3">
+                <Link to="/UserLogin" className="text-md text-blue-600 hover:underline">
+                  Already have an account? <strong>Log In</strong>
+                </Link>
+              </div>
+            
 
           </form>
         </div>
@@ -189,4 +184,4 @@ function UserSignup() {
   );
 }
 
-export default UserSignup;
+export default UserSignup;
