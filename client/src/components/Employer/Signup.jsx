@@ -26,7 +26,7 @@ function EmployerSignup() {
       email: Yup.string().email("Invalid email").required("Email is required"),
       phone: Yup.string().matches(/^[0-9]{10}$/, "Enter 10 digit phone number").nullable(),
       password: Yup.string().required("Password is required").min(6, "At least 6 characters"),
-      company: Yup.string().nullable(),
+      company: Yup.string().required("Company is required"),
       agreeToTerms: Yup.boolean()
     .oneOf([true], "You must agree to the terms and privacy policy")
     }),
@@ -35,10 +35,10 @@ function EmployerSignup() {
         const respose = await axios.post('http://localhost:5000/api/employers',values);
         alert("singup successful!");
         resetForm();
-        navigate('/login/employer');
+        navigate('/EmployerLogin');
       }catch(error){
-        alert(error.response?.data?.message || 'error while signing up');
-        console.error('Signup error:', error);
+        alert(error.response?.data?.message || error.message || 'Error while signing up');
+         console.error('Signup error:', error);
       }
     }
   });
