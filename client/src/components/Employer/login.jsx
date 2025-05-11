@@ -16,15 +16,35 @@ function EmployeeLogin() {
     password: Yup.string().required('Password is required'),
   });
 
-    const initialValues = {
-        email: '',
-        password: '',
-    };
+  const initialValues = {
+    email: '',
+    password: '',
+  };
 
-    const onSubmit = (values) => {
-        console.log('Logging in employee with:', values);
-    };
+  const onSubmit = async (values) => {
+    try {
+      const res = await axios.post('http://localhost:5000/api/users/login', values); // adjust backend port if needed
+      console.log('Login Response:', res);
 
+      if (res.data.success) {
+        const { token, user } = res.data;
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('UserId', user._id);
+        localStorage.setItem('role', user.role);
+
+        console.log('Token stored:', token);
+
+        navigate('/user-Dashboard');
+      } else {
+        setError('Invalid credentials');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Server error or Invalid credentials');
+    }
+  };
+       
     return (
         <div>
             <Header />

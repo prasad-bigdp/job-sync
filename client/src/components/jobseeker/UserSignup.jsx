@@ -39,10 +39,12 @@ function UserSignup() {
           darkMode: values.darkMode
         }
       };
-      console.log("Submitted User:", payload);
+      localStorage.setItem("UserAccount",JSON.stringify(values))
+
+      alert("Signup successful ! please Login")
 
       // Redirect to login page
-      navigate('/login');
+      // navigate('/login');
     }
   });
 
