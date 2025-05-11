@@ -26,26 +26,17 @@ function UserSignup() {
       agreeToTerms: Yup.boolean()
         .oneOf([true], "You must accept the terms and conditions")
     }),
-    onSubmit: (values) => {
-      const payload = {
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-        role: "User",
-        settings: {
-          receiveApplicationEmails: values.receiveApplicationEmails,
-          darkMode: values.darkMode
-        }
-      };
-      localStorage.setItem("UserAccount",JSON.stringify(values))
-
-      alert("Signup successful ! please Login")
-
-      // Redirect to login page
-      // navigate('/login');
-    }
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/api/users', values);
+        console.log(response)
+        alert('Signup successful!');
+        navigate('/UserLogin');
+      } catch (error) {
+        alert('Error while signing up.');
+        console.error('Signup error:', error.response?.data || error.message);
+      }
+    },
   });
 
   return (
