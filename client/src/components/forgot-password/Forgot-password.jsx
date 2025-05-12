@@ -11,20 +11,15 @@ function ForgotPassword() {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
-      confirmPassword: "",
+      captcha: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email").required("Email is required"),
-      password: Yup.string()
-        .required("New password is required")
-        .min(6, "At least 6 characters"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .required("Confirm password is required"),
+      captcha: Yup.string().required("Captcha is required"),
     }),
     onSubmit: (values) => {
-      console.log("Resetting password with:", values);
+      console.log("Submitting email for password reset:", values.email);
+      // You can make an API call here to your backend
       navigate("/login");
     },
   });
@@ -42,7 +37,7 @@ function ForgotPassword() {
             {/* Email */}
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium mb-1">
-                Enter your Email <span className="text-red-500">*</span>
+                Enter Registered Email <span className="text-red-500">*</span>
               </label>
               <TextField
                 id="email"
@@ -58,59 +53,26 @@ function ForgotPassword() {
               />
             </div>
 
-            {/* New Password */}
-            <div className="mb-4">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium mb-1"
-              >
-                Set New Password <span className="text-red-500">*</span>
-              </label>
-              <TextField
-                id="password"
-                name="password"
-                placeholder="New Password"
-                type="password"
-                fullWidth
-                variant="outlined"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
-              />
-            </div>
-
-            {/* Confirm Password */}
+            {/* Captcha
             <div className="mb-6">
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium mb-1"
-              >
-                Re-enter Password <span className="text-red-500">*</span>
+              <label htmlFor="captcha" className="block text-sm font-medium mb-1">
+                Enter Captcha <span className="text-red-500">*</span>
               </label>
               <TextField
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                type="password"
+                id="captcha"
+                name="captcha"
+                placeholder="Enter the characters shown"
                 fullWidth
                 variant="outlined"
-                value={formik.values.confirmPassword}
+                value={formik.values.captcha}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
-                  formik.touched.confirmPassword &&
-                  Boolean(formik.errors.confirmPassword)
-                }
-                helperText={
-                  formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
-                }
+                error={formik.touched.captcha && Boolean(formik.errors.captcha)}
+                helperText={formik.touched.captcha && formik.errors.captcha}
               />
-            </div>
+              {/* Placeholder for a real CAPTCHA image */}
+              {/* <div className="mt-2 text-sm text-gray-500 italic">[Captcha Image Here]</div>
+            </div> */} 
 
             <div className="flex justify-end">
               <Button
@@ -128,7 +90,7 @@ function ForgotPassword() {
                   },
                 }}
               >
-                Change Password
+                Submit
               </Button>
             </div>
           </form>
