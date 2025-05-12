@@ -1,0 +1,346 @@
+{
+    "jobs": [
+        {
+            "id": 1,
+            "title": "Frontend Developer",
+            "company": "TechNova Solutions",
+            "location": "Bangalore, India",
+            "experience": "2-4 years",
+            "salary": "₹6-10 LPA",
+            "type": "Full-Time",
+            "postedOn": "2025-04-25",
+            "skills": [
+                "React",
+                "JavaScript",
+                "HTML",
+                "CSS"
+            
+            ],
+            "description": "Build and maintain scalable frontend applications using React and modern JavaScript.",
+            "responsibility": [
+                "Develop and implement visually rich and highly interactive user interfaces using React and Next.js.",
+                "Create complex and performant animations and transitions usingGSAP (GreenSock Animation Platform)to enhance user engagement and visual appeal.",
+                "Translate UI/UX designs and wireframes into pixel-perfect, responsive, and accessible web components.",
+                "Write clean, well-documented, and maintainable code following best practices and coding standards.",
+                "Collaborate closely with UX/UI designers to ensure the feasibility and optimal implementation of design concepts, particularly animation specifications.",
+                "Integrate front-end applications with back-end APIs and services.",
+                "Participate in code reviews to ensure code quality and knowledge sharing.",
+                "Identify and troubleshoot front-end performance bottlenecks, especially related to animations, and implement solutions.",
+                "Stay up to date with the latest front-end technologies, animation techniques, and best practices.",
+                "Contribute to the continuous improvement of our development processes and tools.",
+                "(Preferred) Integrate front-end components and animated elements with the Sitecore CMS.",
+                "(Preferred) Work with Sitecore Layout Service and JSS (JavaScript Services) in conjunction with dynamic UI elements and animations.",
+                "(Preferred) Understand how to implement animations within a modular and scalable Sitecore environment.",
+                "Participate in agile development methodologies, including sprint planning, daily stand-ups, and retrospectives."
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Backend Engineer",
+            "company": "CloudSpire Inc.",
+            "location": "Remote",
+            "experience": "3+ years",
+            "salary": "₹10-14 LPA",
+            "type": "Full-Time",
+            "postedOn": "2025-04-20",
+            "skills": [
+                "Node.js",
+                "Express",
+                "MongoDB",
+                "REST APIs"
+            ],
+            "description": "Design backend architecture and REST APIs using Node.js and Express.",
+            "responsibility": [
+                "Develop and implement visually rich and highly interactive user interfaces using React and Next.js.",
+                "Create complex and performant animations and transitions usingGSAP (GreenSock Animation Platform)to enhance user engagement and visual appeal.",
+                "Translate UI/UX designs and wireframes into pixel-perfect, responsive, and accessible web components.",
+                "Write clean, well-documented, and maintainable code following best practices and coding standards.",
+                "Collaborate closely with UX/UI designers to ensure the feasibility and optimal implementation of design concepts, particularly animation specifications.",
+                "Integrate front-end applications with back-end APIs and services.",
+                "Participate in code reviews to ensure code quality and knowledge sharing.",
+                "Identify and troubleshoot front-end performance bottlenecks, especially related to animations, and implement solutions.",
+                "Stay up to date with the latest front-end technologies, animation techniques, and best practices.",
+                "Contribute to the continuous improvement of our development processes and tools.",
+                "(Preferred) Integrate front-end components and animated elements with the Sitecore CMS.",
+                "(Preferred) Work with Sitecore Layout Service and JSS (JavaScript Services) in conjunction with dynamic UI elements and animations.",
+                "(Preferred) Understand how to implement animations within a modular and scalable Sitecore environment.",
+                "Participate in agile development methodologies, including sprint planning, daily stand-ups, and retrospectives."
+            ]
+        },
+        {
+            "id": 3,
+            "title": "UI/UX Designer",
+            "company": "PixelCraft Studio",
+            "location": "Mumbai, India",
+            "experience": "1-3 years",
+            "salary": "₹5-8 LPA",
+            "type": "Contract",
+            "postedOn": "2025-04-15",
+            "skills": [
+                "Figma",
+                "Adobe XD",
+                "User Research"
+            ],
+            "description": "Design wireframes and user journeys to improve product usability.",
+            "responsibility": [
+                "Develop and implement visually rich and highly interactive user interfaces using React and Next.js.",
+                "Create complex and performant animations and transitions usingGSAP (GreenSock Animation Platform)to enhance user engagement and visual appeal.",
+                "Translate UI/UX designs and wireframes into pixel-perfect, responsive, and accessible web components.",
+                "Write clean, well-documented, and maintainable code following best practices and coding standards.",
+                "Collaborate closely with UX/UI designers to ensure the feasibility and optimal implementation of design concepts, particularly animation specifications.",
+                "Integrate front-end applications with back-end APIs and services.",
+                "Participate in code reviews to ensure code quality and knowledge sharing.",
+                "Identify and troubleshoot front-end performance bottlenecks, especially related to animations, and implement solutions.",
+                "Stay up to date with the latest front-end technologies, animation techniques, and best practices.",
+                "Contribute to the continuous improvement of our development processes and tools.",
+                "(Preferred) Integrate front-end components and animated elements with the Sitecore CMS.",
+                "(Preferred) Work with Sitecore Layout Service and JSS (JavaScript Services) in conjunction with dynamic UI elements and animations.",
+                "(Preferred) Understand how to implement animations within a modular and scalable Sitecore environment.",
+                "Participate in agile development methodologies, including sprint planning, daily stand-ups, and retrospectives."
+            ]
+        },
+        {
+            "id": 4,
+            "title": "UI/UX Designer",
+            "company": "PixelCraft Studio",
+            "location": "Mumbai, India",
+            "experience": "1-3 years",
+            "salary": "₹5-9 LPA",
+            "type": "Contract",
+            "postedOn": "2025-04-15",
+            "skills": [
+                "Figma",
+                "Adobe XD",
+                "User Research"
+            ],
+            "description": "Design wireframes and user journeys to improve product usability.",
+            "responsibility": [
+                "Develop and implement visually rich and highly interactive user interfaces using React and Next.js.",
+                "Create complex and performant animations and transitions usingGSAP (GreenSock Animation Platform)to enhance user engagement and visual appeal.",
+                "Translate UI/UX designs and wireframes into pixel-perfect, responsive, and accessible web components.",
+                "Write clean, well-documented, and maintainable code following best practices and coding standards.",
+                "Collaborate closely with UX/UI designers to ensure the feasibility and optimal implementation of design concepts, particularly animation specifications.",
+                "Integrate front-end applications with back-end APIs and services.",
+                "Participate in code reviews to ensure code quality and knowledge sharing.",
+                "Identify and troubleshoot front-end performance bottlenecks, especially related to animations, and implement solutions.",
+                "Stay up to date with the latest front-end technologies, animation techniques, and best practices.",
+                "Contribute to the continuous improvement of our development processes and tools.",
+                "(Preferred) Integrate front-end components and animated elements with the Sitecore CMS.",
+                "(Preferred) Work with Sitecore Layout Service and JSS (JavaScript Services) in conjunction with dynamic UI elements and animations.",
+                "(Preferred) Understand how to implement animations within a modular and scalable Sitecore environment.",
+                "Participate in agile development methodologies, including sprint planning, daily stand-ups, and retrospectives."
+            ]
+        },
+        {
+            "id": 4,
+            "title": "DevOps Engineer",
+            "company": "InfraSecure",
+            "location": "Hyderabad, India",
+            "experience": "4-6 years",
+            "salary": "₹12-16 LPA",
+            "type": "Full-Time",
+            "postedOn": "2025-04-22",
+            "skills": [
+                "AWS",
+                "Docker",
+                "CI/CD",
+                "Terraform"
+            ],
+            "description": "Implement DevOps pipelines, manage cloud infrastructure and deployment automation.",
+            "responsibility": [
+                "Develop and implement visually rich and highly interactive user interfaces using React and Next.js.",
+                "Create complex and performant animations and transitions usingGSAP (GreenSock Animation Platform)to enhance user engagement and visual appeal.",
+                "Translate UI/UX designs and wireframes into pixel-perfect, responsive, and accessible web components.",
+                "Write clean, well-documented, and maintainable code following best practices and coding standards.",
+                "Collaborate closely with UX/UI designers to ensure the feasibility and optimal implementation of design concepts, particularly animation specifications.",
+                "Integrate front-end applications with back-end APIs and services.",
+                "Participate in code reviews to ensure code quality and knowledge sharing.",
+                "Identify and troubleshoot front-end performance bottlenecks, especially related to animations, and implement solutions.",
+                "Stay up to date with the latest front-end technologies, animation techniques, and best practices.",
+                "Contribute to the continuous improvement of our development processes and tools.",
+                "(Preferred) Integrate front-end components and animated elements with the Sitecore CMS.",
+                "(Preferred) Work with Sitecore Layout Service and JSS (JavaScript Services) in conjunction with dynamic UI elements and animations.",
+                "(Preferred) Understand how to implement animations within a modular and scalable Sitecore environment.",
+                "Participate in agile development methodologies, including sprint planning, daily stand-ups, and retrospectives."
+            ]
+        },
+        {
+            "id": 10,
+            "title": "Data Analyst",
+            "company": "Insights360",
+            "location": "Noida, India",
+            "experience": "0-2 years",
+            "salary": "₹4-7 LPA",
+            "type": "Full-Time",
+            "postedOn": "2025-04-18",
+            "skills": [
+                "SQL",
+                "Excel",
+                "Tableau",
+                "Python"
+            ],
+            "description": "Analyze datasets to derive actionable insights and build dashboards.",
+            "responsibility": [
+                "Develop and implement visually rich and highly interactive user interfaces using React and Next.js.",
+                "Create complex and performant animations and transitions usingGSAP (GreenSock Animation Platform)to enhance user engagement and visual appeal.",
+                "Translate UI/UX designs and wireframes into pixel-perfect, responsive, and accessible web components.",
+                "Write clean, well-documented, and maintainable code following best practices and coding standards.",
+                "Collaborate closely with UX/UI designers to ensure the feasibility and optimal implementation of design concepts, particularly animation specifications.",
+                "Integrate front-end applications with back-end APIs and services.",
+                "Participate in code reviews to ensure code quality and knowledge sharing.",
+                "Identify and troubleshoot front-end performance bottlenecks, especially related to animations, and implement solutions.",
+                "Stay up to date with the latest front-end technologies, animation techniques, and best practices.",
+                "Contribute to the continuous improvement of our development processes and tools.",
+                "(Preferred) Integrate front-end components and animated elements with the Sitecore CMS.",
+                "(Preferred) Work with Sitecore Layout Service and JSS (JavaScript Services) in conjunction with dynamic UI elements and animations.",
+                "(Preferred) Understand how to implement animations within a modular and scalable Sitecore environment.",
+                "Participate in agile development methodologies, including sprint planning, daily stand-ups, and retrospectives."
+            ]
+        },
+        {
+            "id": 6,
+            "title": "Mobile App Developer",
+            "company": "AppCrafters Ltd.",
+            "location": "Chennai, India",
+            "experience": "2-5 years",
+            "salary": "₹7-11 LPA",
+            "type": "Full-Time",
+            "postedOn": "2025-04-29",
+            "skills": [
+                "Flutter",
+                "Dart",
+                "Firebase",
+                "iOS",
+                "Android"
+            ],
+            "description": "Develop cross-platform mobile applications using Flutter.",
+            "responsibility": [
+                "Develop robust and user-friendly mobile apps using Flutter.",
+                "Collaborate with product and design teams to implement app features.",
+                "Integrate third-party libraries and APIs.",
+                "Maintain clean, scalable, and documented codebase.",
+                "Publish apps to App Store and Google Play.",
+                "Monitor app performance and debug issues."
+            ]
+        },
+        {
+            "id": 6,
+            "title": "Mobile App Developer",
+            "company": "AppCrafters Ltd.",
+            "location": "Chennai, India",
+            "experience": "2-5 years",
+            "salary": "₹7-11 LPA",
+            "type": "Full-Time",
+            "postedOn": "2025-04-29",
+            "skills": [
+                "Flutter",
+                "Dart",
+                "Firebase",
+                "iOS",
+                "Android"
+            ],
+            "description": "Develop cross-platform mobile applications using Flutter.",
+            "responsibility": [
+                "Develop robust and user-friendly mobile apps using Flutter.",
+                "Collaborate with product and design teams to implement app features.",
+                "Integrate third-party libraries and APIs.",
+                "Maintain clean, scalable, and documented codebase.",
+                "Publish apps to App Store and Google Play.",
+                "Monitor app performance and debug issues."
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Product Manager",
+            "company": "StrategyCore",
+            "location": "Remote",
+            "experience": "5+ years",
+            "salary": "₹18-25 LPA",
+            "type": "Full-Time",
+            "postedOn": "2025-04-27",
+            "skills": [
+                "Agile",
+                "Scrum",
+                "Jira",
+                "User Stories"
+            ],
+            "description": "Lead cross-functional teams to build and deliver scalable digital products.",
+            "responsibility": [
+                "Define product roadmap and strategy.",
+                "Gather and prioritize requirements.",
+                "Work closely with engineering, design, and marketing teams.",
+                "Track KPIs and user feedback to iterate on features.",
+                "Ensure timely product releases."
+            ]
+        },
+        {
+            "id": 8,
+            "title": "Graphic Designer",
+            "company": "CreativeNest",
+            "location": "Pune, India",
+            "experience": "1-2 years",
+            "salary": "₹3-5 LPA",
+            "type": "Contract",
+            "postedOn": "2025-04-28",
+            "skills": [
+                "Photoshop",
+                "Illustrator",
+                "Canva",
+                "Branding"
+            ],
+            "description": "Create engaging visual content and support digital campaigns.",
+            "responsibility": [
+                "Design social media creatives, banners, and infographics.",
+                "Collaborate with marketing team for ad campaigns.",
+                "Ensure brand consistency across designs.",
+                "Prepare print-ready artwork for brochures and posters."
+            ]
+        },
+        {
+            "id": 9,
+            "title": "AI/ML Engineer",
+            "company": "NeuroTech AI",
+            "location": "Bangalore, India",
+            "experience": "3-6 years",
+            "salary": "₹16-22 LPA",
+            "type": "Full-Time",
+            "postedOn": "2025-04-26",
+            "skills": [
+                "Python",
+                "TensorFlow",
+                "PyTorch",
+                "Data Science"
+            ],
+            "description": "Build and deploy machine learning models for real-time applications.",
+            "responsibility": [
+                "Develop and fine-tune ML models using TensorFlow/PyTorch.",
+                "Work with data engineers on large datasets.",
+                "Optimize models for inference and deployment.",
+                "Collaborate with product teams to integrate AI features."
+            ]
+        },
+        {
+            "id": 10,
+            "title": "Cybersecurity Analyst",
+            "company": "SecureNet Global",
+            "location": "Gurgaon, India",
+            "experience": "2-4 years",
+            "salary": "₹9-13 LPA",
+            "type": "Full-Time",
+            "postedOn": "2025-04-23",
+            "skills": [
+                "Network Security",
+                "SIEM",
+                "Firewalls",
+                "Incident Response"
+            ],
+            "description": "Monitor and defend systems from cyber threats and vulnerabilities.",
+            "responsibility": [
+                "Investigate and respond to security incidents.",
+                "Perform vulnerability scans and patching.",
+                "Work with SOC tools and threat intelligence platforms.",
+                "Document risks and mitigation steps."
+            ]
+        }
+    ]
+}

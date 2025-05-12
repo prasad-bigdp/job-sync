@@ -1,16 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './App.css'
-import App from './App.jsx'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { BrowserRouter } from 'react-router-dom';
-// import Header from './components/employer-dashboard/Header.jsx';
-// import Sidebar from './components/employer-dashboard/Sidebar.jsx';
-import ForgotPassword from './components/forgot-password/Forgot-password.jsx';
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
-
-createRoot(document.getElementById('root')).render(
-<BrowserRouter>
-      <ForgotPassword />
+createRoot(document.getElementById("root")).render(
+  <BrowserRouter>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </BrowserRouter>
-)
+);
