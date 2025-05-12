@@ -37,7 +37,7 @@ function InternshipCorner() {
             <img src={intern.logo} alt={intern.company} className="w-14 h-14 object-contain mb-4" />
             <h3 className="text-lg font-semibold mb-1 text-gray-800">{intern.title}</h3>
             <p className="text-sm text-gray-500 mb-3">@ {intern.company}</p>
-            <button className="px-4 py-2 mt-auto bg-indigo-600 hover:bg-indigo-500 text-white rounded-full text-sm font-medium transition-all duration-200">
+            <button className="px-4 py-2 mt-auto bg-indigo-600 hover:bg-indigo-500  cursor-pointer text-white rounded-full text-sm font-medium transition-all duration-200">
               Apply Now
             </button>
             <div className="absolute inset-0 bg-indigo-600 opacity-0 group-hover:opacity-5 transition-all duration-300 rounded-2xl" />
