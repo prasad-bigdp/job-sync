@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button } from "@mui/material";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -24,22 +24,20 @@ function EmployerSignup() {
       email: Yup.string().email("Invalid email").required("Email is required"),
       phone: Yup.string().matches(/^[0-9]{10}$/, "Enter 10 digit phone number").nullable(),
       password: Yup.string().required("Password is required").min(6, "At least 6 characters"),
-            company: Yup.string().required("Company is required"),
       agreeToTerms: Yup.boolean()
-        .oneOf([true], "You must agree to the terms and privacy policy")
+        .oneOf([true], "You must accept the terms and conditions")
     }),
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values) => {
       try {
-        const response = await axios.post('http://localhost:5000/api/employers', values);
+        const response = await axios.post('http://127.0.0.1:5000/api/employers', values);
+        console.log(response)
         alert('Signup successful!');
-        resetForm();
         navigate('/EmployerLogin');
       } catch (error) {
-        alert(error.response?.data?.message || error.message || 'Error while signing up');
-        console.error('Signup error:', error);
+        alert('Error while signing up.');
+        console.error('Signup error:', error.response?.data || error.message);
       }
     },
-
   });
 
   return (

@@ -36,7 +36,7 @@ export default function EmployerDashboard() {
   }, [auth]);
 
   if (!auth.token || auth.role !== "employer") {
-    return <Navigate to="/employerlogin" replace />;
+    return <Navigate to="/EmployerLogin"/>;
   }
 
   if (!employerData) {

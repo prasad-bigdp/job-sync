@@ -4,27 +4,32 @@ import * as Yup from 'yup';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
+import Header from '../../header';
 
 function UserLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const initialValues = { email: '', password: '' };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().min(6, 'Minimum 6 characters').required('Required'),
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    password: Yup.string().required('Password is required'),
   });
+
+  const initialValues = {
+    email: '',
+    password: '',
+  };
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       const res = await axios.post('http://127.0.0.1:5000/api/users/login', values);
       console.log('Login Response:', res);
+
       if (res.data.success) {
         const { token, user } = res.data;
 
@@ -46,6 +51,7 @@ function UserLogin() {
 
   return (
     <div>
+      <Header />
       <div className="flex min-h-screen bg-gray-100 justify-end items-center px-4">
         <div className="bg-[#ffffff] shadow-md rounded-lg w-full max-w-md px-8 pt-6 pb-8">
           <h3 className="text-xl font-semibold mb-6 text-gray-800 text-center">User Login</h3>
