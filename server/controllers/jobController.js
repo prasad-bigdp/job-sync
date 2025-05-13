@@ -43,8 +43,9 @@ exports.getAllJobs = async (req, res) => {
         }
         res.json(jobs);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ 
+            message: error.message 
+        });
     }
 };
 
@@ -57,7 +58,9 @@ exports.getJobById = async (req, res) => {
         }
         res.json(job);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ 
+            message: error.message 
+        });
     }
 };
 

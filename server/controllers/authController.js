@@ -8,9 +8,16 @@ const signUp = async (req, res) => {
 
     try {
         // Check if employer already exists
-        const existingEmployer = await Employer.findOne({ email: email });
-        if (existingEmployer) {
-            return res.status(400).json({ message: 'Employer already exists' });
+        const existingEmail = await Employer.findOne({ email: email });
+        if (existingEmail) {
+            return res.status(400).json({ message: 'Email already exists' });
+        }
+
+        //check password length is more than 6 characters
+        if (password.length < 6) {
+            return res.status(400).json({
+                message: 'Password must be at least 6 characters long',
+            });
         }
 
         // Hash the password
@@ -27,9 +34,15 @@ const signUp = async (req, res) => {
 
         await newEmployer.save();
 
-        res.status(201).json({ message: 'Employer created successfully' });
+        res.status(201).json({ 
+            message: 'Employer created successfully',
+            employer: newEmployer,
+         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ 
+            message: 'Employer creation failed',
+            error: error.message 
+        });
     }
 };
 
@@ -41,26 +54,40 @@ const signIn = async (req, res) => {
         // Check if employer exists
         const employer = await Employer.findOne({ email: email });
         if (!employer) {
-            return res.status(404).json({ message: 'Employer not found' });
+            return res.status(404).json({
+                 message: 'Employer not found' 
+                });
         }
 
-        // Compare passwords
-        const isPasswordValid = await bcrypt.compare(password, employer.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
 
-        // Generate JWT token
-        const token = jwt.sign({ id: employer._id }, process.env.JWT_SECRET || 'jobsync123', { expiresIn: '1h' });
-
-        res.status(200).json({ token });
+        await bcrypt.compare(password, employer.password, (error,data)=>{
+            if(data){
+                const authData =[
+                    {email:employer.email},
+                    {role:employer.role},
+                ];
+                const token = jwt.sign({authData},process.env.JWT_SECRET || 'jobsync123', { 
+                    expiresIn: '30d',
+                });
+                res.status(200).json({
+                    message:'Employer login Successfully',
+                    id: employer._id,
+                    role:employer.role,
+                    token: token,
+                });
+            }else{
+                res.status(400).json({
+                    message: 'Invalid Credentials',
+                });
+            }
+        });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Server error', error });
+        res.status(500).json({ 
+            message: 'Employer login failed', 
+            error : error.message,
+        });
     }
 };
 
-module.exports = {
-    signUp,
-    signIn,
-};
+module.exports = {signUp, signIn};
