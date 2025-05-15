@@ -1,66 +1,35 @@
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Employer = require('../models/Employer');
+const User = require('../models/User');
 
-// Signup route for Employer
-const signUp = async (req, res) => {
-    const { name, email, phone, password, company } = req.body;
+const dotenv = require('dotenv');
+dotenv.config();
+const SECRET_KEY = process.env.JWT_SECRET;
 
-    try {
-        // Check if employer already exists
-        const existingEmployer = await Employer.findOne({ email: email });
-        if (existingEmployer) {
-            return res.status(400).json({ message: 'Employer already exists' });
-        }
+exports.loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+    if (!user) return res.json({ success: false, message: 'User not found' });
+    if (user.password !== password) return res.json({ success: false, message: 'Incorrect password' });
 
-        // Create a new employer
-        const newEmployer = new Employer({
-            name: name,
-            email: email,
-            phone: phone,
-            password: hashedPassword,
-            company: company,
-        });
+    const token = jwt.sign({ email: user.email, userId: user._id }, SECRET_KEY, { expiresIn: '1h' });
 
-        await newEmployer.save();
-
-        res.status(201).json({ message: 'Employer created successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    const { password: userPaswword, ...userWithoutPassword } = user.toObject();
+    res.json({ success: true, token, user: userWithoutPassword });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.json({ success: false, message: 'Server error' });
+  }
 };
 
-// Signin route for Employer
-const signIn = async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        // Check if employer exists
-        const employer = await Employer.findOne({ email: email });
-        if (!employer) {
-            return res.status(404).json({ message: 'Employer not found' });
-        }
-
-        // Compare passwords
-        const isPasswordValid = await bcrypt.compare(password, employer.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        // Generate JWT token
-        const token = jwt.sign({ id: employer._id }, process.env.JWT_SECRET || 'jobsync123', { expiresIn: '1h' });
-
-        res.status(200).json({ token });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error', error });
-    }
-};
-
-module.exports = {
-    signUp,
-    signIn,
+exports.getUserDashboard = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select('-password');
+    if (!user) return res.json({ message: 'User not found' });
+    res.json({ user });
+  } catch (err) {
+    console.error('Dashboard fetch error:', err);
+    res.json({ message: 'Database error', error: err.message });
+  }
 };
