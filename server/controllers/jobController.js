@@ -1,6 +1,6 @@
 const Job = require("../models/Job")
 const User = require("../models/User")
-
+const Job= require('../models/Job')
 exports.getMatchedJobs = (req , res) => {
     
     User.findById(req.user.id)
@@ -33,12 +33,13 @@ exports.getMatchedJobs = (req , res) => {
      })
 }
 
-exports.getJobsController = (req, res) =>
+exports.getJobsController = async (req, res) =>
 {
   if (!req.user)
   {
      res.status(400).json({error:"Token is not provided"})
   }
+  Job.find({},{})
     
 }
 exports.postJobController = (req, res) =>
