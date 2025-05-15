@@ -1,33 +1,20 @@
 //Middleware for authentication :
 const jwt = require("jsonwebtoken");
-const Employer = require("../models/Employer");
+const authMiddleware = (req, res, next) => {
+	const authHeader = req.header("Authorization")
+	if (!authHeader) return res.status(401).json({ message: "No token provided" })
 
-const authMiddleware = async (req, res, next) => {
-	const authHeader = req.header("Authorization");
-
-	if (authHeader && authHeader.startsWith("Bearer")){
-		const token = authHeader.split(" ")[1]; // Bearer <token>
-		try{
-			const decoded = jwt.verify(token, process.env.JWT_SECRET);
-			if (!decoded) {
-				return res.status(401).json({ message: "Invalid token" });  //verify token
-			  }
-
-			  const employer = await Employer.findById(decoded.id).select("-password");
-			  if (!employer) {
-				return res.status(401).json({ message: "Unauthorized" });  //find employer
-			  }
-			  req.user = employer;
-			  return next();
-		} catch(err) {
-			return res.status(401).json({ message: err.message }); //catch error
-		}
+	const token = authHeader.split(" ")[1] // Bearer <token>
+	try {
+		const decoded = jwt.verify(token, process.env.JWT_SECRET)
+		req.user = decoded // contains userId or employerId and role
+		next()
+	} catch (err) {
+		res.status(401).json({ message: "Invalid token" })
 	}
-	res.status(401).json({ message: "There is no token found !" });
-};
+}
 
-module.exports = authMiddleware;
-
+module.exports = authMiddleware
 // module.exports = function(req , res , next) {
 //     const authHeader = req.header("Authorization")
 
