@@ -12,18 +12,33 @@ const JobSearchBar = () => {
          })
          const[isSuggestionBar,setSuggestionBar]=useState('')
          const [inputError,setInputError]=useState(false)
+         const[suggestionJobs,setSuggestionJobs]=useState([])
+         const[suggestionLocation,setSuggestionLocation]=useState([])
+         const[suggestionExperience,setSuggestionExperience]=useState([])
          const navigate=useNavigate()
          
        const handleChange=(e)=>{
           const{name,value}=e.target
-          setQuery({...Query,[name]:value.toLowerCase()})
-          if(value===""){
-            setSuggestionBar("")
-          }else{
-            setSuggestionBar(e.target.name)
-          }
-          
-           
+          setQuery({...Query,[name]:value.trim().toLowerCase()})
+          if(value==="" ||value.trim()==="") return  setSuggestionBar("")
+           setSuggestionBar(name)
+           if(name==="jobQuery"){
+                 if(!suggestionJobs.includes(value.trim())){
+                  setSuggestionJobs(prev=>[...prev,value])
+                 }
+           }     
+          else if(name==="locationQuery"){
+              if(!suggestionLocation.includes(value.trim())){
+
+                setSuggestionLocation(prev=>[...prev,value])
+              }
+           }     
+           else if(name==="expreinceQuery"){
+              if(!suggestionExperience.includes(value.trim())){
+
+                setSuggestionExperience(prev=>[...prev,value])
+              }
+           }     
        }
 
       const handleJobsSearchClick=(e)=>{
@@ -31,6 +46,9 @@ const JobSearchBar = () => {
         if(!Query.jobQuery||!Query.locationQuery||!Query.expreinceQuery) return  setInputError(true)
         navigate(`/search?query=${Query.jobQuery}&locations=${Query.locationQuery}&experience=${Query.expreinceQuery}`)
         
+      }
+      const handleInputClick=(query,inputName)=>{
+           setQuery({...Query,[inputName]:query.toLowerCase()})
       }
 
     
@@ -56,12 +74,12 @@ const JobSearchBar = () => {
            name="jobQuery"
            value={Query.jobQuery}
            onChange={handleChange}
-           onBlur={()=>setSuggestionBar("")}
+           onBlur={()=>setTimeout(()=>setSuggestionBar(""),500)}
            className="outline-none  border-stone-300 ps-2 w-[100%] text-[13px] pe-4"
            placeholder="Search by Skills, Company or Job Title"
          />
-           <div className={`${isSuggestionBar==="jobQuery"?"block":"hidden"} absolute -bottom-[214px] h-[200px] w-full border-stone-300 rounded-[7px] shadow-2xl p-3 bg-white border`}>
-           <SuggestionBar /></div>
+           <div className={`${isSuggestionBar==="jobQuery"?"block":"hidden"} absolute -bottom-[214px] z-10 h-[200px] overflow-auto w-full border-stone-300 rounded-[7px] shadow-2xl  bg-white border`}>
+           <SuggestionBar suggestionValue={suggestionJobs} handleQueryClick={(query)=>handleInputClick(query,"jobQuery")} /></div>
            </div>
 
             <div className="w-[30%] relative">
@@ -70,15 +88,18 @@ const JobSearchBar = () => {
             name="locationQuery"
              value={Query.locationQuery}
              onChange={handleChange}
-             onBlur={()=>setSuggestionBar("")}
+             onBlur={()=>setTimeout(()=>setSuggestionBar(""),500)}
              className="border-l  max-[768px]:hidden border-stone-300 outline-none text-[13px] ps-2 pe-4 w-[100%]"
              placeholder="Loaction "
           />
-          <div className={`${isSuggestionBar==="locationQuery"?"block":"hidden"} absolute -bottom-[214px] h-[200px] w-full border-stone-300 rounded-[7px] shadow-2xl p-3 bg-white border`}><SuggestionBar/></div>
+          <div className={`${isSuggestionBar==="locationQuery"?"block":"hidden"} absolute -bottom-[214px] h-[200px] w-[300px] z-10 border-stone-300 overflow-auto rounded-[7px] shadow-2xl p-3 bg-white border`}>
+          <SuggestionBar   suggestionValue={suggestionLocation} handleQueryClick={(query)=>handleInputClick(query,"locationQuery")}/></div>
             </div>
+
             <div className="w-[20%] relative">
-            <input type="text" name="expreinceQuery" value={Query.expreinceQuery}    onBlur={()=>setSuggestionBar("")}   onChange={handleChange} placeholder="Experience" className="border-l max-[768px]:hidden w-[100%] ps-2 border-stone-300 outline-none text-[13px] "/>
-            <div className={`${isSuggestionBar==="expreinceQuery"?"block":"hidden"} absolute right-0 -bottom-[214px] h-[200px] w-full border-stone-300 rounded-[7px] shadow-2xl p-3 bg-white border`}><SuggestionBar/></div>
+            <input type="text" name="expreinceQuery" value={Query.expreinceQuery}    onBlur={()=>setTimeout(()=>setSuggestionBar(""),500)}   onChange={handleChange}  placeholder="Experience" className="border-l max-[768px]:hidden w-[100%] ps-2 border-stone-300 outline-none text-[13px] "/>
+            <div className={`${isSuggestionBar==="expreinceQuery"?"block":"hidden"} absolute left-8 -bottom-[214px] overflow-auto z-10 h-[200px] w-[300px] border-stone-300 rounded-[7px] shadow-2xl p-3 bg-white border`}>
+            <SuggestionBar   suggestionValue={suggestionExperience} handleQueryClick={(query)=>handleInputClick(query,"expreinceQuery")}/></div>
             </div>
            
             <div>

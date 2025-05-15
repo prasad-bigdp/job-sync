@@ -122,7 +122,7 @@ const Footer = () => {
 
         <div className="text-gray-400 text-xs mt-6 space-y-1 leading-relaxed text-center">
           <p>| Security & Fraud | Privacy Notice | Terms of Use | Beware of Fraudsters | Be Safe | Complaints |</p>
-          <p>© 2025 YourCompany | All rights Reserved</p>
+          <p>© 2025 JobSync | All rights Reserved</p>
         </div>
       </div>
     </footer>
