@@ -1,0 +1,39 @@
+const jwt = require('jsonwebtoken');
+const Employer = require('../models/Employer');
+const dotenv = require('dotenv');
+const bcrypt = require("bcrypt");
+
+dotenv.config();
+const SECRET_KEY = process.env.JWT_SECRET;
+
+exports.loginEmployer = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const employer = await Employer.findOne({ email });
+    if (!employer) return res.json({ success: false, message: 'Employer not found' });
+
+    const isMatch = await bcrypt.compare(password, employer.password);
+    if (!isMatch) return res.json({ success: false, message: 'Incorrect password' });
+
+    const token = jwt.sign({ email: employer.email, employerId: employer._id, role: 'employer' }, SECRET_KEY, { expiresIn: '1h' });
+
+    const { password: _, ...employerWithoutPassword } = employer.toObject();
+    res.json({ success: true, token, employer: employerWithoutPassword });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+
+exports.getEmployerDashboard = async (req, res) => {
+  try {
+    const employer = await Employer.findById(req.user.employerId).select('-password');
+    if (!employer) return res.json({ message: 'Employer not found' });
+
+    res.json({ employer });
+  } catch (err) {
+    console.error('Dashboard fetch error:', err);
+    res.status(500).json({ message: 'Database error', error: err.message });
+  }
+};

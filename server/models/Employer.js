@@ -18,4 +18,4 @@ const employerSchema = new mongoose.Schema(
 	{ timestamps: true },
 )
 
-module.exports = mongoose.model('employee', employerSchema)
+module.exports = mongoose.model('Employer', employerSchema)
