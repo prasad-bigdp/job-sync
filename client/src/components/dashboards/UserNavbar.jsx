@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Bell, User } from 'lucide-react';
 
-const EmployerNavBar = ({employer}) => {
+const UserNavBar = ({user}) => {
   
   const [isHovered, setIsHovered] = useState(false);
 
-  const userName = employer?.name || "User"
+  const userName = user?.name || "User"
   const initials = userName
     
         .split(' ')
@@ -49,4 +49,4 @@ const EmployerNavBar = ({employer}) => {
   );
 };
 
-export default EmployerNavBar;
+export default UserNavBar;

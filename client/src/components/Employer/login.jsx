@@ -33,6 +33,8 @@ function EmployeeLogin() {
     try {
       const res = await axios.post('http://127.0.0.1:5000/api/employers/login', values);
       const { token, employer } = res.data;
+      console.log('token:',res.data.token)
+      console.log('Token:',res.data.employer)
 
       if (!employer) return setError('Employer data not found');
 

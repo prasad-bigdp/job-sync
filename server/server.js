@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 // app.use("api/auth" , require("./routes/auth"))
 app.use("/api/users" , require("./routes/user"))
 app.use("/api/employers" , require("./routes/employer"))
+app.use("/api", require("./routes/resetPasswordRoute"));
 //Job Matching Route :
 // app.use("/api/jobs" , require("./routes/job"))
 // app.use("/api/applications" , require("./routes/application"))

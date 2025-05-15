@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { TextField, Button } from "@mui/material";
 import { useNavigate,Link } from 'react-router-dom';
 import axios from 'axios';
+import Header from '../Homecomponents/Header'
 
 function UserSignup() {
   const navigate = useNavigate();
@@ -33,7 +34,8 @@ function UserSignup() {
         alert('Signup successful!');
         navigate('/UserLogin');
       } catch (error) {
-        alert('Error while signing up.');
+        const errMsg = error.response?.data?.message || 'Error while signing up.';
+        alert(errMsg)
         console.error('Signup error:', error.response?.data || error.message);
       }
     },
@@ -41,7 +43,7 @@ function UserSignup() {
 
   return (
     <div>
-     
+     <Header/>
       <div className="flex justify-end pr-10 mt-10">
         <div className='w-full max-w-md'>
           <h3 className="text-lg font-semibold mb-4">New to JobSync? Sign Up!</h3>

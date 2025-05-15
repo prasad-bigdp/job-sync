@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarChart2, FileText, List, Users, Star, Building, Settings, LogOut } from 'lucide-react';
-import { useAuth } from "../../context/AuthContext"; // Make sure to import useAuth
+import { useAuth } from "../../context/AuthContext"; 
 
 const Sidebar = ({ activeTab, setActiveTab, employer }) => {
   const {logout} = useAuth();

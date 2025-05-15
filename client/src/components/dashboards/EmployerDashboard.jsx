@@ -11,7 +11,7 @@ export default function EmployerDashboard() {
   const [employerData, setEmployerData] = useState(null);
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // ✅ local loading
+  const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function EmployerDashboard() {
     };
 
     fetchEmployerDashboard();
-  }, [auth, navigate, logout]); // ✅ no `loading` here
+  }, [auth, navigate, logout]);
 
   if (loading) {
     return (

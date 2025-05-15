@@ -7,7 +7,8 @@ const authMiddleware = require('../middleware/authMiddleware');
 // Public routes
 router.post('/login', authController.loginUser); 
 router.post('/', userController.createUser);     
-router.get('/', userController.getAllUsers);     
+router.get('/', userController.getAllUsers);  
+  
   
 
 // Protected route
@@ -16,4 +17,5 @@ router.get('/user-dashboard', authMiddleware, authController.getUserDashboard);
 // dynamic route
 
 router.get('/:id', userController.getUserById);
+
 module.exports = router;

@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-
+const bcrypt = require("bcrypt");
 const dotenv = require('dotenv');
+
 dotenv.config();
 const SECRET_KEY = process.env.JWT_SECRET;
 
@@ -9,19 +10,21 @@ exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-
     if (!user) return res.json({ success: false, message: 'User not found' });
-    if (user.password !== password) return res.json({ success: false, message: 'Incorrect password' });
 
-    const token = jwt.sign({ email: user.email, userId: user._id }, SECRET_KEY, { expiresIn: '1h' });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.json({ success: false, message: 'Incorrect password' });
 
-    const { password: userPaswword, ...userWithoutPassword } = user.toObject();
+    const token = jwt.sign({ email: user.email, userId: user._id, role: 'user' }, SECRET_KEY, { expiresIn: '1h' });
+
+    const { password: _, ...userWithoutPassword } = user.toObject();
     res.json({ success: true, token, user: userWithoutPassword });
   } catch (err) {
     console.error('Login error:', err);
     res.json({ success: false, message: 'Server error' });
   }
 };
+
 
 exports.getUserDashboard = async (req, res) => {
   try {

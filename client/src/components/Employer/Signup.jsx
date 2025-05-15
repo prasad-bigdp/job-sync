@@ -34,7 +34,8 @@ function EmployerSignup() {
         alert('Signup successful!');
         navigate('/EmployerLogin');
       } catch (error) {
-        alert('Error while signing up.');
+        const errMsg = error.response?.data?.message || 'Error while signing up.';
+        alert(errMsg)
         console.error('Signup error:', error.response?.data || error.message);
       }
     },

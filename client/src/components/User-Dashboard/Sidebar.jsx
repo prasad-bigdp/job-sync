@@ -8,7 +8,7 @@ import {
   UploadCloud,
 } from 'lucide-react';
 
-const Sidebar = () => {
+const UserSidebar = () => {
   return (
     <div className="h-screen w-64 bg-gray-100 text-black fixed flex flex-col">
       <div className="text-2xl font-bold p-6 border-b border-gray-700">
@@ -32,4 +32,4 @@ const NavItem = ({ icon, label }) => (
   </div>
 );
 
-export default Sidebar;
+export default UserSidebar;

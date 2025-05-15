@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const Employer = require('../models/Employer');
+const bcrypt = require('bcrypt');
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -23,11 +25,27 @@ exports.getUserById = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const user = new User(req.body);
+    const { email, password, ...rest } = req.body;
+
+    // Check if email exists in User or Employer
+    const existingUser = await User.findOne({ email });
+    const existingEmployer = await Employer.findOne({ email });
+
+    if (existingUser || existingEmployer) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    if (!password || password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ ...rest, email, password: hashedPassword });
+
     await user.save();
-    res.json({ message: 'User created successfully' });
+    res.status(201).json({ message: "User created successfully" });
   } catch (err) {
     console.error("Error creating user:", err);
-    res.json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
