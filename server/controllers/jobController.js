@@ -1,48 +1,61 @@
 const Job = require("../models/Job")
 const User = require("../models/User")
-const Job= require('../models/Job')
-exports.getMatchedJobs = (req , res) => {
-    
-    User.findById(req.user.id)
 
-     .then(user => {
+exports.getMatchedJobs = async (req, res) => {
+	try {
+		const user = await User.findById(req.user.userId)
 
-      //check existing user :
-        if(!user) {
-            return res.status(404).json({message : "User not Found"})
-        }
+		if (!user) {
+			return res.status(404).json({ success: false, message: "User not Found" })
+		}
 
-        //check user skills :
-        const userSkills = user.skills
-        if(!userSkills || userSkills.length === 0) {
-            return res.status(200).json({message : "User has no skills listed" , jobs : []})
-        }
+		const userSkills = user.skills
+		if (!userSkills || userSkills.length === 0) {
+			return res.json({
+				success: true,
+				message: "User has no skills listed. No jobs to match.",
+				jobs: [],
+			})
+		}
 
+		// Matching Logic :
+		const matchedJobs = await Job.find({
+			skillsRequired: { $in: userSkills },
+		}).populate("employer", "name company")
 
-        // Matching Logic :
-        return Job.find({skillsRequired : {$in : userSkills}})
-          .populate("employer" , "name company")               // replaces the ObjectId ( of job field which is reference to the employer collection ) with the actual employer details..
-          .then(matchedJobs => {
-            res.json({matchedCount : matchedJobs.length , jobs : matchedJobs})
-          })
-     })
-
-     .catch(err => {
-        console.error(err)
-        res.status(500).json({message : "Server Error"})
-     })
+		res.json({
+			success: true,
+			matchedCount: matchedJobs.length,
+			jobs: matchedJobs,
+		})
+	} catch (err) {
+		console.error("Error in getMatchedJobs:", err)
+		if (err.name === "CastError") {
+			return res
+				.status(400)
+				.json({ success: false, message: "Invalid user ID format" })
+		}
+		res
+			.status(500)
+			.json({ success: false, message: "Server Error fetching matched jobs" })
+	}
 }
 
-exports.getJobsController = async (req, res) =>
-{
-  if (!req.user)
-  {
-     res.status(400).json({error:"Token is not provided"})
-  }
-  Job.find({},{})
-    
+exports.getJobsController = async (req, res) => {
+	try {
+		const jobs = await Job.find({}).populate("employer", "name company")
+		res.json({ success: true, count: jobs.length, jobs })
+	} catch (err) {
+		console.error("Error in getJobsController:", err)
+		res
+			.status(500)
+			.json({ success: false, message: "Server error fetching jobs" })
+	}
 }
-exports.postJobController = (req, res) =>
-{
-  
+
+exports.postJobController = (req, res) => {
+	// TODO: Implement job posting logic
+	res
+		.status(501)
+		.json({ success: false, message: "Job posting not implemented yet" })
 }

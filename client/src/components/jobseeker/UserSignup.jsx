@@ -40,8 +40,7 @@ function UserSignup() {
   });
 
   return (
-    <div>
-     
+    <div>   
       <div className="flex justify-end pr-10 mt-10">
         <div className='w-full max-w-md'>
           <h3 className="text-lg font-semibold mb-4">New to JobSync? Sign Up!</h3>
