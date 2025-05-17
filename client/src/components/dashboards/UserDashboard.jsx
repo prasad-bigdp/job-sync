@@ -64,7 +64,7 @@ export default function UserDashboard() {
       <UserSidebar user={userData} />
       <div className="flex flex-col flex-1 ml-64">
         <UserNavBar user={userData} />
-        <main className="mt-16 p-6">
+        <main className="mt-16">
           <UserDashboardPage />
         </main>
       </div>
