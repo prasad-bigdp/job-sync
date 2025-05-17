@@ -82,11 +82,7 @@ function JobList() {
                     />
                   </div>
 
-                  <div
-
-                   
-
-                    className={`col-span-3 border  lg:h-[100vh] max-lg:pt-9  rounded-[10px] bg-white ${
+                  <div  className={`col-span-3 border  lg:h-[100vh] max-lg:pt-9  rounded-[10px] bg-white ${
 
                       isSelected
                         ? "max-lg:absolute max-lg:w-full"
@@ -99,6 +95,7 @@ function JobList() {
                         isSelected={isSelected}
                         setSelected={setSelected}
                       />
+                      
                     ) : (
                       <p>Select a job to see details</p>
                     )}

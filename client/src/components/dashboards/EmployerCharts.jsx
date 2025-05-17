@@ -3,10 +3,7 @@ import {
   PieChart, Pie, Cell, Tooltip, Legend,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
   ResponsiveContainer, LineChart, Line, AreaChart, Area,LabelList
-} from 'recharts';
-
-
-
+} from "recharts";
 const EmployerCharts = () => {
   // Sample data
   const pieData = [
