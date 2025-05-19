@@ -1,0 +1,89 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css";
+
+.job-card {
+  transition: transform 0.2s ease-in-out;
+}
+.job-card:hover {
+  transform: scale(1.02);
+}
+/* Global container */
+.joblist-container {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  padding: 40px;
+  min-height: 100vh;
+  color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header section */
+.joblist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.joblist-header h2 {
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+.create-job-btn {
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+  transition: 0.3s ease;
+}
+
+.create-job-btn:hover {
+  background: linear-gradient(45deg, #0072ff, #00c6ff);
+  transform: scale(1.05);
+}
+
+/* Card styles */
+.job-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+}
+
+.job-card .card-title {
+  color: #00c6ff;
+  font-weight: bold;
+}
+
+.job-card .btn-outline-primary,
+.job-card .btn-outline-danger {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.job-card .btn-outline-primary:hover {
+  background-color: #00c6ff;
+  color: white;
+  border-color: #00c6ff;
+}
+
+.job-card .btn-outline-danger:hover {
+  background-color: #ff4b5c;
+  color: white;
+  border-color: #ff4b5c;
+}
+
+
+

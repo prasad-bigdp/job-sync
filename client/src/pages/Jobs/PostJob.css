@@ -1,0 +1,56 @@
+.post-job-container {
+  background: linear-gradient(135deg, #f0f4ff, #dff4ff);
+  min-height: 100vh;
+}
+
+.post-job-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e3e8f0;
+}
+
+.glossy-input {
+  border-radius: 12px;
+  padding: 10px 14px;
+  border: 1px solid #d3e0ef;
+  transition: border 0.3s, box-shadow 0.3s;
+  font-size: 14px;
+}
+
+.glossy-input:focus {
+  border-color: #4facfe;
+  box-shadow: 0 0 8px rgba(79, 172, 254, 0.4);
+  outline: none;
+}
+
+.glossy-btn {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: white;
+  border: none;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 8px 16px;
+  box-shadow: 0 6px 12px rgba(0, 242, 254, 0.3);
+  transition: all 0.3s ease;
+}
+
+.glossy-btn:hover {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  transform: scale(1.03);
+}
+
+.glossy-outline-btn {
+  background: transparent;
+  color: #4facfe;
+  border: 2px solid #4facfe;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.glossy-outline-btn:hover {
+  background: #4facfe;
+  color: white;
+}

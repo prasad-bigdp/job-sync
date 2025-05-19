@@ -17,3 +17,4 @@ const jobSchema = new mongoose.Schema(
 	},
 	{ timestamps: true },
 )
+module.exports = mongoose.model('job', jobSchema);

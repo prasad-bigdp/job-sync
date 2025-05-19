@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter , Routes, Route } from 'react-router-dom';
+import JobList from './pages/Jobs/JobList';
+import EditJobForm from './pages/Jobs/EditJobForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import PostJob from './pages/Jobs/PostJob';
 
-function App() {
-  const [count, setCount] = useState(0)
 
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <BrowserRouter>
+      <Routes>
+       <Route path ="/" element={<JobList />} /> 
+         {/* <Route path="/login" element={<EmployeeLogin/>}/> 
+        <Route path="/EmployerLogin" element={<EmployeeLogin/>} />
+        <Route path="/EmployerSignup" element={<EmployerSignup/>} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="/UserLogin" element={<UserLogin/>}/>
+        <Route path="/UserSignup" element={<UserSignup />} />  */}
+        <Route path="/my-jobs" element={<JobList />} />
+        <Route path ="/create-job" element={<PostJob />} /> 
+        <Route path="/edit-job/:jobId" element={<EditJobForm />} />
+        
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
-export default App
+export default App;

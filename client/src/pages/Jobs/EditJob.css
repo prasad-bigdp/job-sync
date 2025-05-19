@@ -1,0 +1,77 @@
+.edit-job-container {
+  background: linear-gradient(135deg, #f7f9fc, #e3f2fd);
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+input.form-control,
+textarea.form-control {
+  border: 1px solid #dce3f0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+input.form-control:focus,
+textarea.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+.glossy-btn {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 242, 254, 0.3);
+}
+
+.glossy-btn:hover {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  transform: scale(1.03);
+}
+
+.glossy-outline-btn {
+  background: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.glossy-outline-btn:hover {
+  background: #007bff;
+  color: white;
+}
+
+.skill-badge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  font-size: 14px;
+  border-radius: 20px;
+  padding: 6px 12px;
+  margin: 4px 6px 4px 0;
+  box-shadow: 0 4px 8px rgba(38, 132, 255, 0.3);
+}
+
+.remove-skill-btn {
+  background: none;
+  border: none;
+  margin-left: 8px;
+  color: #ffccd5;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.remove-skill-btn:hover {
+  transform: scale(1.2);
+  color: #ffffff;
+}
