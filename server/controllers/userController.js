@@ -1,5 +1,8 @@
-const User = require("../models/User")
-const bcrypt = require("bcryptjs")
+const User = require('../models/User');
+const Employer = require('../models/Employer');
+const bcrypt = require('bcrypt');
+
+
 
 exports.getAllUsers = async (req, res) => {
 	try {
@@ -29,36 +32,28 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-	try {
-		const { email, password, ...rest } = req.body
-		let existingUser = await User.findOne({ email })
-		if (existingUser) {
-			return res
-				.status(400)
-				.json({
-					success: false,
-					message: "User with this email already exists",
-				})
-		}
+  try {
+    const { email, password, ...rest } = req.body;
 
-		const salt = await bcrypt.genSalt(10)
-		const hashedPassword = await bcrypt.hash(password, salt)
+    // Check if email exists in User or Employer
+    const existingUser = await User.findOne({ email });
+    const existingEmployer = await Employer.findOne({ email });
 
-		const user = new User({ email, password: hashedPassword, ...rest })
-		await user.save()
+    if (existingUser || existingEmployer) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
 
-		const { password: _, ...userWithoutPassword } = user.toObject()
-		res
-			.status(201)
-			.json({
-				success: true,
-				message: "User created successfully",
-				user: userWithoutPassword,
-			})
-	} catch (err) {
-		console.error("Error creating user:", err)
-		res
-			.status(500)
-			.json({ success: false, message: "Server error", error: err.message })
-	}
-}
+    if (!password || password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ ...rest, email, password: hashedPassword });
+
+    await user.save();
+    res.status(201).json({ message: "User created successfully" });
+  } catch (err) {
+    console.error("Error creating user:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
