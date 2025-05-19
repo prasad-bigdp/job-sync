@@ -15,7 +15,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../ReusableCode/theme';
 import FormField from '../ReusableCode/formField';
 
-function UserSignup() {
+function EmployerSignup() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,17 +30,20 @@ function UserSignup() {
       password: Yup.string().required("Password is required").min(6),
       agreeToTerms: Yup.boolean().oneOf([true], "You must accept the terms")
     }),
-    onSubmit: async (values) => {
+     onSubmit: async (values) => {
       try {
-        const res = await axios.post('http://127.0.0.1:5000/api/users', values);
+        const response = await axios.post('http://127.0.0.1:5000/api/employers', values);
+        console.log(response)
         alert('Signup successful!');
-        navigate('/UserLogin');
+        navigate('/EmployerLogin');
       } catch (error) {
-        alert('Error while signing up.');
-        console.error('Signup error:', error.response?.data || error.message);
+        const errMsg = error.response?.data?.message || error.message || "Signup failed";
+        alert(errMsg);
+        console.error('Signup error:', errMsg);
       }
     },
   });
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -129,7 +132,7 @@ function UserSignup() {
 
               <Typography variant="body2" align="center" sx={{ mt: 2 }}>
                 Already have an account?{" "}
-                <Link to="/UserLogin" style={{ color: theme.palette.primary.main, fontWeight: 600 }}>
+                <Link to="/EmployerLogin" style={{ color: theme.palette.primary.main, fontWeight: 600 }}>
                   Login
                 </Link>
               </Typography>
@@ -141,4 +144,4 @@ function UserSignup() {
   );
 }
 
-export default UserSignup;
+export default EmployerSignup;

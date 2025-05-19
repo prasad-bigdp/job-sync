@@ -10,6 +10,7 @@ export default function EmployerDashboard() {
   const { auth, logout } = useAuth();
   const [employerData, setEmployerData] = useState(null);
   const [activeTab, setActiveTab] = useState('Dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
@@ -61,10 +62,17 @@ export default function EmployerDashboard() {
   }
 
   return (
-    <div className="h-screen bg-gray-50 overflow-hidden">
-      <EmployerSidebar activeTab={activeTab} setActiveTab={setActiveTab} employer={employerData} />
-      <EmployerNavBar employer={employerData} />
-      <EmployerCharts />
+    <div className="flex h-screen bg-gray-50">
+      <EmployerSidebar activeTab={activeTab} setActiveTab={setActiveTab} employer={employerData} sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen} />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <EmployerNavBar employer={employerData} setSidebarOpen={setSidebarOpen} />
+
+        <main className="flex-1 overflow-y-auto bg-gray-50">
+          <EmployerCharts />
+        </main>
+      </div>
+
     </div>
   );
 }

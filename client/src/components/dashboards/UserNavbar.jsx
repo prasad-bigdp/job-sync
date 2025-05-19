@@ -1,46 +1,109 @@
-import React, { useState } from 'react';
-import { Bell, User } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Bell,
+  Sun,
+  Moon,
+  UserCircle,
+  ChevronDown,
+  LogOut,
+  Settings,
+  Search,
+} from "lucide-react";
 
-const UserNavBar = ({user}) => {
-  
-  const [isHovered, setIsHovered] = useState(false);
+const UserNavBar = ({ showSearchBar, onMenuClick }) => {
+  const [darkMode, setDarkMode] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const userName = user?.name || "User"
-  const initials = userName
-    
-        .split(' ')
-        .map(word => word[0])
-        .join('')
-        .toUpperCase()
-        .slice(0, 2);
-    
+  const toggleDarkMode = () => setDarkMode(!darkMode);
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   return (
-    <header className="fixed top-0 left-64 right-0 bg-white shadow-sm py-3 px-6 flex justify-between items-center border-b z-10">
-      <div className="flex items-center">
-        <div className="flex items-center mr-6">
-        
-          
-        </div>
-       
-      </div>
+    <header className="bg-white dark:bg-gray-900 shadow-sm px-4 md:px-8 py-4 flex flex-col md:flex-row md:justify-between md:items-center gap-4 border-b dark:border-gray-700">
       
-      <div className="flex items-center space-x-6 gap-4">
-        <button className="text-gray-500 hover:text-gray-700 relative">
-          <Bell size={20} />
-        </button>
-        
-        <div 
-          className="relative"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+      {/* Hamburger menu for mobile */}
+      <div className="flex justify-between items-center w-full md:w-auto">
+        <button
+          onClick={onMenuClick}
+          className="md:hidden text-gray-600 dark:text-white"
+          aria-label="Toggle Menu"
         >
-          <button className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-medium">
-            {initials}
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+
+        <div className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue">
+          JobSync
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      {showSearchBar && (
+        <div className="relative w-full md:w-1/3">
+          <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search Your Job"
+            className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+          />
+        </div>
+      )}
+
+      {/* Right side buttons */}
+      <div className="flex items-center space-x-4">
+        <button
+          onClick={toggleDarkMode}
+          className="text-gray-700 dark:text-black"
+          aria-label="Toggle Dark Mode"
+        >
+          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
+
+        <div className="relative ml-4">
+          <Bell className="text-gray-700 dark:text-black" size={20} />
+        </div>
+
+        <div className="relative">
+          <button
+            onClick={toggleDropdown}
+            className="flex items-center space-x-1 text-gray-700 dark:text-black"
+            aria-haspopup="true"
+            aria-expanded={dropdownOpen}
+          >
+            <UserCircle size={28} />
+            <ChevronDown size={16} />
           </button>
-          {isHovered && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 px-4 text-sm text-gray-700">
-              {userName}
+
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded shadow z-50">
+              <a
+                href="#profile"
+                className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <UserCircle size={18} className="mr-2" /> View Profile
+              </a>
+              <a
+                href="#settings"
+                className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <Settings size={18} className="mr-2" /> Settings
+              </a>
+              <a
+                href="#logout"
+                className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 text-red-500"
+              >
+                <LogOut size={18} className="mr-2" /> Logout
+              </a>
             </div>
           )}
         </div>
