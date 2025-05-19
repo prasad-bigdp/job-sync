@@ -62,9 +62,9 @@ export default function UserDashboard() {
   return (
     <div className="flex bg-gray-50 min-h-screen">
       <UserSidebar user={userData} />
-      <div className="flex flex-col flex-1 ml-64">
+      <div className="flex flex-col flex-1 ">
         <UserNavBar user={userData} />
-        <main className="mt-16">
+        <main className="mt-2">
           <UserDashboardPage />
         </main>
       </div>

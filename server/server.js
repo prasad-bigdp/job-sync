@@ -19,9 +19,9 @@ app.use("/api/users" , require("./routes/user"))
 app.use("/api/employers" , require("./routes/employer"))
 app.use("/api", require("./routes/resetPasswordRoute"));
 
-//Job Matching Route :
-app.use("api/jobs" , require("./routes/job"))
-app.use("api/applications" , require("./routes/application"))
+// //Job Matching Route :
+// app.use("api/jobs" , require("./routes/job"))
+// app.use("api/applications" , require("./routes/application"))
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
