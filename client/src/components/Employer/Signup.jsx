@@ -11,9 +11,36 @@ import {
   Visibility, VisibilityOff, PersonOutline, EmailOutlined, LockOutlined,
   ArrowForward, PhoneAndroidOutlined
 } from '@mui/icons-material';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from '../ReusableCode/theme';
-import FormField from '../ReusableCode/formField';
+import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: { main: '#6b21a8' },
+    secondary: { main: '#7c3aed' },
+    background: { default: '#f3e8ff' },
+  },
+  typography: {
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+  },
+  shape: { borderRadius: 8 },
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined',
+        fullWidth: true,
+      },
+      styleOverrides: {
+        root: { marginBottom: '10px' },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: { padding: '12px 24px' },
+      },
+    },
+  },
+});
 
 function EmployerSignup() {
   const navigate = useNavigate();
@@ -22,72 +49,95 @@ function EmployerSignup() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const formik = useFormik({
-    initialValues: { name: "", email: "", phone: "", password: "", agreeToTerms: false },
+    initialValues: {
+      name: "", email: "", phone: "", password: "", company: "", agreeToTerms: false
+    },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required").min(3),
       email: Yup.string().email("Invalid email").required("Email is required"),
       phone: Yup.string().matches(/^[0-9]{10}$/, "Enter 10-digit phone number").required("Phone is required"),
       password: Yup.string().required("Password is required").min(6),
-      agreeToTerms: Yup.boolean().oneOf([true], "You must accept the terms")
+      company: Yup.string().required("Company name is required"),
+      agreeToTerms: Yup.boolean().oneOf([true], "You must accept the terms"),
     }),
-     onSubmit: async (values) => {
+    onSubmit: async (values) => {
       try {
-        const response = await axios.post('http://127.0.0.1:5000/api/employers', values);
-        console.log(response)
+        const response = await axios.post('http://127.0.0.1:5000/api/employer', values);
+        console.log(response);
         alert('Signup successful!');
         navigate('/EmployerLogin');
       } catch (error) {
-        const errMsg = error.response?.data?.message || error.message || "Signup failed";
-        alert(errMsg);
-        console.error('Signup error:', errMsg);
+        alert('Error while signing up.');
+        console.error('Signup error:', error.response?.data || error.message);
       }
     },
   });
-  
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default', display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
         <Paper elevation={5} sx={{ maxWidth: 900, width: '100%', display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
           {!isSmallScreen && (
-            <Box sx={{ width: '60%', p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src="/4236127.jpg" alt="Signup" style={{ maxWidth: '100%' }} />
+            <Box sx={{ width: '60%', p: 4, bgcolor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src="https://res.cloudinary.com/dcawbqlmr/image/upload/v1747653893/6333213_pgmtjz.jpg" alt="Signup" style={{ maxWidth: '100%', maxHeight: '600px' }} />
             </Box>
           )}
-
           <Box sx={{ width: { xs: '100%', md: '50%' }, p: { xs: 3, md: 5 } }}>
             <Typography variant="h5" fontWeight={700} color="primary" gutterBottom>
               New to JobSync? Sign Up!
             </Typography>
 
             <form onSubmit={formik.handleSubmit} noValidate>
-              <FormField id="name" label="Name" icon={<PersonOutline />} formik={formik} />
-              <FormField id="email" label="Email" icon={<EmailOutlined />} formik={formik} />
-              <FormField id="phone" label="Phone Number" icon={<PhoneAndroidOutlined />} formik={formik} />
+              {[
+                { id: 'name', label: 'Name', icon: <PersonOutline /> },
+                { id: 'email', label: 'Email', icon: <EmailOutlined /> },
+                { id: 'phone', label: 'Phone Number', icon: <PhoneAndroidOutlined /> },
+                { id: 'company', label: 'Company Name', icon: <WorkOutlineOutlinedIcon /> }
+              ].map(({ id, label, icon }) => (
+                <Box key={id}>
+                  <label htmlFor={id} className="block text-sm font-medium mb-1">
+                    {label} {formik.values[id] === "" && <span style={{ color: 'red' }}>*</span>}
+                  </label>
+                  <TextField
+                    id={id}
+                    name={id}
+                    value={formik.values[id]}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched[id] && Boolean(formik.errors[id])}
+                    helperText={formik.touched[id] && formik.errors[id]}
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">{icon}</InputAdornment>
+                    }}
+                  />
+                </Box>
+              ))}
 
-              <label htmlFor="password" className="block text-sm font-medium mb-1">
-                Password {formik.values.password === "" && <span style={{ color: 'red' }}>*</span>}
-              </label>
-              <TextField
-                id="password"
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.password && Boolean(formik.errors.password)}
-                helperText={formik.touched.password && formik.errors.password}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start"><LockOutlined /></InputAdornment>,
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
-              />
+              <Box>
+                <label htmlFor="password" className="block text-sm font-medium mb-1">
+                  Password {formik.values.password === "" && <span style={{ color: 'red' }}>*</span>}
+                </label>
+                <TextField
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start"><LockOutlined /></InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Box>
 
               <FormControlLabel
                 control={

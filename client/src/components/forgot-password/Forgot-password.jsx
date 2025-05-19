@@ -93,7 +93,7 @@ function ForgotPassword() {
               }}
             >
               <img
-                src="/Questions-pana.png"
+                src="https://res.cloudinary.com/dgwnjntoq/image/upload/v1747672053/Questions-pana_srq3q3.png"
                 alt="Forgot Password Illustration"
                 style={{ maxWidth: "100%", maxHeight: "500px" }}
               />

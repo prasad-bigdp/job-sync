@@ -94,7 +94,7 @@ function ResetPassword() {
               }}
             >
               <img
-                src="/Online document-bro.png"
+                src="https://res.cloudinary.com/dgwnjntoq/image/upload/v1747671882/Online_document-bro_rhrkyr.png"
                 alt="Reset Password Illustration"
                 style={{ maxWidth: '100%', maxHeight: '500px' }}
               />
