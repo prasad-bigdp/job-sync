@@ -1,6 +1,0 @@
-Jobs: 
-   /Jobs/create/:Eid
-   /Jobs/update/:Jid/:Eid
-   /Jobs/delete/:Jid/:Eid
-   /getJobs
-
