@@ -1,173 +1,244 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
-<<<<<<< HEAD
 import { useNavigate, Link } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
-=======
-import { Link,useNavigate } from 'react-router-dom';
->>>>>>> 1a91157338d99d4c754ca0c70f322cc917fc923a
+
+import {
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton,
+  Typography,
+  Box,
+  Paper,
+  CircularProgress,
+  useMediaQuery,
+  ThemeProvider,
+  createTheme,
+} from '@mui/material';
+import { Visibility, VisibilityOff, EmailOutlined, LockOutlined } from '@mui/icons-material';
 import Header from '../../header';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#6b21a8',
+    },
+    secondary: {
+      main: '#7c3aed',
+    },
+    background: {
+      default: '#f3e8ff',
+    },
+  },
+  typography: {
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+  },
+  shape: {
+    borderRadius: 8,
+  },
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined',
+        fullWidth: true,
+      },
+      styleOverrides: {
+        root: {
+          marginBottom: '10px',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          padding: '12px 24px',
+        },
+      },
+    },
+  },
+});
 
 function UserLogin() {
-<<<<<<< HEAD
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-=======
-  const navigate = useNavigate();
->>>>>>> 1a91157338d99d4c754ca0c70f322cc917fc923a
-  const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Invalid email address').required('Email is required'),
+      password: Yup.string().required('Password is required'),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+      setError('');
+      try {
+        const res = await axios.post('http://127.0.0.1:5000/api/users/login', values);
+        if (res.data.success) {
+          const { token, user } = res.data;
+          localStorage.setItem('token', token);
+          localStorage.setItem('UserId', user._id);
+          localStorage.setItem('role', user.role);
+          navigate('/user-dashboard');
+        } else {
+          setError('Invalid credentials');
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        setError('Server error or invalid credentials');
+      } finally {
+        setLoading(false);
+      }
+    },
   });
 
-  const initialValues = {
-    email: '',
-    password: '',
-  };
-
-<<<<<<< HEAD
-  const onSubmit = async (values, { setSubmitting }) => {
-    try {
-      const res = await axios.post('http://127.0.0.1:5000/api/users/login', values);
-      console.log('Login Response:', res);
-
-      if (res.data.success) {
-        const { token, user } = res.data;
-
-        localStorage.setItem('token', token);
-        localStorage.setItem('UserId', user._id);
-        localStorage.setItem('role', user.role);
-
-        navigate('/user-dashboard');
-      } else {
-        setError('Invalid credentials');
-      }
-    } catch (err) {
-      console.error('Login error:', err);
-      setError('Server error or invalid credentials');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-=======
-  const onSubmit = (values) => {
-    const storedUser = JSON.parse(localStorage.getItem('employerUser'));
-
-      if (!storedUser) {
-        alert('No user found. Please sign up first.');
-        return;
-      }
-
-      if (
-        values.email === storedUser.email &&
-        values.password === storedUser.password
-      ) {
-        localStorage.setItem('isLoggedIn', 'true'); // Optional: for auth checks
-        alert('Login successful!');
-        navigate('/user-Dashboard'); // redirect to dashboard
-      } else {
-        alert('Invalid email or password.');
-      }
-    }
-  
->>>>>>> 1a91157338d99d4c754ca0c70f322cc917fc923a
-
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Header />
-      <div className="flex min-h-screen bg-gray-100 justify-end items-center px-4">
-        <div className="bg-[#ffffff] shadow-md rounded-lg w-full max-w-md px-8 pt-6 pb-8">
-          <h3 className="text-xl font-semibold mb-6 text-gray-800 text-center">User Login</h3>
-
-          {error && (
-            <div className="text-red-500 text-sm text-center mb-4">{error}</div>
+      <Box
+        sx={{
+          minHeight: '100vh',
+          backgroundColor: 'background.default',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          p: 2,
+        }}
+      >
+        <Paper
+          elevation={5}
+          sx={{
+            maxWidth: 900,
+            width: '100%',
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            overflow: 'hidden',
+          }}
+        >
+          {!isSmallScreen && (
+            <Box
+              sx={{
+                width: '60%',
+                p: 4,
+                bgcolor: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <img
+                src="https://res.cloudinary.com/dxgs6l0ac/image/upload/v1747402045/3d-render-secure-login-password-illustration_j2uoyh.jpg"
+                alt="Login Illustration"
+                style={{ maxWidth: '100%', maxHeight: '600px' }}
+              />
+            </Box>
           )}
+          <Box sx={{ width: { xs: '100%', md: '50%' }, p: { xs: 3, md: 5 } }}>
+            <Typography variant="h5" fontWeight={700} color="primary" gutterBottom>
+              Welcome Back! Log In
+            </Typography>
 
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <div className="mb-4">
-                  <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-                    Email address
-                  </label>
-                  <Field
-                    type="email"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="email"
-                    name="email"
-                  />
-                  <ErrorMessage name="email" component="div" className="text-red-500 text-sm italic" />
-                </div>
-
-                <div className="mb-6 relative">
-                  <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <Field
-                      type={showPassword ? 'text' : 'password'}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
-                      id="password"
-                      name="password"
-                    />
-                    <div
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </div>
-                  </div>
-                  <ErrorMessage name="password" component="div" className="text-red-500 text-sm italic" />
-                </div>
-
-                <div className="flex items-center justify-between mb-4">
-                  <Link to="/forgot-password" className="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
-                    Forgot Password?
-                  </Link>
-                </div>
-
-                <div className="text-center mb-4">
-                  <span className="text-gray-600 text-sm">Don't have an account? </span>
-                  <Link to="/UserSignup" className="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
-                    Sign up
-                  </Link>
-                </div>
-
-                <button
-                  type="submit"
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-                  disabled={isSubmitting}
-                >
-                  Log In
-                </button>
-
-                <div className="text-center mt-4">
-                  <span className="text-sm text-gray-700">
-                    Don't have an account?{' '}
-                    <Link to="/UserSignup" className="text-blue-500 hover:underline">
-                      Click here to sign up
-                    </Link>
-                  </span>
-                </div>
-              </Form>
+            {error && (
+              <Typography variant="body2" color="error" align="center" sx={{ mb: 2 }}>
+                {error}
+              </Typography>
             )}
-          </Formik>
-        </div>
-      </div>
-    </div>
+
+            <form onSubmit={formik.handleSubmit} noValidate>
+              <Box>
+                <label htmlFor="email" className="block text-sm font-medium mb-1">
+                  Email Address
+                </label>
+                <TextField
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EmailOutlined />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+
+              <Box>
+                <label htmlFor="password" className="block text-sm font-medium mb-1">
+                  Password
+                </label>
+                <TextField
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockOutlined />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+                <Link to="/forgot-password" style={{ color: theme.palette.primary.main }}>
+                  Forgot Password?
+                </Link>
+              </Box>
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={loading}
+                sx={{
+                  mt: 1,
+                  height: '48px',
+                  background: 'linear-gradient(90deg, #6b21a8 0%, #7c3aed 100%)',
+                  color: '#fff',
+                  fontWeight: 600,
+                  boxShadow: '0 4px 12px rgba(107,33,168,0.4)',
+                }}
+              >
+                {loading ? <CircularProgress size={24} color="inherit" /> : 'Log In'}
+              </Button>
+
+              <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+                Don't have an account?{' '}
+                <Link to="/UserSignup" style={{ color: theme.palette.primary.main, fontWeight: 600 }}>
+                  Sign up
+                </Link>
+              </Typography>
+            </form>
+          </Box>
+        </Paper>
+      </Box>
+    </ThemeProvider>
   );
 }
 
