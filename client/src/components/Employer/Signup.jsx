@@ -1,209 +1,196 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom'; 
-import { TextField ,Button} from "@mui/material";
-import Header from '../../header';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import {
+  TextField, Button, Checkbox, FormControlLabel, Box, Typography, Paper,
+  useMediaQuery, InputAdornment, IconButton, CircularProgress
+} from '@mui/material';
+import {
+  Visibility, VisibilityOff, PersonOutline, EmailOutlined, LockOutlined,
+  ArrowForward, PhoneAndroidOutlined
+} from '@mui/icons-material';
+import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+const theme = createTheme({
+  palette: {
+    primary: { main: '#6b21a8' },
+    secondary: { main: '#7c3aed' },
+    background: { default: '#f3e8ff' },
+  },
+  typography: {
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+  },
+  shape: { borderRadius: 8 },
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined',
+        fullWidth: true,
+      },
+      styleOverrides: {
+        root: { marginBottom: '10px' },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: { padding: '12px 24px' },
+      },
+    },
+  },
+});
 
 function EmployerSignup() {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      email: "",
-      phone: "",
-      password: "",
-      company: "",
-      receiveApplicationEmails: true,
-      darkMode: false,
-      agreeToTerms:false
+      name: "", email: "", phone: "", password: "", company: "", agreeToTerms: false
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required").min(3, "Name is too short"),
+      name: Yup.string().required("Name is required").min(3),
       email: Yup.string().email("Invalid email").required("Email is required"),
-      phone: Yup.string().matches(/^[0-9]{10}$/, "Enter 10 digit phone number").nullable(),
-      password: Yup.string().required("Password is required").min(6, "At least 6 characters"),
-      company: Yup.string().required("Company is required"),
-      agreeToTerms: Yup.boolean()
-    .oneOf([true], "You must agree to the terms and privacy policy")
+      phone: Yup.string().matches(/^[0-9]{10}$/, "Enter 10-digit phone number").required("Phone is required"),
+      password: Yup.string().required("Password is required").min(6),
+      company: Yup.string().required("Company name is required"),
+      agreeToTerms: Yup.boolean().oneOf([true], "You must accept the terms"),
     }),
-    onSubmit: async(values,{resetForm}) => {
-      try{
-        const respose = await axios.post('http://localhost:5000/api/employers',values);
-        alert("singup successful!");
-        resetForm();
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/api/employer', values);
+        console.log(response);
+        alert('Signup successful!');
         navigate('/EmployerLogin');
-      }catch(error){
-        alert(error.response?.data?.message || error.message || 'Error while signing up');
-         console.error('Signup error:', error);
+      } catch (error) {
+        alert('Error while signing up.');
+        console.error('Signup error:', error.response?.data || error.message);
       }
-    }
+    },
   });
 
   return (
-    <div>
-      <Header />
-    
-    <div className="flex justify-end pr-10 mt-10">
-      <div className='w-full max-w-md'>
-      <h3>Create Recruiter Profile</h3>
-      <form onSubmit={formik.handleSubmit} className="w-full max-w-md">
-        <div className='mb-4'>
-          <label htmlFor='name' className="block text-sm font-medium mb-1">
-            Name <span className="text-red-500">*</span>
-          </label>
-          <TextField id="name"
-          name="name"
-          placeholder="Name"
-          fullWidth
-          variant="outlined"
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.name && Boolean(formik.errors.name)}
-          helperText={formik.touched.name && formik.errors.name}></TextField>
-        </div>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default', display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+        <Paper elevation={5} sx={{ maxWidth: 900, width: '100%', display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
+          {!isSmallScreen && (
+            <Box sx={{ width: '60%', p: 4, bgcolor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src="https://res.cloudinary.com/dcawbqlmr/image/upload/v1747653893/6333213_pgmtjz.jpg" alt="Signup" style={{ maxWidth: '100%', maxHeight: '600px' }} />
+            </Box>
+          )}
+          <Box sx={{ width: { xs: '100%', md: '50%' }, p: { xs: 3, md: 5 } }}>
+            <Typography variant="h5" fontWeight={700} color="primary" gutterBottom>
+              New to JobSync? Sign Up!
+            </Typography>
 
-        <div className='mb-4'>
-          <label htmlFor='Email ID' className="block text-sm font-medium mb-1">
-            Email <span className="text-red-500">*</span>
-          </label>
-          <TextField id="email"
-          name="email"
-          placeholder="email address"
-          fullWidth
-          variant="outlined"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}></TextField>
-        </div>
-        
-        <div className="flex gap-6 mb-4">
-  <div className="w-64">
-    <label htmlFor="phone" className="block text-sm font-medium mb-1">
-      Phone Number<span className="text-red-500">*</span>
-    </label>
-    <TextField
-      id="phone"
-      name="phone"
-      placeholder="Phone Number"
-      variant="outlined"
-      type="tel"
-      value={formik.values.phone}
-      onChange={formik.handleChange}
-      onBlur={formik.handleBlur}
-      error={formik.touched.phone && Boolean(formik.errors.phone)}
-      helperText={formik.touched.phone && formik.errors.phone}
-      sx={{
-        width: '100%',
-        '& .MuiOutlinedInput-root': {
-          borderRadius: 0
-        }
-      }}
-    />
-  </div>
+            <form onSubmit={formik.handleSubmit} noValidate>
+              {[
+                { id: 'name', label: 'Name', icon: <PersonOutline /> },
+                { id: 'email', label: 'Email', icon: <EmailOutlined /> },
+                { id: 'phone', label: 'Phone Number', icon: <PhoneAndroidOutlined /> },
+                { id: 'company', label: 'Company Name', icon: <WorkOutlineOutlinedIcon /> }
+              ].map(({ id, label, icon }) => (
+                <Box key={id}>
+                  <label htmlFor={id} className="block text-sm font-medium mb-1">
+                    {label} {formik.values[id] === "" && <span style={{ color: 'red' }}>*</span>}
+                  </label>
+                  <TextField
+                    id={id}
+                    name={id}
+                    value={formik.values[id]}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched[id] && Boolean(formik.errors[id])}
+                    helperText={formik.touched[id] && formik.errors[id]}
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">{icon}</InputAdornment>
+                    }}
+                  />
+                </Box>
+              ))}
 
-  <div className="w-64">
-    <label htmlFor="password" className="block text-sm font-medium mb-1">
-      Password<span className="text-red-500">*</span>
-    </label>
-    <TextField
-      id="password"
-      name="password"
-      placeholder="Password"
-      variant="outlined"
-      type="password"
-      value={formik.values.password}
-      onChange={formik.handleChange}
-      onBlur={formik.handleBlur}
-      error={formik.touched.password && Boolean(formik.errors.password)}
-      helperText={formik.touched.password && formik.errors.password}
-      sx={{
-        width: '100%',
-        '& .MuiOutlinedInput-root': {
-          borderRadius: 0
-        }
-      }}
-      
-    />
-    
+              <Box>
+                <label htmlFor="password" className="block text-sm font-medium mb-1">
+                  Password {formik.values.password === "" && <span style={{ color: 'red' }}>*</span>}
+                </label>
+                <TextField
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start"><LockOutlined /></InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Box>
 
-        
-    
-  </div>
-</div>
-<div className="mb-4 w-full">
-  <label htmlFor="company" className="block text-sm font-medium mb-1">
-  Company<span className="text-red-500">*</span>
-  </label>
-  <TextField
-    id="company"
-    name="company"
-    placeholder="Company"
-    variant="outlined"
-    fullWidth
-    value={formik.values.company}
-    onChange={formik.handleChange}
-    onBlur={formik.handleBlur}
-    error={formik.touched.company && Boolean(formik.errors.company)}
-    helperText={formik.touched.company && formik.errors.company}
-    sx={{
-      '& .MuiOutlinedInput-root': {
-        borderRadius: 0
-      }
-    }}
-  />
-</div>
-<div className="mb-4">
-  <label className="flex items-start gap-2 text-sm">
-    <input
-      type="checkbox"
-      name="agreeToTerms"
-      checked={formik.values.agreeToTerms}
-      onChange={formik.handleChange}
-      className="mt-1"
-    />
-    <span>
-      I agree to use the aforesaid details to create my Recruiter Profile & display it on the JobSync site and also agree to be bound by the{" "}
-      <a href="#" className="text-blue-600 underline">Terms of Use</a> &{" "}
-      <a href="#" className="text-blue-600 underline">Privacy</a> of JobSync.
-    </span>
-  </label>
-  {formik.touched.agreeToTerms && formik.errors.agreeToTerms && (
-    <p className="text-red-600 text-xs mt-1">{formik.errors.agreeToTerms}</p>
-  )}
-</div>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="agreeToTerms"
+                    color="primary"
+                    checked={formik.values.agreeToTerms}
+                    onChange={formik.handleChange}
+                  />
+                }
+                label={
+                  <Typography variant="body2">
+                    I agree to the{" "}
+                    <Link to="#" style={{ color: theme.palette.primary.main }}>Terms of Use</Link> &{" "}
+                    <Link to="#" style={{ color: theme.palette.primary.main }}>Privacy Policy</Link>.
+                  </Typography>
+                }
+              />
+              {formik.touched.agreeToTerms && formik.errors.agreeToTerms && (
+                <Typography variant="caption" color="error">
+                  {formik.errors.agreeToTerms}
+                </Typography>
+              )}
 
-<div className="flex justify-end mt-4">
-  <Button
-    type="submit"
-    variant="contained"
-    sx={{
-      width:'150px',
-      height:'45px',
-      color: 'white', 
-      borderColor: 'purple', // purple border
-      borderRadius: 1.5,
-      backgroundColor:'#6b21a8',
-      textTransform: 'none', 
-      '&:hover': {
-        borderColor: '#581c87', // darker purple on hover
-        color: '#581c87'
-      }
-    }}
-  >
-    Submit
-  </Button>
-</div>
-</form>
-  </div>
-    </div>
-      </div>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={loading}
+                endIcon={!loading && <ArrowForward />}
+                sx={{
+                  mt: 3,
+                  height: '48px',
+                  background: 'linear-gradient(90deg, #6b21a8 0%, #7c3aed 100%)',
+                  color: '#fff',
+                  fontWeight: 600,
+                  boxShadow: '0 4px 12px rgba(107,33,168,0.4)'
+                }}
+              >
+                {loading ? <CircularProgress size={24} color="inherit" /> : "Sign Up"}
+              </Button>
+
+              <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+                Already have an account?{" "}
+                <Link to="/EmployerLogin" style={{ color: theme.palette.primary.main, fontWeight: 600 }}>
+                  Login
+                </Link>
+              </Typography>
+            </form>
+          </Box>
+        </Paper>
+      </Box>
+    </ThemeProvider>
   );
 }
 

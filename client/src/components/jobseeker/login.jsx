@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
+
 import {
   TextField,
   Button,
@@ -62,9 +63,16 @@ const theme = createTheme({
 
 function UserLogin() {
   const navigate = useNavigate();
+
+import Header from '../Homecomponents/Header';
+import { useAuth } from '../../context/AuthContext';
+
+function UserLogin() {
+
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const formik = useFormik({
@@ -98,6 +106,51 @@ function UserLogin() {
       }
     },
   });
+
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
+
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    password: Yup.string().required('Password is required'),
+  });
+
+  const initialValues = {
+    email: '',
+    password: '',
+  };
+
+  const onSubmit = async (values, { setSubmitting }) => {
+    try {
+      const res = await axios.post('http://127.0.0.1:5000/api/users/login', values);
+      console.log('Login Response:', res);
+
+      if (res.data.success) {
+        const { token, user } = res.data;
+        console.log('Token:',res.data.token)
+        console.log('User:',res.data.user)
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('UserId', user._id);
+        localStorage.setItem('role', user.role);
+        setAuth({ token, userId: user._id, role: 'user' });
+        navigate('/user-dashboard');
+      } else {
+        setError('Invalid credentials');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Server error or invalid credentials');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
 
   return (
     <ThemeProvider theme={theme}>

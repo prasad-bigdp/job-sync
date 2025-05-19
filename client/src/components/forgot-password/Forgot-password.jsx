@@ -1,140 +1,179 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { TextField, Button } from "@mui/material";
-import Header from "../../header";
-import { useNavigate } from "react-router-dom";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Paper,
+  CircularProgress,
+  useMediaQuery,
+} from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import axios from "axios";
+import Header from "../Homecomponents/Header";
+import { Mail } from "lucide-react";
+import InputAdornment from "@mui/material/InputAdornment";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#6b21a8",
+    },
+    secondary: {
+      main: "#7c3aed",
+    },
+    background: {
+      default: "#f3e8ff",
+    },
+  },
+  typography: {
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+  },
+  shape: {
+    borderRadius: 8,
+  },
+});
 
 function ForgotPassword() {
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
+    initialValues: { email: "" },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email").required("Email is required"),
-      password: Yup.string()
-        .required("New password is required")
-        .min(6, "At least 6 characters"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .required("Confirm password is required"),
     }),
-    onSubmit: (values) => {
-      console.log("Resetting password with:", values);
-      navigate("/login");
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        await axios.post("http://localhost:5000/api/forgot-password", values);
+        alert("Password reset link sent to your email.");
+      } catch (err) {
+        alert(err.response?.data?.message || "Something went wrong.");
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Header />
-      <div className="flex justify-end pr-10 mt-10">
-        <div className="w-full max-w-md">
-          <h2 className="text-lg font-semibold mb-6 text-gray-800">
-            Forgot Password
-          </h2>
-
-          <form onSubmit={formik.handleSubmit} className="w-full max-w-md">
-            {/* Email */}
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
-                Enter your Email <span className="text-red-500">*</span>
-              </label>
-              <TextField
-                id="email"
-                name="email"
-                placeholder="Email address"
-                fullWidth
-                variant="outlined"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+      <Box
+        sx={{
+          minHeight: "100vh",
+          backgroundColor: "background.default",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          p: 2,
+        }}
+      >
+        <Paper
+          elevation={5}
+          sx={{
+            maxWidth: 900,
+            width: "100%",
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            overflow: "hidden",
+          }}
+        >
+          {!isSmallScreen && (
+            <Box
+              sx={{
+                width: "50%",
+                p: 4,
+                bgcolor: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                src="https://res.cloudinary.com/dgwnjntoq/image/upload/v1747672053/Questions-pana_srq3q3.png"
+                alt="Forgot Password Illustration"
+                style={{ maxWidth: "100%", maxHeight: "500px" }}
               />
-            </div>
+            </Box>
+          )}
 
-            {/* New Password */}
-            <div className="mb-4">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium mb-1"
-              >
-                Set New Password <span className="text-red-500">*</span>
-              </label>
-              <TextField
-                id="password"
-                name="password"
-                placeholder="New Password"
-                type="password"
-                fullWidth
-                variant="outlined"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
-              />
-            </div>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "50%" },
+              p: { xs: 3, md: 5 },
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <Typography
+              variant="h5"
+              fontWeight={700}
+              color="primary"
+              gutterBottom
+            >
+              Forgot Password
+            </Typography>
 
-            {/* Confirm Password */}
-            <div className="mb-6">
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium mb-1"
-              >
-                Re-enter Password <span className="text-red-500">*</span>
-              </label>
-              <TextField
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                type="password"
-                fullWidth
-                variant="outlined"
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.confirmPassword &&
-                  Boolean(formik.errors.confirmPassword)
-                }
-                helperText={
-                  formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
-                }
-              />
-            </div>
+            <form onSubmit={formik.handleSubmit}>
+              <Box mb={3}>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Enter your registered Email{" "}
+                  <span style={{ color: "red" }}>*</span>
+                </label>
+                <TextField
+                  id="email"
+                  name="email"
+                  placeholder="Email address"
+                  fullWidth
+                  variant="outlined"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Mail size={20} color="#6b21a8" />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
 
-            <div className="flex justify-end">
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{
-                  backgroundColor: "#6b21a8",
+                  background: "linear-gradient(to right, #7c3aed, #6b21a8)",
                   color: "white",
                   textTransform: "none",
                   height: "48px",
                   fontWeight: "bold",
                   "&:hover": {
-                    backgroundColor: "#581c87",
+                    background: "linear-gradient(to right, #6b21a8, #581c87)",
                   },
                 }}
               >
-                Change Password
+                {loading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "Send Reset Link"
+                )}
               </Button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+            </form>
+          </Box>
+        </Paper>
+      </Box>
+    </ThemeProvider>
   );
 }
 
