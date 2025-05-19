@@ -4,12 +4,15 @@ import * as Yup from 'yup';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
-import Header from '../../header';
+import Header from '../Homecomponents/Header';
+import { useAuth } from '../../context/AuthContext';
 
 function UserLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { setAuth } = useAuth();
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -32,11 +35,13 @@ function UserLogin() {
 
       if (res.data.success) {
         const { token, user } = res.data;
+        console.log('Token:',res.data.token)
+        console.log('User:',res.data.user)
 
         localStorage.setItem('token', token);
         localStorage.setItem('UserId', user._id);
         localStorage.setItem('role', user.role);
-
+        setAuth({ token, userId: user._id, role: 'user' });
         navigate('/user-dashboard');
       } else {
         setError('Invalid credentials');

@@ -2,30 +2,22 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from "@mui/material";
-import Header from "../../header";
-import { useNavigate } from "react-router-dom";
+import Header from "../Homecomponents/Header";
+import axios from "axios";
 
 function ForgotPassword() {
-  const navigate = useNavigate();
-
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
+    initialValues: { email: "" },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email").required("Email is required"),
-      password: Yup.string()
-        .required("New password is required")
-        .min(6, "At least 6 characters"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .required("Confirm password is required"),
     }),
-    onSubmit: (values) => {
-      console.log("Resetting password with:", values);
-      navigate("/login");
+    onSubmit: async (values) => {
+      try {
+        await axios.post(`http://localhost:5000/api/forgot-password`, values);
+        alert("Password reset link sent to your email.");
+      } catch (err) {
+        alert(err.response?.data?.message || "Something went wrong.");
+      }
     },
   });
 
@@ -34,12 +26,9 @@ function ForgotPassword() {
       <Header />
       <div className="flex justify-end pr-10 mt-10">
         <div className="w-full max-w-md">
-          <h2 className="text-lg font-semibold mb-6 text-gray-800">
-            Forgot Password
-          </h2>
+          <h2 className="text-lg font-semibold mb-6 text-gray-800">Forgot Password</h2>
 
-          <form onSubmit={formik.handleSubmit} className="w-full max-w-md">
-            {/* Email */}
+          <form onSubmit={formik.handleSubmit}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium mb-1">
                 Enter your Email <span className="text-red-500">*</span>
@@ -58,60 +47,6 @@ function ForgotPassword() {
               />
             </div>
 
-            {/* New Password */}
-            <div className="mb-4">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium mb-1"
-              >
-                Set New Password <span className="text-red-500">*</span>
-              </label>
-              <TextField
-                id="password"
-                name="password"
-                placeholder="New Password"
-                type="password"
-                fullWidth
-                variant="outlined"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
-              />
-            </div>
-
-            {/* Confirm Password */}
-            <div className="mb-6">
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium mb-1"
-              >
-                Re-enter Password <span className="text-red-500">*</span>
-              </label>
-              <TextField
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                type="password"
-                fullWidth
-                variant="outlined"
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.confirmPassword &&
-                  Boolean(formik.errors.confirmPassword)
-                }
-                helperText={
-                  formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
-                }
-              />
-            </div>
-
             <div className="flex justify-end">
               <Button
                 type="submit"
@@ -123,12 +58,10 @@ function ForgotPassword() {
                   textTransform: "none",
                   height: "48px",
                   fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "#581c87",
-                  },
+                  "&:hover": { backgroundColor: "#581c87" },
                 }}
               >
-                Change Password
+                Send Reset Link
               </Button>
             </div>
           </form>

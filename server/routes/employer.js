@@ -1,20 +1,20 @@
-const express = require("express")
-const router = express.Router()
-const employerController = require("../controllers/employerController")
-const employerAuthController = require("../controllers/employerAuthController")
-const authMiddleware = require("../middleware/authMiddleware")
+const express = require('express');
+const router = express.Router();
+const employerController = require('../controllers/employerController');
+const authController = require('../controllers/employerAuthController');
+const authMiddleware = require('../middleware/authMiddleware');
+
 
 // Public routes
-router.post("/register", employerController.createEmployer)
-router.post("/login", employerAuthController.loginEmployer)
+router.post('/login', authController.loginEmployer);
+router.post('/', employerController.createEmployer);
+router.get('/', employerController.getAllEmployers);
 
-// Protected routes
-router.get(
-	"/dashboard",
-	authMiddleware,
-	employerAuthController.getEmployerDashboard,
-)
-router.get("/", authMiddleware, employerController.getAllEmployers)
-router.get("/:id", authMiddleware, employerController.getEmployerById)
+// Protected route
+router.get('/employer-dashboard', authMiddleware, authController.getEmployerDashboard);
 
-module.exports = router
+// Dynamic route
+router.get('/:id', employerController.getEmployerById);
+
+
+module.exports = router;

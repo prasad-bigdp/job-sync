@@ -34,7 +34,7 @@ const EmployerCharts = () => {
   ];
 
   return (
-    <main className="pt-16 pl-64 bg-gray-50">
+    <main className=" bg-gray-50">
       <div className="p-6 overflow-y-auto h-[calc(100vh-4rem)]">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
@@ -101,9 +101,13 @@ const EmployerCharts = () => {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="name" stroke="#888" fontSize={12} />
                 <YAxis stroke="#888" fontSize={12} />
-                <Tooltip formatter={(value, name) => name === 'JobsPosted' ? [`Posted ${value}`, 'Jobs Posted'] : [`${value}`, 'Apps Received']} />
+                <Tooltip formatter={(value, name) => {
+                  return name === 'JobsPosted'
+                    ? [`Posted ${value}`, 'Jobs Posted']
+                    : [`${value}`, 'Apps Received'];
+            }} />
                 <Bar dataKey="JobsPosted" fill="#F28C82" radius={[4, 4, 0, 0]} barSize={20}>
-                  <LabelList dataKey="JobsPosted" position="top" formatter={(value) => `Posted ${value}`} />
+                  <Tooltip formatter={(value) => [`${value} Posted`, null]} />
                 </Bar>
                 <Bar dataKey="AppsReceived" fill="#3B82F6" radius={[4, 4, 0, 0]} barSize={20}>
                   <LabelList dataKey="AppsReceived" position="top" formatter={(value) => value} />
@@ -243,7 +247,7 @@ const StatCard = ({ title, value, change, isUp, icon }) => (
         <p className="text-gray-500 text-sm font-medium truncate">{title}</p>
         <div className="flex items-baseline">
           <p className="text-2xl font-semibold text-gray-900">{value}</p>
-          <p className="ml-2 flex items-baseline text-sm font-semibold ${isUp ? 'text-green-600' : 'text-red-600'}">
+          <p className={`ml-2 flex items-baseline text-sm font-semibold ${isUp ? 'text-green-600' : 'text-red-600'}`}>
             {isUp ? (
               <svg className="self-center flex-shrink-0 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path fillRule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
@@ -262,4 +266,4 @@ const StatCard = ({ title, value, change, isUp, icon }) => (
   </div>
 );
 
-export default EmployerCharts;
+export default EmployerCharts;
