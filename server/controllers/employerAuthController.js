@@ -1,10 +1,13 @@
-const jwt = require("jsonwebtoken")
-const Employer = require("../models/Employer")
-const bcrypt = require("bcryptjs")
+
+const jwt = require('jsonwebtoken');
+const Employer = require('../models/Employer');
+const dotenv = require('dotenv');
+const bcrypt = require("bcrypt");
 
 const SECRET_KEY = process.env.JWT_SECRET
 
 exports.loginEmployer = async (req, res) => {
+
 	const { email, password } = req.body
 
 	try {
@@ -36,6 +39,8 @@ exports.loginEmployer = async (req, res) => {
 		res.status(500).json({ success: false, message: "Server error" })
 	}
 }
+
+
 
 exports.getEmployerDashboard = async (req, res) => {
 	try {

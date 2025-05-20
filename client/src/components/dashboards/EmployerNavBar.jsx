@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Bell, User } from 'lucide-react';
+import { Bell, User, Menu } from 'lucide-react';
 
-const EmployerNavBar = ({employer}) => {
-  // Mock user data (in a real app, this would come from auth context or state management)
-  
+const EmpolyerNavBar = ({ setSidebarOpen,employer }) => {
+ 
   const [isHovered, setIsHovered] = useState(false);
-
   const userName = employer?.name || "User"
+
   const initials = userName
     
         .split(' ')
@@ -14,24 +13,23 @@ const EmployerNavBar = ({employer}) => {
         .join('')
         .toUpperCase()
         .slice(0, 2);
-    
 
   return (
-    <header className="fixed top-0 left-64 right-0 bg-white shadow-sm py-3 px-6 flex justify-between items-center border-b z-10">
-      <div className="flex items-center">
-        <div className="flex items-center mr-6">
-        
-          
-        </div>
-       
-      </div>
-      
-      <div className="flex items-center space-x-6 gap-4">
+    <header className="bg-white shadow-sm py-3 px-8 m-2 flex justify-between items-center border-b z-10">
+      {/* Mobile menu button */}
+      <button
+        className="lg:hidden text-gray-700"
+        onClick={() => setSidebarOpen(true)}
+      >
+        <Menu size={24} />
+      </button>
+
+      <div className="flex items-center gap-4 space-x-6 ml-auto">
         <button className="text-gray-500 hover:text-gray-700 relative">
           <Bell size={20} />
         </button>
-        
-        <div 
+
+        <div
           className="relative"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -42,6 +40,7 @@ const EmployerNavBar = ({employer}) => {
           {isHovered && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 px-4 text-sm text-gray-700">
               {userName}
+
             </div>
           )}
         </div>
@@ -50,4 +49,4 @@ const EmployerNavBar = ({employer}) => {
   );
 };
 
-export default EmployerNavBar;
+export default EmpolyerNavBar;
