@@ -15,13 +15,8 @@ router.get("/matched", authMiddleware, getMatchedJobs)
 // Protected route for employers to get specific employers posted job (requires employer to be logged in)
 router.get("/employer/:id", authMiddleware, jobController.getJobsByEmployerId)
 
-// Protected route for employers to post a new job (requires employer to be logged in)
-router.post("/", authMiddleware, jobController.createJob)  
+//added route path for job matching :
 
-// Protected route for employers to update a job (requires employer to be logged in)
-router.put("/:id", authMiddleware, jobController.updateJob)
-
-// Protected route for employers to delete a job (requires employer to be logged in)
-router.delete("/:id", authMiddleware, jobController.deleteJob)
+router.get("/match" , auth , jobController.getMatchedJobs)
 
 module.exports = router
