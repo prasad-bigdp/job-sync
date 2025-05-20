@@ -7,13 +7,11 @@ import {
   Star,
   Building,
   Settings,
-  LogOut
+  LogOut,
+  X
 } from 'lucide-react';
-import { useAuth } from "../../context/AuthContext";
 
-const EmployerSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen,employer }) => {
-  const {logout} = useAuth();
-
+const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
   const menuItems = [
     { icon: <BarChart2 size={20} />, label: "Dashboard" },
     { icon: <FileText size={20} />, label: "Post a Job" },
@@ -28,7 +26,7 @@ const EmployerSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen,
     <>
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-30 z-30 lg:hidden"
+          className="fixed inset-0 bg-black bg personally-owned-30 z-30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -37,27 +35,19 @@ const EmployerSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen,
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 transform transition-transform duration-200 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:shadow-none`}
       >
-        <div className="p-4 border-b">
+        <div className="p-4 border-b flex justify-between items-center">
           <img
             src="https://res.cloudinary.com/dzmrkbev5/image/upload/v1746340322/JobSync_djvrm2.webp"
             className="w-[110px]"
             alt="Logo"
           />
+          <button
+            className="lg:hidden text-gray-700"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <X size={24} />
+          </button>
         </div>
-
-         {/* Employer Details */}
-          <div className="p-4 text-center">
-        {employer ? (
-          <div className="text-md text-gray-700">
-            <p className="font-medium">{employer.name}</p>
-            <p>{employer.email}</p>
-            <p>{employer.phone}</p>
-          </div>
-        ) : (
-          <div className="text-sm text-gray-500">Loading Employer Info...</div>
-        )}
-      </div>
-
 
         <div className="p-4 flex-grow overflow-y-auto">
           <nav>
@@ -85,7 +75,7 @@ const EmployerSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen,
         </div>
 
         <div className="absolute bottom-0 w-full p-4 border-t">
-          <button onClick={logout} className="w-full flex items-center text-purple-600 bold hover:bg-red-50 rounded-md px-3 py-2 text-sm">
+          <button className="w-full flex items-center text-purple-600 bold hover:bg-red-50 rounded-md px-3 py-2 text-sm">
             <span className="mr-3"><LogOut size={20} /></span>
             Logout
           </button>
@@ -95,4 +85,4 @@ const EmployerSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen,
   );
 };
 
-export default EmployerSidebar;
+export default Sidebar;

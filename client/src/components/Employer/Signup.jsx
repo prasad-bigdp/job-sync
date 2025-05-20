@@ -62,7 +62,7 @@ function EmployerSignup() {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('http://127.0.0.1:5000/api/employer', values);
+        const response = await axios.post('http://127.0.0.1:5000/api/employers', values);
         console.log(response);
         alert('Signup successful!');
         navigate('/EmployerLogin');
