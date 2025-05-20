@@ -57,12 +57,13 @@
 const express = require("express")
 const router = express.Router()
 const employerController = require("../controllers/employerController")
+const authController = require("../controllers/authController")
 const employerAuthController = require("../controllers/employerAuthController")
 const authMiddleware = require("../middleware/authMiddleware")
 
 // Public routes
-router.post("/register", employerController.createEmployer)
-router.post("/login",authMiddleware,employerAuthController.loginEmployer)
+router.post("/register", employerController.createEmployer);
+router.post("/login",employerAuthController.loginEmployer)
 
 // Protected routes
 router.get(
@@ -72,5 +73,16 @@ router.get(
 )
 router.get("/", authMiddleware, employerController.getAllEmployers)
 router.get("/:id", authMiddleware, employerController.getEmployerById)
+
+
+
+// Public routes
+//router.post('/login', authController.loginEmployer);
+//router.post('/register', employerController.createEmployer);
+router.get('/', employerController.getAllEmployers);
+
+// Protected route
+router.get('/employer-dashboard', authMiddleware, employerAuthController.getEmployerDashboard);
+
 
 module.exports = router;

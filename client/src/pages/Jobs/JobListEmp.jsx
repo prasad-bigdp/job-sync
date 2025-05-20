@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import './JobList.css';
 
-function JobList() {
+function JobListEmp() {
   const [jobs, setJobs] = useState([]);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showAlertModal, setShowAlertModal] = useState(false);
@@ -16,7 +16,7 @@ function JobList() {
   // Fetching jobs
   const fetchJobs = async () => {
     try {
-      const res = await axios.get(`${process.env.CLIENT_URL}/api/jobs`, {
+      const res = await axios.get(`${import.meta.env.VITE_CLIENT_URL}/api/jobs`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setJobs(res.data);
@@ -26,7 +26,7 @@ function JobList() {
   };
 
   useEffect(() => {
-    fetchJobs();
+    //fetchJobs();
   }, []);
 
   // Open confirm modal
@@ -145,4 +145,4 @@ function JobList() {
   );
 }
 
-export default JobList;
+export default JobListEmp;

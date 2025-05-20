@@ -1,8 +1,7 @@
-const Employer = require("../models/Employer")
-const bcrypt = require("bcryptjs")
 
-const jwt = require("jsonwebtoken")
-const SECRET_KEY = process.env.JWT_SECRET
+const Employer = require('../models/Employer');
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 exports.getAllEmployers = async (req, res) => {
 	try {
@@ -34,43 +33,29 @@ exports.getEmployerById = async (req, res) => {
 }
 
 exports.createEmployer = async (req, res) => {
-	try {
-		const { email, password, ...rest } = req.body
-		let existingEmployer = await Employer.findOne({ email })
-		if (existingEmployer) {
-			return res
-				.status(400)
-				.json({
-					success: false,
-					message: "Employer with this email already exists",
-				})
-		}
 
-		const token = jwt.sign(
-					{ email: employer.email, employerId: employer._id, role: employer.role },
-					SECRET_KEY,
-					{ expiresIn: "1h" },
-				)
+  try {
+    const { email, password, ...rest } = req.body;
 
-		const salt = await bcrypt.genSalt(10)
-		const hashedPassword = await bcrypt.hash(password, salt)
+    const existingEmployer = await Employer.findOne({ email });
+    const existingUser = await User.findOne({ email });
 
-		const employer = new Employer({ email, password: hashedPassword, ...rest })
-		await employer.save()
+    if (existingEmployer || existingUser) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
 
-		const { password: _, ...employerWithoutPassword } = employer.toObject()
-		
-		res
-			.status(201)
-			.json({
-				success: true,
-				message: "Employer created successfully",
-				employer: employerWithoutPassword,
-			})
-	} catch (err) {
-		console.error("Error creating employer:", err)
-		res
-			.status(500)
-			.json({ success: false, message: "Server error", error: err.message })
-	}
-}
+    if (!password || password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const employer = new Employer({ ...rest, email, password: hashedPassword });
+
+    await employer.save();
+    res.status(201).json({ message: "Employer created successfully" });
+  } catch (err) {
+    console.error("Error creating employer:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
