@@ -1,22 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from "axios";    //axios for posting req on server
+import axios from "axios";
 
-const JobApplication = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  //const [userId, setUserId] = useState(null);
-  //const [employerId, setEmployerId] = useState(null);
+
+const JobApplication = ({ isModalOpen, setIsModalOpen, selectedJob }) => {
   const [jobId, setJobId] = useState(null);
 
   useEffect(() => {
-    // Get user, job , employer details from localStorage
-    //const storedUserId = localStorage.getItem("userId");
-    //const storedEmployerId = localStorage.getItem("employerId");
     const storedJobId = localStorage.getItem("jobId");
-
-    //setUserId(storedUserId);
-   // setEmployerId(storedEmployerId);
     setJobId(storedJobId);
   }, []);
 
@@ -31,31 +23,20 @@ const JobApplication = () => {
   });
 
   const handleSubmit = async (values, { resetForm }) => {
-    
     try {
       const formData = new FormData();
       formData.append("resume", values.resume);
       formData.append("message", values.message);
-      //formData.append("userId", userId);
-      //formData.append("employerId", employerId);
       formData.append("jobId", jobId);
 
-      // Replace with your actual endpoint
       const response = await axios.post(`http://localhost:5000/api/application/${jobId}`, formData);
-
       alert("Application submitted successfully!");
-      console.log("Server response:", response.data);
-
       resetForm();
-      setIsModalOpen(false); // Close the modal after submission
+      setIsModalOpen(false);
     } catch (error) {
       console.error("Submission failed:", error);
       alert("Failed to submit application. Please try again.");
     }
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
@@ -63,27 +44,19 @@ const JobApplication = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Job Application</h1>
-      <button 
-        onClick={openModal} 
-        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-      >
-        Apply Now
-      </button>
-
-      {/* Job Application Modal */}
+    <>
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center px-4">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 relative">
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+              style={{ fontSize: '50px', marginTop:"-20px" }}
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-600"
             >
               &times;
             </button>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">Apply for this Job</h2>
+            <strong className="text-2xl font-semibold  mb-5 text-gray-800">Apply for {selectedJob.title} role</strong>
 
             <Formik
               initialValues={initialValues}
@@ -103,7 +76,7 @@ const JobApplication = () => {
                       onChange={(event) =>
                         setFieldValue("resume", event.currentTarget.files[0])
                       }
-                      className="w-full border border-gray-300 p-2 rounded "
+                      className="w-full border border-gray-300 p-2 rounded"
                     />
                     <ErrorMessage name="resume" component="div" className="text-red-500 text-1xl" />
                   </div>
@@ -122,7 +95,7 @@ const JobApplication = () => {
 
                   <button
                     type="submit"
-                    className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200"
+                    className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200" style={{ backgroundColor: "rgb(110, 0, 190)" }}
                   >
                     Submit Application
                   </button>
@@ -132,7 +105,7 @@ const JobApplication = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
