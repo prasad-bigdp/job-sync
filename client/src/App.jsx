@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+
+import Home from "./pages/Home";
+import MobileSearchJobs from "./pages/MobileSearchJobs";
+import JobList from "./components/Homecomponents/JobList";
+import EmployerSignup from './components/Employer/Signup';
+import Login from './pages/login';
+import EmployeeLogin from './components/Employer/login';
+import ForgotPassword from './components/forgot-password/Forgot-password';
+import UserLogin from './components/JobSeeker/login';
+import UserSignup from './components/JobSeeker/UserSignup';
+import EmployerDashboard from "./components/dashboards/EmployerDashboard";
+import UserDashboard from './Components/dashboards/UserDashboard';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/seekerform" element={<MobileSearchJobs />} />
+        <Route path="/search" element={<JobList />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/EmployerLogin" element={<EmployeeLogin />} />
+        <Route path="/EmployerSignup" element={<EmployerSignup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/UserLogin" element={<UserLogin />} />
+        <Route path="/UserSignup" element={<UserSignup />} />
+        <Route path="/employer-dashboard" element={<EmployerDashboard />} />
+        <Route path="/user-Dashboard" element={<UserDashboard />} />
+       
+      </Routes>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
