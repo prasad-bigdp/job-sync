@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 
     setAuth({ token, userId, role });
     setLoading(false);
-    console.log("Auth from localStorage (init):", { token, userId, role });
+    
   }, []);
 
   const logout = () => {

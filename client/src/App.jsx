@@ -1,7 +1,6 @@
 
 
 import { BrowserRouter,  Routes, Route } from 'react-router-dom';
-import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/Home";
 import MobileSearchJobs from "./pages/MobileSearchJobs";
 import JobList from "./components/Homecomponents/JobList";
@@ -17,9 +16,6 @@ import UserDashboard from './components/dashboards/UserDashboard';
 function App() {
   return (
 
-
-    <AuthProvider>
-
       <Routes>
         <Route path ="/" element={<Home />} />
         <Route path="/seekerform" element={<MobileSearchJobs />} />
@@ -34,7 +30,7 @@ function App() {
         <Route path="/employer-dashboard" element={<EmployerDashboard />} />
         <Route path="/user-Dashboard" element={<UserDashboard />} />
       </Routes>
-    </AuthProvider>
+
 
   )
 

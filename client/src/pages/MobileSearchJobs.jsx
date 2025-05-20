@@ -6,6 +6,7 @@ const MobileSearchJobs = () => {
   const [jobsQuery, setJobsquery] = useState("");
   const [locationQuery, setLocationquery] = useState("");
   const [expreinceQuery, setexperinceQuery] = useState("");
+  const[inputError,setInputerror]=useState(false)
   useEffect(() => {
     if (window.innerWidth > 1024) {
       navigate("/");
@@ -15,7 +16,7 @@ const MobileSearchJobs = () => {
     navigate("/");
   };
   const handleJobsSearchclick = () => {
-    if (!jobsQuery || !locationQuery || !expreinceQuery) return null;
+    if (!jobsQuery || !locationQuery || !expreinceQuery) return setInputerror(true);
     navigate(`/search?query=${jobsQuery}&locations=${locationQuery}&experience=${expreinceQuery}`)
   };
   return (
@@ -52,6 +53,9 @@ const MobileSearchJobs = () => {
             placeholder="Experience "
           />
         </div>
+      </div>
+      <div className={inputError?"text-red-400 block":"hidden"}>
+         Please enter the keyword for search the jobs
       </div>
      
       <div className="absolute w-full left-0 bottom-[100px] px-3 ">

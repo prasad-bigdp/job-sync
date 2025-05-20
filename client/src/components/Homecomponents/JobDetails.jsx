@@ -3,9 +3,6 @@ import { Briefcase } from 'lucide-react';
 import { Wallet } from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
 
-
-
-
 const JobDetails=({selectedJob,setSelected})=>{
     
             const handleJobsBackclick=()=>{
@@ -23,7 +20,7 @@ const JobDetails=({selectedJob,setSelected})=>{
                 
                </div>
           
-               <div  className="p-6"> 
+               <div  className="p-6 "> 
                 <div >
                    <h2 className="text-2xl font-bold mb-2">{selectedJob.title}</h2>
                       <div>
