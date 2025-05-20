@@ -1,6 +1,4 @@
-
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -11,6 +9,7 @@ import {
   Paper,
   useMediaQuery,
   InputAdornment,
+  IconButton,
 } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Lock, ShieldCheck } from 'lucide-react';
@@ -18,7 +17,7 @@ import Header from '../Homecomponents/Header';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-// import ResetPasswordImg from "../../assets/Online document-bro.png";
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const theme = createTheme({
   palette: {
@@ -38,6 +37,19 @@ function ResetPassword() {
   const navigate = useNavigate();
   const { token } = useParams();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  
+  // State for password visibility toggle
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  // Toggle handlers for password visibility
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+  
+  // Prevent the mouse down event to avoid focus loss on the input
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const formik = useFormik({
     initialValues: { password: '', confirmPassword: '' },
@@ -58,6 +70,10 @@ function ResetPassword() {
       }
     },
   });
+
+  // Real-time password matching check
+  const passwordsMatch = formik.values.password === formik.values.confirmPassword 
+    && formik.values.confirmPassword !== '';
 
   return (
     <ThemeProvider theme={theme}>
@@ -122,7 +138,7 @@ function ResetPassword() {
                 <TextField
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   fullWidth
                   variant="outlined"
                   placeholder="New Password"
@@ -137,6 +153,18 @@ function ResetPassword() {
                         <Lock size={18} color="#6b21a8" />
                       </InputAdornment>
                     ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
                 />
               </Box>
@@ -148,7 +176,7 @@ function ResetPassword() {
                 <TextField
                   id="confirmPassword"
                   name="confirmPassword"
-                  type="password"
+                  type={showConfirmPassword ? 'text' : 'password'}
                   fullWidth
                   variant="outlined"
                   placeholder="Confirm Password"
@@ -163,14 +191,46 @@ function ResetPassword() {
                         <ShieldCheck size={18} color="#6b21a8"/>
                       </InputAdornment>
                     ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle confirm password visibility"
+                          onClick={handleClickShowConfirmPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
                 />
               </Box>
+              
+              {formik.values.confirmPassword && formik.values.password && (
+                <Box mb={2} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box 
+                    sx={{ 
+                      width: 16, 
+                      height: 16, 
+                      borderRadius: '50%', 
+                      bgcolor: passwordsMatch ? 'success.main' : 'error.main' 
+                    }} 
+                  />
+                  <Typography 
+                    variant="body2" 
+                    color={passwordsMatch ? 'success.main' : 'error.main'}
+                  >
+                    {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
+                  </Typography>
+                </Box>
+              )}
 
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
+                disabled={!passwordsMatch && formik.values.confirmPassword !== ''}
                 sx={{
                   background: 'linear-gradient(to right, #7c3aed, #6b21a8)',
                   color: 'white',
@@ -180,6 +240,9 @@ function ResetPassword() {
                   '&:hover': {
                     background: 'linear-gradient(to right, #6b21a8, #581c87)',
                   },
+                  '&.Mui-disabled': {
+                    background: '#e0e0e0',
+                  }
                 }}
               >
                 Change Password

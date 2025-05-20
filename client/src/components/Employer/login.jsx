@@ -1,128 +1,176 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import {
+  TextField, Button, Box, Typography, Paper,
+  InputAdornment, IconButton, CircularProgress, useMediaQuery
+} from '@mui/material';
+import {
+  Visibility, VisibilityOff, EmailOutlined, LockOutlined, ArrowForward
+} from '@mui/icons-material';
 import { useNavigate, Link } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useAuth } from '../../context/AuthContext';
+
+const theme = createTheme({
+  palette: {
+    primary: { main: '#6b21a8' },
+    secondary: { main: '#7c3aed' },
+    background: { default: '#f3e8ff' },
+  },
+  typography: {
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+  },
+  shape: { borderRadius: 8 },
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined',
+        fullWidth: true,
+      },
+      styleOverrides: {
+        root: { marginBottom: '10px' },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: { padding: '12px 24px' },
+      },
+    },
+  },
+});
 
 function EmployeeLogin() {
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
   const navigate = useNavigate();
   const { setAuth } = useAuth();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: ''
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email").required("Email is required"),
+      password: Yup.string().required("Password is required")
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+      setServerError('');
+      try {
+        const res = await axios.post('http://127.0.0.1:5000/api/employers/login', values);
+        const { token, employer } = res.data;
+
+        if (!employer) throw new Error("Employer data missing");
+
+        setAuth({ token, userId: employer._id, role: employer.role });
+        navigate('/employer-dashboard');
+      } catch (error) {
+        setServerError("Invalid credentials or server error.");
+        console.error("Login error:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
   });
 
-  const initialValues = {
-    email: '',
-    password: '',
-  };
-
-  const onSubmit = async (values, { setSubmitting }) => {
-    setError('');
-    setLoading(true);
-    try {
-      const res = await axios.post('http://127.0.0.1:5000/api/employers/login', values);
-      const { token, employer } = res.data;
-      console.log('token:',res.data.token)
-      console.log('Token:',res.data.employer)
-
-      if (!employer) return setError('Employer data not found');
-
-      setAuth({ token, userId: employer._id, role: employer.role });
-
-      navigate('/employer-dashboard');
-    } catch (err) {
-      console.error('Login error:', err);
-      setError('Server error or invalid credentials');
-    } finally {
-      setSubmitting(false);
-      setLoading(false);
-    }
-  };
-
   return (
-     <div className="flex min-h-screen bg-gray-100 justify-end items-center px-4">
-      <div className="bg-white shadow-md rounded-lg w-full max-w-md px-8 pt-6 pb-8">
-        <h3 className="text-xl font-semibold mb-6 text-gray-800 text-center">Employer Login</h3>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default', display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+        <Paper elevation={5} sx={{ maxWidth: 900, width: '100%', display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
+          {!isSmallScreen && (
+            <Box sx={{ width: '60%', p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src="https://res.cloudinary.com/dgwnjntoq/image/upload/v1747752937/Computer_login-pana_pagiqh.png" alt="Login" style={{ maxWidth: '100%' }} />
+            </Box>
+          )}
+          <Box sx={{ width: { xs: '100%', md: '50%' }, p: { xs: 3, md: 5 } }}>
+            <Typography variant="h5" fontWeight={700} color="primary" gutterBottom>
+              Welcome Back, Employer!
+            </Typography>
 
-        {error && <div className="text-red-500 text-sm text-center mb-4">{error}</div>}
+            {serverError && (
+              <Typography color="error" variant="body2" mb={2}>
+                {serverError}
+              </Typography>
+            )}
 
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-          {({ isSubmitting }) => (
-            <Form>
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-                  Email address
-                </label>
-                <Field
-                  type="email"
-                  autoComplete="email"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  name="email"
-                />
-                <ErrorMessage name="email" component="div" className="text-red-500 text-sm italic" />
-              </div>
-
-              <div className="mb-6 relative">
-                <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-                  Password
-                </label>
-                <div className="relative">
-                  <Field
-                    type={showPassword ? 'text' : 'password'}
-                    autoComplete="current-password"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
-                    id="password"
-                    name="password"
+            <form onSubmit={formik.handleSubmit} noValidate>
+              {[
+                { id: 'email', label: 'Email', icon: <EmailOutlined /> },
+                { id: 'password', label: 'Password', icon: <LockOutlined /> }
+              ].map(({ id, label, icon }) => (
+                <Box key={id}>
+                  <label htmlFor={id} style={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>
+                    {label} {formik.values[id] === "" && <span style={{ color: 'red' }}>*</span>}
+                  </label>
+                  <TextField
+                    id={id}
+                    name={id}
+                    type={id === 'password' ? (showPassword ? 'text' : 'password') : 'email'}
+                    value={formik.values[id]}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched[id] && Boolean(formik.errors[id])}
+                    helperText={formik.touched[id] && formik.errors[id]}
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">{icon}</InputAdornment>,
+                      ...(id === 'password' && {
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={togglePasswordVisibility} edge="end" aria-label="toggle password visibility">
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      })
+                    }}
                   />
-                  <div
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
-                    onClick={togglePasswordVisibility}
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </div>
-                </div>
-                <ErrorMessage name="password" component="div" className="text-red-500 text-sm italic" />
-              </div>
+                </Box>
+              ))}
 
-              <div className="flex items-center justify-between mb-4">
-                <Link to="/forgot-password" className="text-sm text-blue-500 hover:text-blue-800">
+              <Box sx={{ textAlign: 'right', mb: 2 }}>
+                <Link to="/forgot-password" style={{ color: theme.palette.primary.main }}>
                   Forgot Password?
                 </Link>
-              </div>
+              </Box>
 
-              <div className="text-center mb-4">
-                <span className="text-gray-600 text-sm">Don't have an account? </span>
-                <Link to="/EmployerSignup" className="text-sm text-blue-500 hover:text-blue-800">
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={loading}
+                endIcon={!loading && <ArrowForward />}
+                sx={{
+                  height: '48px',
+                  background: 'linear-gradient(90deg, #6b21a8 0%, #7c3aed 100%)',
+                  color: '#fff',
+                  fontWeight: 600,
+                  boxShadow: '0 4px 12px rgba(107,33,168,0.4)'
+                }}
+              >
+                {loading ? <CircularProgress size={24} color="inherit" /> : "Log In"}
+              </Button>
+
+              <Typography variant="body2" align="center" sx={{ mt: 3 }}>
+                Don't have an account?{" "}
+                <Link to="/EmployerSignup" style={{ color: theme.palette.primary.main, fontWeight: 600 }}>
                   Sign up
                 </Link>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded w-full"
-              >
-                Log In
-              </button>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </div>
+              </Typography>
+            </form>
+          </Box>
+        </Paper>
+      </Box>
+    </ThemeProvider>
   );
- 
 }
 
 export default EmployeeLogin;

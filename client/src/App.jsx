@@ -1,5 +1,4 @@
 
-
 import { BrowserRouter,  Routes, Route } from 'react-router-dom';
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/Home";
@@ -9,6 +8,10 @@ import EmployerSignup from './components/Employer/Signup'
 import Login from './pages/login'
 import EmployeeLogin from './components/Employer/login';
 import ForgotPassword from './components/forgot-password/Forgot-password';
+
+
+
+
 import UserLogin from './components/jobseeker/login';
 import UserSignup from './components/jobseeker/UserSignup';
 import ResetPassword from './components/forgot-password/ResetPassword'
@@ -34,6 +37,7 @@ function App() {
         <Route path="/employer-dashboard" element={<EmployerDashboard />} />
         <Route path="/user-Dashboard" element={<UserDashboard />} />
       </Routes>
+
     </AuthProvider>
 
   )
