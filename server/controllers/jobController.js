@@ -59,6 +59,10 @@ exports.getFilteredJobs = (req , res) => {
     filter.skillsRequired = { $in : skillArray }
   }
 
+   if (experience) {
+    filter.experienceRequired = { $lte: parseInt(experience) }; 
+  }
+
   // Query the Job collection with the constructed filter
   Job.find(filter)
      .populate("employer" , "name company email")
@@ -66,15 +70,18 @@ exports.getFilteredJobs = (req , res) => {
       let filtered = jobs ;
 
       // Additional filtering for employer or company if provided
-      if(employer || company) {
-        filtered = jobs.filter( (job) => {
-          const matchEmployer = company
-          ? job.employer?.company
-          ?.toLowerCase()
-          .includes(company.toLowerCase())
-          : true ;
-          return matchEmployer && matchCompany ;
-        })
+      if (employer || company) {
+        filtered = jobs.filter((job) => {
+          const matchEmployer = employer
+            ? job.employer?.name?.toLowerCase().includes(employer.toLowerCase())
+            : true;
+
+          const matchCompany = company
+            ? job.employer?.company?.toLowerCase().includes(company.toLowerCase())
+            : true;
+
+          return matchEmployer && matchCompany;
+        });
       }
 
       // if no job matches the criteria
