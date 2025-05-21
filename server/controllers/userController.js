@@ -14,22 +14,6 @@ exports.getAllUsers = async (req, res) => {
 	}
 }
 
-exports.getUserById = async (req, res) => {
-	try {
-		const user = await User.findById(req.params.id).select("-password")
-		if (!user)
-			return res.status(404).json({ success: false, message: "User not found" })
-		res.json({ success: true, user })
-	} catch (err) {
-		console.error(err)
-		if (err.name === "CastError") {
-			return res
-				.status(400)
-				.json({ success: false, message: "Invalid user ID format" })
-		}
-		res.status(500).json({ success: false, message: "Server error" })
-	}
-}
 
 exports.createUser = async (req, res) => {
   try {
@@ -55,5 +39,49 @@ exports.createUser = async (req, res) => {
   } catch (err) {
     console.error("Error creating user:", err);
     res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+
+//group-7 profile
+
+//Get user profile by ID
+exports.getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate('appliedJobs');
+    if (!user) return res.status(404).json({ 
+      success: false,
+      error: 'User not found' 
+    });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ 
+      success: false,
+      error: err.message 
+    });
+  }
+};
+
+// Update user profile
+exports.updateUserProfile = async (req, res) => {
+  if (req.user.role !== 'user' || req.user.userId !== req.params.id) {
+    return res.status(403).json({ 
+      success: false,
+      error: 'You are not authorized to update this profile' 
+    });
+  }
+
+  try {
+    const updates = req.body;
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+      runValidators: true,
+    });
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ 
+      success: false,
+      error: err.message
+     });
   }
 };
