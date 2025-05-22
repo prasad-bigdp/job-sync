@@ -1,63 +1,86 @@
 
-const jwt = require('jsonwebtoken');
 const Employer = require('../models/Employer');
-const dotenv = require('dotenv');
-const bcrypt = require("bcrypt");
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
-const SECRET_KEY = process.env.JWT_SECRET
-
-exports.loginEmployer = async (req, res) => {
-
-	const { email, password } = req.body
-
+exports.getAllEmployers = async (req, res) => {
 	try {
-		const employer = await Employer.findOne({ email })
-
-		if (!employer) {
-			return res
-				.status(404)
-				.json({ success: false, message: "Employer not found" })
-		}
-
-		const isMatch = await bcrypt.compare(password, employer.password)
-		if (!isMatch) {
-			return res
-				.status(400)
-				.json({ success: false, message: "Incorrect password" })
-		}
-
-		const token = jwt.sign(
-			{ email: employer.email, employerId: employer._id, role: employer.role },
-			SECRET_KEY,
-			{ expiresIn: "1h" },
-		)
-
-		const { password: _, ...employerWithoutPassword } = employer.toObject()
-		res.json({ success: true, token, employer: employerWithoutPassword })
+		const employers = await Employer.find().select("-password")
+		res.json({ success: true, employers })
 	} catch (err) {
-		console.error("Login error:", err)
+		console.error(err)
 		res.status(500).json({ success: false, message: "Server error" })
 	}
 }
 
 
+exports.createEmployer = async (req, res) => {
 
-exports.getEmployerDashboard = async (req, res) => {
-	try {
-		const employer = await Employer.findById(req.user.employerId).select(
-			"-password",
-		)
-		if (!employer) {
-			return res
-				.status(404)
-				.json({ success: false, message: "Employer not found" })
-		}
+  try {
+    const { email, password, ...rest } = req.body;
 
-		res.json({ success: true, employer })
-	} catch (err) {
-		console.error("Dashboard fetch error:", err)
-		res
-			.status(500)
-			.json({ success: false, message: "Error fetching employer data" })
-	}
-}
+    const existingEmployer = await Employer.findOne({ email });
+    const existingUser = await User.findOne({ email });
+
+    if (existingEmployer || existingUser) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    if (!password || password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const employer = new Employer({ ...rest, email, password: hashedPassword });
+
+    await employer.save();
+    res.status(201).json({ message: "Employer created successfully" });
+  } catch (err) {
+    console.error("Error creating employer:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+
+//group-7 profile
+
+//Get employer profile by ID
+exports.getEmployerProfile = async (req, res) => {
+  try {
+    const employer = await Employer.findById(req.params.id).populate('createdJobs').select("-password");
+    if (!employer) return res.status(404).json({ 
+      success: false,
+      error: 'Employer not found' 
+    });
+    res.json(employer);
+  } catch (err) {
+    res.status(500).json({
+      success: false, 
+		  error: err.message 
+	  });
+  }
+};
+
+//Upadte employer profile by ID
+exports.updateEmployerProfile = async (req, res) => {
+  if (req.user.role !== 'employer' || req.user.employerId !== req.params.id) {
+    return res.status(403).json({ 
+      success: false,
+      error: 'You are not authorized to update this profile' 
+    });
+  }
+
+  try {
+    const updates = req.body;
+    const updatedEmployer = await Employer.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+      runValidators: true,
+    });
+    res.json(updatedEmployer);
+  } catch (err) {
+    res.status(500).json({ 
+      success: false,
+      error: err.message 
+    });
+  }
+};
