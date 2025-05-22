@@ -26,7 +26,7 @@ function JobListEmp() {
   };
 
   useEffect(() => {
-    //fetchJobs();
+    fetchJobs();
   }, []);
 
   // Open confirm modal
@@ -38,14 +38,14 @@ function JobListEmp() {
   // Confirm delete
   const handleConfirmDelete = async () => {
     try {
-      await axios.delete(`CLIENT_URL/api/jobs/${selectedJobId}`, {
+      await axios.delete(`${import.meta.env.VITE_CLIENT_URL}/api/jobs/${selectedJobId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setJobs((prevJobs) => prevJobs.filter((job) => job._id !== selectedJobId));
       setAlertMessage("Job deleted successfully!");
     } catch (err) {
       console.error("Error deleting job", err);
-      setAlertMessage("Failed to delete job.");
+      setAlertMessage(err.response?.data?.message || "Failed to delete job.");
     } finally {
       setShowConfirmModal(false);
       setShowAlertModal(true);
@@ -61,7 +61,7 @@ function JobListEmp() {
 
   //it goes to edit form and based on job id retrives job details
   const handleEdit = (jobId) => {
-    navigate(`/edit-job/${jobId}`);
+    navigate(`/employer-dashboard/edit-job/${jobId}`);
   };
 
   return (
@@ -69,7 +69,7 @@ function JobListEmp() {
       {/* Confirm Delete Modal */}
       {showConfirmModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md text-gray-900">
             <h3 className="text-lg font-semibold mb-4">Confirm Delete</h3>
             <p className="mb-6">Are you sure you want to delete this job?</p>
             <div className="flex justify-end gap-2">
@@ -93,7 +93,7 @@ function JobListEmp() {
       {/* Alert Modal */}
       {showAlertModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md text-gray-900">
             <h3 className="text-lg font-semibold mb-4">Notification</h3>
             <p className="mb-6">{alertMessage}</p>
             <div className="flex justify-end">
@@ -110,7 +110,7 @@ function JobListEmp() {
 
       <div className="joblist-header">
         <h2>My Job Postings</h2>
-        <button className="create-job-btn" onClick={() => navigate('/create-job')}>
+        <button className="create-job-btn" onClick={() => navigate('/employer-dashboard/create-job')}>
           <FaPlus className="me-2" />
           Create Job
         </button>

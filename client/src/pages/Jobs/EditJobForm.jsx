@@ -9,6 +9,7 @@ const EditJobForm = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   const [jobData, setJobData] = useState({
     title: '',
@@ -21,7 +22,7 @@ const EditJobForm = () => {
   const [skillInput, setSkillInput] = useState('');
 
   useEffect(() => {
-    axios.get(`CLIENT_URL/api/jobs/${jobId}`, {
+    axios.get(`${import.meta.env.VITE_CLIENT_URL}/api/jobs/${jobId}`, {
       headers: { Authorization: `Bearer ${token}` }
     }).then(res => {
       setJobData({
@@ -60,11 +61,11 @@ const EditJobForm = () => {
 
   const handleSubmit = (e) => { 
     e.preventDefault();
-    axios.put(`CLIENT_URL/api/jobs/${jobId}`, jobData, {
+    axios.put(`${import.meta.env.VITE_CLIENT_URL}/api/jobs/${jobId}`, jobData, {
       headers: { Authorization: `Bearer ${token}` }
     }).then(() => {
-      alert('Job updated!');
-      navigate('/my-jobs');
+       setShowSuccessDialog(true); 
+    //  navigate('/my-jobs');
     }).catch(err => {
       console.error('Failed to update job', err);
     });
@@ -73,7 +74,6 @@ const EditJobForm = () => {
   return (
     <div className="edit-job-container container mt-5 p-4">
 
-    {/* <div className="container mt-5 p-4 border rounded shadow bg-light"> */}
       <h2 className="mb-4 text-primary">Edit Job</h2>
       
       <form onSubmit={handleSubmit}>
@@ -147,13 +147,36 @@ const EditJobForm = () => {
             <FaSave /> Update Job
           </button>
           <button
-            type="button" className=" btn glossy-outline-btn" onClick={() => navigate("/my-jobs")}
+            type="button" className=" btn glossy-outline-btn" onClick={() => navigate("/employer-dashboard/my-jobs")}
           >
             <FaArrowLeft /> Cancel
           </button>
         </div>
       </form>
-    {/* </div> */}
+      {showSuccessDialog && (
+  <div className="modal-backdrop show" style={{zIndex: 1050, position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)',opacity:1}}>
+    <div className="modal d-block" tabIndex="-1" style={{zIndex: 1060, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+      <div className="modal-dialog">
+        <div className="modal-content text-gray-900 bg-white"> 
+          <div className="modal-header">
+            <h5 className="modal-title text-success">Success</h5>
+          </div>
+          <div className="modal-body">
+            <p>Job updated!</p>
+          </div>
+          <div className="modal-footer">
+            <button className="btn btn-primary" onClick={() => {
+              setShowSuccessDialog(false);
+              navigate('/employer-dashboard/my-jobs');
+            }}>
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 };

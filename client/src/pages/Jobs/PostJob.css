@@ -1,26 +1,34 @@
 .post-job-container {
-  background: linear-gradient(135deg, #f0f4ff, #dff4ff);
+  background: linear-gradient(135deg, #f0f4ff, #f8f9f9);
   min-height: 100vh;
 }
 
 .post-job-card {
-  background: #ffffff;
+   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
   border: 1px solid #e3e8f0;
+  padding: 16px;
+  width: 100%;
+  max-width: 500px;
 }
 
 .glossy-input {
-  border-radius: 12px;
-  padding: 10px 14px;
-  border: 1px solid #d3e0ef;
-  transition: border 0.3s, box-shadow 0.3s;
-  font-size: 14px;
+
+   border-radius: 12px;
+  padding: 16px 18px;      /* Increased padding for thickness */
+  border: 2px solid #2563eb; /* Thicker border, blue color */
+  font-size: 1.1rem;
+  font-weight: 500;
+  min-height: 48px;        /* Ensures height */
+  background: #f8fafc;
+  transition: border 0.2s;
 }
 
 .glossy-input:focus {
   border-color: #4facfe;
-  box-shadow: 0 0 8px rgba(79, 172, 254, 0.4);
+  
+  box-shadow: 0 0 0 2px #c7d2fe;
   outline: none;
 }
 
@@ -53,4 +61,15 @@
 .glossy-outline-btn:hover {
   background: #4facfe;
   color: white;
+}
+
+@media (max-width: 600px) {
+  .post-job-card {
+    padding: 8px;
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  .post-job-container {
+    padding: 0 !important;
+  }
 }

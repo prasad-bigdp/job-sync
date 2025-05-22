@@ -76,11 +76,14 @@ exports.getJobById = async (req, res) => {
 // create job --employers
 exports.createJob = async (req, res) => {
     try {  
-      if (!req.user || !req.user.id) {
+      if (req.user.role !== "employer") {
         return res.status(401).json({ message: "you are not authorized to create job !" });
       }
-  
-      const employerId = req.user.id;
+      const employerId = req.user.employerId || req.user.EmployerId || req.user._id || req.user._id;
+       if (!employerId) {
+        return res.status(400).json({ message: "Employer ID not found in token." });
+      }
+      console.log("Decoded user in createJob:", req.user);
       const newJobData = { ...req.body, employer: employerId };
   
       const newJob = new Job(newJobData);
@@ -90,7 +93,9 @@ exports.createJob = async (req, res) => {
       await Employer.findByIdAndUpdate(employerId, {
         $push: { createdJobs: savedJob._id },
       });
-      res.status(201).json(savedJob,{message: "Job created successfully"});
+      res.status(201).json({ success: true, job: savedJob, message: "Job created successfully" });
+
+    //   res.status(201).json(savedJob,{message: "Job created successfully"});
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -114,7 +119,7 @@ exports.getJobsByEmployerId = async (req, res) => {
 // update job --employers
 exports.updateJob = async (req, res) => {
     try {
-        const employerId = req.user.id;
+        const employerId = req.user.employerId || req.user.EmployerId || req.user.id || req.user._id;
         const job = await Job.findById(req.params.id);
 
         if (!job) {
@@ -139,7 +144,7 @@ exports.updateJob = async (req, res) => {
 // delete job --employers
 exports.deleteJob = async (req, res) => {
     try {
-        const employerId = req.user.id;
+        const employerId = req.user.employerId || req.user.EmployerId || req.user.id || req.user._id;
         const job = await Job.findById(req.params.id);
 
         if (!job) {

@@ -10,9 +10,11 @@ import {
   LogOut
 } from 'lucide-react';
 import { useAuth } from "../../context/AuthContext";
+import {useNavigate} from 'react-router-dom';
 
 const EmployerSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen,employer }) => {
   const {logout} = useAuth();
+  let navigate = useNavigate();
 
   const menuItems = [
     { icon: <BarChart2 size={20} />, label: "Dashboard" },
@@ -68,6 +70,12 @@ const EmployerSidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen,
                     onClick={() => {
                       setActiveTab(item.label);
                       setSidebarOpen(false);
+                      if (item.label === "Post a Job") {
+                      navigate("/employer-dashboard/create-job"); // <-- Navigate to create-job
+                    }
+                    if (item.label === "Manage Jobs") {
+                      navigate("/employer-dashboard/my-jobs"); // <-- Navigate to manage-jobs
+                    }
                     }}
                     className={`w-full flex items-center rounded-md px-3 py-2 text-sm ${
                       activeTab === item.label

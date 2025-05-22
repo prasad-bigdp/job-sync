@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate, Navigate, Outlet } from "react-router-dom";
 import EmployerNavBar from "./EmployerNavBar";
 import EmployerSidebar from './EmployerSidebar';
 import EmployerCharts from './EmployerCharts';
+
 
 export default function EmployerDashboard() {
   const { auth, logout } = useAuth();
@@ -15,15 +16,14 @@ export default function EmployerDashboard() {
   const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchEmployerDashboard = async () => {
+  const fetchEmployerDashboard = async () => {
       if (!auth.token || auth.role !== "employer") return;
 
       setLoading(true);
       setError(null);
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_CLIENT_URL}/api/employers/employer-dashboard`,
+          `VITE_CLIENT_URL/api/employers/employer-dashboard`,
           {
             headers: {
               Authorization: `Bearer ${auth.token}`,
@@ -42,6 +42,8 @@ export default function EmployerDashboard() {
       }
     };
 
+  useEffect(() => {
+    
     fetchEmployerDashboard();
   }, [auth, navigate, logout]);
 
@@ -69,7 +71,8 @@ export default function EmployerDashboard() {
         <EmployerNavBar employer={employerData} setSidebarOpen={setSidebarOpen} />
 
         <main className="flex-1 overflow-y-auto bg-gray-50">
-          <EmployerCharts />
+          <Outlet />
+          
         </main>
       </div>
 

@@ -17,6 +17,7 @@ const PostJob = () => {
 
 const { auth } = useAuth();
 const navigate = useNavigate();
+const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
 	const [status, setStatus] = useState({ success: "", error: "" })
 
@@ -32,26 +33,37 @@ const navigate = useNavigate();
 			const employerId = auth.userId
       console.log("Token from Auth Context:", token);
 			const res = await axios.post(
-				`CLIENT_URL/api/jobs/create-job`,
+				`${import.meta.env.VITE_CLIENT_URL}/api/jobs/create-job`,
+        
 				{
 					...formData,
 					skillsRequired: formData.skillsRequired
 						.split(",").map((skill) => skill.trim())
 				},
-				{
-					headers: { Authorization: `Bearer ${token}` },
-				},
+        {
+					headers: { Authorization: `Bearer ${token}` }
+				}
+				
 			)
 
-			setStatus({ success: "Job posted successfully!", error: "" })
-			setFormData({
-				title: "",description: "",company:"",
+    if (res.data && res.data.success) {
+  setStatus({ success: "Job posted successfully!", error: "" });
+  setFormData({
+    title: "",
+    description: "",
+    company: "",
     skillsRequired: "",
-		location: "",
-		salaryRange: ""
-		
-			})
-			navigate('/my-jobs');
+    location: "",
+    salaryRange: ""
+  });
+  setShowSuccessDialog(true);
+ // navigate('/my-jobs');
+} else {
+  setStatus({
+    success: "",
+    error: res.data.message || "Something went wrong.",
+  });
+}
 		} catch (err) {
 			console.error("Post Job Error:", err.response?.data || err.message);
 			setStatus({
@@ -62,8 +74,8 @@ const navigate = useNavigate();
 	}
 
 return (
-  <div className="post-job-container container d-flex justify-content-center align-items-center mt-5">
-  <div className="post-job-card p-4 shadow-sm w-100" style={{ maxWidth: '500px' }}>
+  <div className="post-job-container container d-flex justify-content-center align-items-center style={{ minHeight: '100vh', padding: 0 }}">
+  <div className="post-job-card p-2 shadow-sm w-100" style={{ maxWidth: '500px' }}>
     <h5 className="mb-4 text-center text-primary fw-bold">Post a New Job</h5>
 
     <form onSubmit={handleSubmit}>
@@ -146,6 +158,62 @@ return (
         onClick={() => navigate('/my-jobs')}>Cancel</button>
       </div>
     </form>
+    {showSuccessDialog && (
+  <div
+    className="modal-backdrop show"
+    style={{
+      zIndex: 1050,
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(0,0,0,0.7)',
+      opacity:1
+    }}
+  >
+    <div
+      className="modal d-block"
+      tabIndex="-1"
+      style={{
+        zIndex: 1060,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh'
+      }}
+    >
+      <div className="modal-dialog">
+        <div
+          className="modal-content"
+          style={{
+            background: '#fff',
+            color: '#111',
+            borderRadius: '12px',
+            boxShadow: '0 4px 32px rgba(0,0,0,0.1)',
+            opacity:1
+          }}
+        >
+          <div className="modal-header">
+            <h5 className="modal-title text-success">Success</h5>
+          </div>
+          <div className="modal-body">
+            <p>Job posted successfully!</p>
+          </div>
+          <div className="modal-footer">
+            <button
+              className="btn btn-primary"
+              style={{ background: '#2563eb', borderColor: '#2563eb' }}
+              onClick={() => {
+                setShowSuccessDialog(false);
+                navigate('/employer-dashboard/my-jobs');
+              }}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
     {status.success && (
       <div className="alert alert-success mt-3 small">{status.success}</div>

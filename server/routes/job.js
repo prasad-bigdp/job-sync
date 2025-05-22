@@ -17,7 +17,7 @@ router.get("/matched", authMiddleware, jobController.getMatchedJobs)
 router.get("/employer/:id", authMiddleware, jobController.getJobsByEmployerId)
 
 // Protected route for employers to post a new job (requires employer to be logged in)
-router.post("/", authMiddleware, jobController.createJob)  
+router.post("/create-job", authMiddleware, jobController.createJob) ; 
 
 // Protected route for employers to update a job (requires employer to be logged in)
 router.put("/:id", authMiddleware, jobController.updateJob)
