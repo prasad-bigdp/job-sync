@@ -14,6 +14,7 @@ import {
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../ReusableCode/theme';
 import FormField from '../ReusableCode/formField';
+import Header from "../Homecomponents/Header";
 
 function EmployerSignup() {
   const navigate = useNavigate();
@@ -22,7 +23,13 @@ function EmployerSignup() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const formik = useFormik({
-    initialValues: { name: "", email: "", phone: "", password: "", agreeToTerms: false },
+    initialValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      agreeToTerms: false
+    },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required").min(3),
       email: Yup.string().email("Invalid email").required("Email is required"),
@@ -30,28 +37,51 @@ function EmployerSignup() {
       password: Yup.string().required("Password is required").min(6),
       agreeToTerms: Yup.boolean().oneOf([true], "You must accept the terms")
     }),
-     onSubmit: async (values) => {
+    onSubmit: async (values) => {
       try {
+        setLoading(true);
         const response = await axios.post('http://127.0.0.1:5000/api/employers', values);
-        console.log(response)
         alert('Signup successful!');
         navigate('/EmployerLogin');
       } catch (error) {
         const errMsg = error.response?.data?.message || error.message || "Signup failed";
         alert(errMsg);
         console.error('Signup error:', errMsg);
+      } finally {
+        setLoading(false);
       }
     },
   });
-  
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default', display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
-        <Paper elevation={5} sx={{ maxWidth: 900, width: '100%', display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
+  return(
+    <div>
+      <Header />
+        <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          minHeight: '100vh',
+          backgroundColor: 'background.default',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          p: 2
+        }}
+      >
+        <Paper elevation={5} sx={{
+          maxWidth: 900,
+          width: '100%',
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' }
+        }}>
           {!isSmallScreen && (
-            <Box sx={{ width: '60%', p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src="/4236127.jpg" alt="Signup" style={{ maxWidth: '100%' }} />
+            <Box sx={{
+              width: '60%',
+              p: 4,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <img src="https://res.cloudinary.com/dcawbqlmr/image/upload/v1747900512/6333213_huhqtr.jpg" alt="Signup" style={{ maxWidth: '100%' }} />
             </Box>
           )}
 
@@ -65,6 +95,7 @@ function EmployerSignup() {
               <FormField id="email" label="Email" icon={<EmailOutlined />} formik={formik} />
               <FormField id="phone" label="Phone Number" icon={<PhoneAndroidOutlined />} formik={formik} />
 
+              {/* Password Field with Visibility Toggle */}
               <label htmlFor="password" className="block text-sm font-medium mb-1">
                 Password {formik.values.password === "" && <span style={{ color: 'red' }}>*</span>}
               </label>
@@ -141,7 +172,8 @@ function EmployerSignup() {
         </Paper>
       </Box>
     </ThemeProvider>
-  );
+    </div>
+  )
 }
-
 export default EmployerSignup;
+   
