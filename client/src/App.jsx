@@ -31,10 +31,12 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/UserLogin" element={<UserLogin />} />
         <Route path="/UserSignup" element={<UserSignup />} />
-        <Route path="/my-jobs" element={<JobListEmp />} />
-        <Route path ="/create-job" element={<PostJob />} /> 
-        <Route path="/edit-job/:jobId" element={<EditJobForm />} />
-        <Route path="/employer-dashboard" element={<EmployerDashboard />} />
+        <Route path="/employer-dashboard" element={<EmployerDashboard />}>
+        <Route path="my-jobs" element={<JobListEmp />} />
+        <Route path="create-job" element={<PostJob />} />
+        <Route path="edit-job/:jobId" element={<EditJobForm />} />
+        </Route>
+      
         <Route path="/user-Dashboard" element={<UserDashboard />} />
       </Routes>
     </AuthProvider>
